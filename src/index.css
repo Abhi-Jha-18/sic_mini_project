@@ -1,0 +1,3 @@
+/* index.css — intentionally minimal; all visual styling is handled by Tailwind
+   utility classes loaded via CDN in public/index.html and by the <style> block
+   embedded in that file. This file exists only to satisfy the CRA import chain. */
