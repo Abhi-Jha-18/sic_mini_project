@@ -1,20 +1,35 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { act, Simulate } from 'react-dom/test-utils';
+import { act } from 'react';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 
-const click = (node) => act(() => { Simulate.click(node); });
+// React 18: act() outside a test renderer needs this flag
+global.IS_REACT_ACT_ENVIRONMENT = true;
+
+/** Click through React's real event system (works with createRoot). */
+const click = (node) =>
+  act(() => {
+    node.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+  });
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const root = createRoot(div);
+  act(() => {
+    root.render(<App />);
+  });
+  act(() => {
+    root.unmount();
+  });
 });
 
 it('walks the 3-stage journey: landing → budget modal → tailored results', () => {
   const div = document.createElement('div');
   document.body.appendChild(div);
-  act(() => { ReactDOM.render(<App />, div); });
+  const root = createRoot(div);
+  act(() => {
+    root.render(<App />);
+  });
 
   // ── Stage 1 · Landing: the purpose prompt is present ─────────────────────
   expect(div.textContent).toContain('What is the primary purpose or main feature');
@@ -61,6 +76,8 @@ it('walks the 3-stage journey: landing → budget modal → tailored results', (
   click(div.querySelector('#restart-flow'));
   expect(div.querySelector('#purpose-gaming')).not.toBeNull();
 
-  ReactDOM.unmountComponentAtNode(div);
+  act(() => {
+    root.unmount();
+  });
   document.body.removeChild(div);
 });

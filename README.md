@@ -41,8 +41,9 @@ returns a shortlist of 3–4 tailored recommendations with concise pros & cons.
 * **Muted color palette** — desaturated slate-blue accent plus subtle per-purpose tints.
 
 ## Tech Stack
-* React (CRA) with hooks (`useState` / `useMemo` / `useEffect`)
+* React 18 + Vite (dev server & build) with hooks (`useState` / `useMemo` / `useEffect`)
 * Tailwind CSS (CDN) for styling
+* Vitest + jsdom for tests
 * No router or state libraries — the journey is a small, explicit state machine
   (`landing → modal → results`) so the stages never bleed into each other.
 
@@ -64,21 +65,17 @@ relaxed automatically and the UI says so.
 
 ```bash
 npm install
-npm start        # http://localhost:3000
-npm test
-npm run build
+npm start        # http://localhost:3000 (alias: npm run dev)
+npm test         # Vitest suite
+npm run build    # production build → dist/
 ```
-
-> **Note:** the scripts run CRA's webpack 4 toolchain with
-> `NODE_OPTIONS=--openssl-legacy-provider` so they work on Node 17+.
-> On Node 16 and older, you can remove that flag from `package.json`.
 
 ## Project Structure
 
 ```
+index.html               # Tailwind theme (muted minimalist palette + animations)
+vite.config.js           # Vite + Vitest configuration
 src/
-  App.js                  # 3-stage flow: Landing → Modal → Results
-  data/mockDatabase.js    # Purposes, budget tiers, phone catalog, scoring engine
-public/
-  index.html              # Tailwind theme (muted minimalist palette + animations)
+  App.jsx                # 3-stage flow: Landing → Modal → Results
+  data/mockDatabase.js   # Purposes, budget tiers, phone catalog, scoring engine
 ```
