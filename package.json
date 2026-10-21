@@ -1,5 +1,5 @@
 {
-  "name": "compare-mobile",
+  "name": "phonefit",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,8 +8,8 @@
     "react-scripts": "2.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -21,5 +21,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "description": "PhoneFit — 3-stage tailored mobile phone recommendation experience"
 }

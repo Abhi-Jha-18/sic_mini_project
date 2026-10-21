@@ -1,30 +1,84 @@
-# Mobile Phone Comparision Tool - React
-Mobile Phone's Specification Comparison using a react web app
+# PhoneFit — Smart Mobile Recommendation Tool
 
-### Highlevel Features Expected - Phase 1
+A React web app that recommends mobile phones through a clean, minimalist **3-stage flow**.
+Instead of overwhelming users with spec tables, PhoneFit asks two focused questions and
+returns a shortlist of 3–4 tailored recommendations with concise pros & cons.
 
-* Home Page 
-  * Select a phone from the dropdown (make and model)
-  * Link to all phones lisiting
-  
-* Phone Inner page (Ex: iPhone XS, Samsung S9.. )
-  * Phone main information
-  * Phone Advanced information ex: Camera lens..
-  * Add a phone from the list to compare
-  * Links to similar phones and phone brand page
- 
-* Phone Brand Inner Page (Ex: Huawei, Samsung, Apple..)
-  * General brand information  
-  * All the availables phone in a card layout
-  * Stats of the phones and the brand
-  
-* Phone Comparision view (Ex: iPhone XS vs Samsung S9+)
-  * Two phones compared specification wise  
-  * Links to phone pages
-  * Advanced comparision Ex: Camera
-  
-### Phone Profile Data Model
-To be updated
+## User Journey — 3 Distinct Stages
 
-### Brand Profile Data Model
-To be updated
+### Stage 1 · Landing Page
+* Clean headline and subtitle introducing the service.
+* Interactive prompt: *"What is the primary purpose or main feature you need in your
+  mobile phone?"*
+  * Gaming
+  * Photography/Videography
+  * Daily Work &amp; Battery Life
+  * Media Consumption/Display
+  * General Everyday Use
+
+### Stage 2 · Inner Modal (Budget &amp; Preferences)
+* Smoothly transitions into a focused modal once a purpose is selected.
+* Target **Price Range / Budget**:
+  * Entry-level (under ₹20,000)
+  * Mid-range (₹20,000 – ₹50,000)
+  * Flagship (above ₹50,000)
+* *Optional quick toggles:* OS preference (iOS vs. Android) and screen size
+  (Compact ≤ 6.3" / Large ≥ 6.6").
+
+### Stage 3 · Tailored Results
+* Minimalist card layout with **3–4 top recommendations** matched to the selected
+  purpose and budget.
+* Each card shows:
+  * Phone name &amp; image placeholder
+  * Price
+  * Key highlights tailored to the selected primary purpose
+  * Concise pros &amp; cons
+* "Refine" reopens the modal with the current selections; "Start over" returns to Stage 1.
+
+## Design Language
+* **Minimalism** — ample white space, hairline borders, soft shadows, light warm off-white canvas.
+* **Modern typography** — Inter, tight-tracked headings, clear weight contrast.
+* **Muted color palette** — desaturated slate-blue accent plus subtle per-purpose tints.
+
+## Tech Stack
+* React (CRA) with hooks (`useState` / `useMemo` / `useEffect`)
+* Tailwind CSS (CDN) for styling
+* No router or state libraries — the journey is a small, explicit state machine
+  (`landing → modal → results`) so the stages never bleed into each other.
+
+## Recommendation Engine
+Each phone in `src/data/mockDatabase.js` is scored per purpose (0–100):
+
+| Purpose | Weighting |
+| --- | --- |
+| Gaming | Processor 55% · RAM 20% · Refresh rate 10% · Battery 15% |
+| Photography/Videography | Camera 75% · Processor (ISP) 15% · Storage 10% |
+| Daily Work & Battery Life | Battery 55% · Processor 25% · RAM 20% |
+| Media Consumption/Display | Display 60% · Battery 20% · Storage 10% · Refresh 10% |
+| General Everyday Use | Processor / Camera / Battery / Display — 25% each |
+
+If optional filters (OS / screen size) would leave fewer than 3 matches, they are
+relaxed automatically and the UI says so.
+
+## Getting Started
+
+```bash
+npm install
+npm start        # http://localhost:3000
+npm test
+npm run build
+```
+
+> **Note:** the scripts run CRA's webpack 4 toolchain with
+> `NODE_OPTIONS=--openssl-legacy-provider` so they work on Node 17+.
+> On Node 16 and older, you can remove that flag from `package.json`.
+
+## Project Structure
+
+```
+src/
+  App.js                  # 3-stage flow: Landing → Modal → Results
+  data/mockDatabase.js    # Purposes, budget tiers, phone catalog, scoring engine
+public/
+  index.html              # Tailwind theme (muted minimalist palette + animations)
+```
