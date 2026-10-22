@@ -59,16 +59,16 @@ const ProgressSteps = ({ current }) => (
         <div key={label} className="flex items-center gap-2 sm:gap-3">
           {i > 0 && (
             <div
-              className={cx('h-px w-4 sm:w-8', state === 'todo' ? 'bg-stone-300' : 'bg-accent')}
+              className={cx('h-px w-4 sm:w-8', state === 'todo' ? 'bg-stone-600' : 'bg-accent')}
             />
           )}
           <div className="flex items-center gap-1.5">
             <span
               className={cx(
-                'w-6 h-6 rounded-full text-[11px] font-semibold flex items-center justify-center transition-colors',
-                state === 'todo' && 'bg-stone-200 text-stone-500',
-                state === 'active' && 'bg-accent text-white shadow-sm',
-                state === 'done' && 'bg-accent/15 text-accent'
+                'w-6 h-6 rounded-full text-[11px] font-mono font-semibold flex items-center justify-center transition-colors',
+                state === 'todo' && 'bg-white/10 text-stone-400',
+                state === 'active' && 'bg-accent text-white shadow-glow',
+                state === 'done' && 'bg-sage/15 text-sage'
               )}
             >
               {state === 'done' ? <i className="fa-solid fa-check text-[9px]" /> : i + 1}
@@ -76,7 +76,7 @@ const ProgressSteps = ({ current }) => (
             <span
               className={cx(
                 'text-xs font-medium tracking-wide hidden sm:block',
-                state === 'todo' ? 'text-stone-400' : 'text-stone-700'
+                state === 'todo' ? 'text-stone-500' : 'text-stone-300'
               )}
             >
               {label}
@@ -93,14 +93,17 @@ const ProgressSteps = ({ current }) => (
 // ─────────────────────────────────────────────────────────────────────────────
 
 const TopBar = ({ step, onHome, showHome }) => (
-  <header className="sticky top-0 z-40 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-stone-200/80">
+  <header className="sticky top-0 z-40 bg-[#0B0C10]/80 backdrop-blur-xl border-b border-stone-700/80">
     <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
       <button onClick={onHome} className="flex items-center gap-2.5 group" id="logo-home">
-        <div className="w-8 h-8 rounded-xl bg-accent text-white flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+        <div
+          className="w-8 h-8 rounded-xl text-white flex items-center justify-center shadow-tile group-hover:scale-105 transition-transform"
+          style={{ background: 'linear-gradient(135deg, #4A6785 0%, #54649F 55%, #6B5B8A 100%)' }}
+        >
           <i className="fa-solid fa-mobile-screen-button text-sm" />
         </div>
-        <span className="font-semibold text-[17px] tracking-tight text-stone-900">
-          Phone<span className="text-accent">Fit</span>
+        <span className="font-display font-bold text-[17px] tracking-tight text-ink">
+          Phone<span className="text-gradient">Fit</span>
         </span>
       </button>
 
@@ -109,7 +112,7 @@ const TopBar = ({ step, onHome, showHome }) => (
       {showHome ? (
         <button
           onClick={onHome}
-          className="text-sm font-medium text-stone-500 hover:text-accent transition-colors"
+          className="text-sm font-medium text-stone-400 hover:text-accent transition-colors"
         >
           Start over
         </button>
@@ -129,18 +132,28 @@ const PhoneVisual = ({ phone, match, tint }) => {
   return (
     <div
       className="relative h-48 rounded-2xl overflow-hidden flex items-center justify-center"
-      style={{ background: 'linear-gradient(165deg, ' + tone + '12 0%, ' + tone + '26 100%)' }}
+      style={{
+        background:
+          'radial-gradient(120% 90% at 18% 0%, ' + tone + '33 0%, transparent 55%), ' +
+          'radial-gradient(100% 100% at 96% 100%, ' + tone + '24 0%, transparent 55%), ' +
+          'linear-gradient(165deg, #1A1A22 0%, #101014 100%)',
+      }}
     >
-      {/* Match badge */}
+      {/* Match badge — colour-banded by confidence */}
       {match !== undefined && (
-        <span className="absolute top-3 right-3 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white/85 text-stone-700 shadow-sm">
+        <span
+          className={cx(
+            'absolute top-3 right-3 text-[11px] font-mono font-semibold px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-sm',
+            match >= 85 ? 'text-sage' : match >= 70 ? 'text-amber-400' : 'text-rose-400'
+          )}
+        >
           {Math.round(match)}% match
         </span>
       )}
 
       <svg width="86" height="150" viewBox="0 0 86 150" role="img" aria-label={phone.name + ' placeholder image'}>
         {/* Device body */}
-        <rect x="10" y="4" width="66" height="142" rx="13" fill="#FFFFFF" stroke={tone} strokeWidth="2.4" />
+        <rect x="10" y="4" width="66" height="142" rx="13" fill="#121218" stroke={tone} strokeWidth="2.4" />
         {/* Screen */}
         <rect x="16" y="12" width="54" height="126" rx="8" fill={tone} opacity="0.12" />
         {/* Dynamic island */}
@@ -186,19 +199,27 @@ const PurposeCard = ({ purpose, onSelect }) => (
   <button
     id={'purpose-' + purpose.key}
     onClick={() => onSelect(purpose.key)}
-    className="group text-left bg-white rounded-2xl border border-stone-200 p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-accent/40 transition-all duration-200 flex flex-col gap-4"
+    style={{ '--tint': purpose.tint }}
+    className="purpose-card group text-left bg-panel rounded-2xl border border-stone-700 p-6 shadow-sm hover:-translate-y-1 transition-all duration-200 flex flex-col gap-4"
   >
     <div
       className="w-11 h-11 rounded-xl flex items-center justify-center text-lg"
-      style={{ background: purpose.tint + '18', color: purpose.tint }}
+      style={{
+        background: purpose.tint + '1C',
+        color: purpose.tint,
+        boxShadow: 'inset 0 0 0 1px ' + purpose.tint + '2E',
+      }}
     >
       <i className={purpose.icon} />
     </div>
     <div>
-      <h3 className="font-semibold text-stone-900 text-[15px] leading-snug">{purpose.label}</h3>
-      <p className="text-stone-500 text-[13px] mt-1 leading-relaxed">{purpose.description}</p>
+      <h3 className="font-display font-semibold text-ink text-[15px] leading-snug">{purpose.label}</h3>
+      <p className="text-stone-400 text-[13px] mt-1 leading-relaxed">{purpose.description}</p>
     </div>
-    <div className="flex items-center gap-1.5 text-accent text-xs font-semibold opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200">
+    <div
+      className="flex items-center gap-1.5 text-xs font-semibold opacity-0 group-hover:opacity-100 -translate-x-1 group-hover:translate-x-0 transition-all duration-200"
+      style={{ color: purpose.tint }}
+    >
       Choose
       <i className="fa-solid fa-arrow-right text-[10px]" />
     </div>
@@ -213,22 +234,28 @@ const LandingStage = ({ onSelectPurpose }) => (
         <i className="fa-solid fa-compass text-[10px]" />
         Smart phone finder
       </span>
-      <h1 className="mt-6 text-4xl sm:text-[52px] leading-[1.08] font-semibold tracking-tight text-stone-900">
+      <h1 className="mt-6 text-4xl sm:text-[60px] leading-[1.05] font-display font-black text-ink">
         Find the phone
         <br />
-        that fits your life.
+        that <span className="text-gradient">fits your life.</span>
       </h1>
-      <p className="mt-5 text-lg text-stone-500 leading-relaxed max-w-xl mx-auto">
+      <p className="mt-5 text-lg text-stone-400 leading-relaxed max-w-xl mx-auto">
         Skip the endless spec sheets. Answer two quick questions and get a
         shortlist of 3–4 phones tailored to what you actually care about.
       </p>
+      {/* Palette hint — one dot per purpose, matching the card accents */}
+      <div className="mt-8 flex items-center justify-center gap-2.5" aria-hidden="true">
+        {PURPOSES.map((p) => (
+          <span key={p.key} className="w-2 h-2 rounded-full" style={{ background: p.tint }} />
+        ))}
+      </div>
     </section>
 
     {/* Interactive purpose prompt */}
     <section className="pb-24 animate-fade-up">
       <div className="max-w-2xl mx-auto text-center mb-10">
-        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-stone-400">Step 1 · Your priority</p>
-        <h2 className="mt-3 text-2xl sm:text-[28px] font-semibold tracking-tight text-stone-900 leading-snug">
+        <p className="text-xs font-semibold tracking-[0.2em] uppercase text-accent">Step 1 · Your priority</p>
+        <h2 className="mt-3 text-2xl sm:text-[30px] font-display font-semibold text-ink leading-snug">
           What is the primary purpose or main feature
           <br className="hidden sm:block" /> you need in your mobile phone?
         </h2>
@@ -249,7 +276,7 @@ const LandingStage = ({ onSelectPurpose }) => (
 
 const Segmented = ({ label, options, value, onChange }) => (
   <div>
-    <p className="text-xs font-medium text-stone-500 mb-2">{label}</p>
+    <p className="text-xs font-medium text-stone-400 mb-2">{label}</p>
     <div className="flex flex-wrap gap-2">
       {options.map((opt) => (
         <button
@@ -258,8 +285,8 @@ const Segmented = ({ label, options, value, onChange }) => (
           className={cx(
             'px-3.5 py-2 rounded-full text-xs font-medium border transition-all duration-150',
             value === opt.key
-              ? 'bg-accent text-white border-accent shadow-sm'
-              : 'bg-white text-stone-600 border-stone-200 hover:border-stone-300'
+              ? 'text-white border-transparent shadow-glow bg-gradient-to-r from-accent to-plum'
+              : 'bg-white/[0.03] text-stone-300 border-stone-700 hover:border-accent/50 hover:text-accent'
           )}
         >
           {opt.label}
@@ -286,7 +313,7 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-stone-900/30 backdrop-blur-[3px] animate-fade-in"
+        className="absolute inset-0 bg-black/60 backdrop-blur-[3px] animate-fade-in"
         onClick={onClose}
       />
 
@@ -295,31 +322,40 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
         role="dialog"
         aria-modal="true"
         aria-label="Budget and preferences"
-        className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl animate-modal-in max-h-[92vh] overflow-y-auto"
+        className="relative w-full max-w-lg bg-panel rounded-3xl shadow-2xl animate-modal-in max-h-[92vh] overflow-y-auto"
       >
-        {/* Header */}
-        <div className="px-7 pt-7 pb-5 border-b border-stone-100">
+        {/* Header — softly tinted by the chosen purpose */}
+        <div
+          className="px-7 pt-7 pb-5 border-b border-stone-800"
+          style={{ background: 'linear-gradient(135deg, ' + pMeta.tint + '12 0%, transparent 62%)' }}
+        >
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold tracking-[0.18em] uppercase text-accent">
+              <p
+                className="text-xs font-semibold tracking-[0.18em] uppercase"
+                style={{ color: pMeta.tint }}
+              >
                 Step 2 of 3 · Budget &amp; preferences
               </p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
+              <h2 className="mt-2 text-2xl font-display font-semibold text-ink">
                 What's your budget?
               </h2>
             </div>
             <button
               onClick={onClose}
               aria-label="Close"
-              className="w-8 h-8 rounded-full bg-stone-100 text-stone-500 hover:bg-stone-200 transition-colors flex items-center justify-center flex-shrink-0"
+              className="w-8 h-8 rounded-full bg-white/[0.06] text-stone-400 hover:bg-white/10 transition-colors flex items-center justify-center flex-shrink-0"
             >
               <i className="fa-solid fa-xmark text-sm" />
             </button>
           </div>
 
           {/* Chosen purpose recap */}
-          <div className="mt-4 inline-flex items-center gap-2 text-xs font-medium text-stone-600 bg-stone-100 rounded-full px-3 py-1.5">
-            <i className={pMeta.icon} style={{ color: pMeta.tint }} />
+          <div
+            className="mt-4 inline-flex items-center gap-2 text-xs font-medium rounded-full px-3 py-1.5"
+            style={{ background: pMeta.tint + '14', color: pMeta.tint }}
+          >
+            <i className={pMeta.icon} />
             For: {pMeta.label}
           </div>
         </div>
@@ -338,24 +374,26 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
                   className={cx(
                     'w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl border text-left transition-all duration-150',
                     active
-                      ? 'border-accent bg-accent/[0.07] shadow-sm'
-                      : 'border-stone-200 hover:border-stone-300 bg-white'
+                      ? 'border-accent bg-accent/10 shadow-glow'
+                      : 'border-stone-700 hover:border-stone-500 bg-white/[0.03]'
                   )}
                 >
                   <span
                     className={cx(
-                      'w-9 h-9 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors',
-                      active ? 'border-accent bg-accent text-white' : 'border-stone-300 text-transparent'
+                      'w-9 h-9 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all',
+                      active
+                        ? 'border-transparent text-white shadow-glow bg-gradient-to-br from-accent via-[#54649F] to-plum'
+                        : 'border-stone-600 text-transparent'
                     )}
                   >
                     <i className="fa-solid fa-check text-xs" />
                   </span>
                   <span className="flex-1 min-w-0">
                     <span className="flex items-baseline gap-2 flex-wrap">
-                      <span className="font-semibold text-stone-900 text-[15px]">{tier.label}</span>
-                      <span className="text-xs font-medium text-accent">{tier.range}</span>
+                      <span className="font-display font-semibold text-ink text-[15px]">{tier.label}</span>
+                      <span className="text-xs font-mono font-semibold text-accent">{tier.range}</span>
                     </span>
-                    <span className="block text-xs text-stone-500 mt-0.5">{tier.description}</span>
+                    <span className="block text-xs text-stone-400 mt-0.5">{tier.description}</span>
                   </span>
                 </button>
               );
@@ -363,12 +401,12 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
           </div>
 
           {/* Optional preferences */}
-          <div className="pt-5 border-t border-stone-100 space-y-5">
+          <div className="pt-5 border-t border-stone-800 space-y-5">
             <div className="flex items-center gap-2">
-              <p className="text-xs font-semibold tracking-[0.16em] uppercase text-stone-400">
+              <p className="text-xs font-semibold tracking-[0.16em] uppercase text-stone-500">
                 Optional filters
               </p>
-              <div className="flex-1 h-px bg-stone-100" />
+              <div className="flex-1 h-px bg-white/[0.06]" />
             </div>
 
             <Segmented
@@ -390,7 +428,7 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
         <div className="px-7 pb-7 pt-2 flex items-center justify-between gap-3">
           <button
             onClick={onClose}
-            className="text-sm font-medium text-stone-500 hover:text-stone-800 transition-colors"
+            className="text-sm font-medium text-stone-400 hover:text-stone-800 transition-colors"
           >
             <i className="fa-solid fa-arrow-left mr-1.5 text-xs" />
             {isRefine ? 'Cancel' : 'Back to purpose'}
@@ -402,8 +440,8 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
             className={cx(
               'px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200',
               canSubmit
-                ? 'bg-accent text-white hover:bg-accent-dark shadow-sm hover:shadow-md'
-                : 'bg-stone-200 text-stone-400 cursor-not-allowed'
+                ? 'btn-primary'
+                : 'bg-white/10 text-stone-500 cursor-not-allowed'
             )}
           >
             {isRefine ? 'Update my matches' : 'See my recommendations'}
@@ -419,75 +457,82 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
 //  STAGE 3 · RESULT CARD
 // ─────────────────────────────────────────────────────────────────────────────
 
+const TIER_CHIP = {
+  entry: 'text-sage bg-sage/10',
+  mid: 'text-amber-300 bg-amber-300/10',
+  flagship: 'text-plum bg-plum/10',
+};
+
 const ResultCard = ({ entry, purpose }) => {
   const phone = entry.phone;
   const pMeta = purposeMeta(purpose);
   const notes = phone.purposeNotes[purpose] || [];
-  const tierLabel = budgetMeta(
-    phone.priceINR < 20000 ? 'entry' : phone.priceINR <= 50000 ? 'mid' : 'flagship'
-  ).label;
+  const tierKey = phone.priceINR < 20000 ? 'entry' : phone.priceINR <= 50000 ? 'mid' : 'flagship';
+  const tierLabel = budgetMeta(tierKey).label;
 
   return (
-    <article className="bg-white rounded-3xl border border-stone-200 shadow-sm hover:shadow-md transition-shadow duration-200 p-5 flex flex-col gap-5">
+    <article className="bg-panel rounded-3xl border border-stone-700 shadow-sm hover:shadow-lift transition-all duration-200 p-5 flex flex-col gap-5">
       <PhoneVisual phone={phone} match={entry.match} tint={pMeta.tint} />
 
       {/* Name + price */}
       <div>
         <div className="flex items-start justify-between gap-3">
-          <h3 className="font-semibold text-stone-900 text-lg leading-snug">{phone.name}</h3>
-          <span className="text-[11px] font-medium text-stone-500 bg-stone-100 rounded-full px-2.5 py-1 whitespace-nowrap">
+          <h3 className="font-display font-semibold text-ink text-lg leading-snug">{phone.name}</h3>
+          <span className="text-[11px] font-mono font-medium text-stone-400 bg-white/[0.06] rounded-full px-2.5 py-1 whitespace-nowrap">
             {phone.os}
           </span>
         </div>
-        <p className="text-xs text-stone-400 mt-1">
+        <p className="text-xs font-mono text-stone-500 mt-1">
           {phone.brand} · {phone.year} · {phone.chipset}
         </p>
         <div className="flex items-baseline gap-2 mt-2.5">
-          <span className="text-xl font-semibold tracking-tight text-stone-900">
+          <span className="text-xl font-mono font-bold tracking-tight text-ink">
             {inrFormat(phone.priceINR)}
           </span>
-          <span className="text-xs text-stone-400">{tierLabel}</span>
+          <span className={cx('text-[11px] font-semibold rounded-full px-2 py-0.5', TIER_CHIP[tierKey])}>
+            {tierLabel}
+          </span>
         </div>
       </div>
 
       {/* Purpose-tailored highlights */}
       <div>
-        <p className="text-xs font-semibold tracking-[0.14em] uppercase text-stone-400 mb-2.5">
+        <p className="text-xs font-semibold tracking-[0.14em] uppercase mb-2.5" style={{ color: pMeta.tint }}>
           Why it fits {pMeta.label.split('/')[0]}
         </p>
         <ul className="space-y-1.5">
           {notes.map((n) => (
-            <li key={n} className="flex items-start gap-2 text-[13px] text-stone-700 leading-relaxed">
+            <li key={n} className="flex items-start gap-2 text-[13px] text-stone-300 leading-relaxed">
               <i className="fa-solid fa-circle text-[5px] mt-1.5" style={{ color: pMeta.tint }} />
               {n}
             </li>
           ))}
         </ul>
-        <p className="mt-2.5 text-[11px] text-stone-400">
+        <p className="mt-2.5 text-[11px] font-mono text-stone-500">
           {phone.specs.batteryPower} mAh · {phone.specs.ramGB} GB RAM · {phone.screenInches}"{' '}
           {phone.displayType}
         </p>
       </div>
 
       {/* Pros & cons */}
-      <div className="grid grid-cols-1 gap-4 pt-4 border-t border-stone-100 mt-auto">
+      <div className="grid grid-cols-1 gap-4 pt-4 border-t border-stone-800 mt-auto">
         <div>
-          <p className="text-xs font-semibold tracking-[0.14em] uppercase text-emerald-700/80 mb-2">Pros</p>
+          <p className="text-xs font-semibold tracking-[0.14em] uppercase text-sage mb-2">Pros</p>
           <ul className="space-y-1.5">
             {phone.pros.map((pro) => (
-              <li key={pro} className="flex items-start gap-2 text-[13px] text-stone-700 leading-relaxed">
-                <i className="fa-solid fa-check text-emerald-600 text-[10px] mt-1" />
+              <li key={pro} className="flex items-start gap-2 text-[13px] text-stone-300 leading-relaxed">
+                <i className="fa-solid fa-circle-check text-emerald-500 text-xs mt-0.5" />
                 {pro}
               </li>
             ))}
           </ul>
         </div>
         <div>
-          <p className="text-xs font-semibold tracking-[0.14em] uppercase text-rose-700/70 mb-2">Cons</p>
+          <p className="text-xs font-semibold tracking-[0.14em] uppercase text-rose-500 mb-2">Cons</p>
           <ul className="space-y-1.5">
             {phone.cons.map((con) => (
-              <li key={con} className="flex items-start gap-2 text-[13px] text-stone-500 leading-relaxed">
-                <i className="fa-solid fa-minus text-rose-400 text-[10px] mt-1" />
+              <li key={con} className="flex items-start gap-2 text-[13px] text-stone-400 leading-relaxed">
+                <i className="fa-solid fa-circle-minus text-rose-400 text-xs mt-0.5" />
                 {con}
               </li>
             ))}
@@ -519,10 +564,10 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
         <p className="text-xs font-semibold tracking-[0.2em] uppercase text-accent">
           Step 3 of 3 · Your matches
         </p>
-        <h1 className="mt-3 text-3xl sm:text-[40px] leading-tight font-semibold tracking-tight text-stone-900">
+        <h1 className="mt-3 text-3xl sm:text-[40px] leading-tight font-display font-extrabold text-ink">
           Tailored for <span style={{ color: pMeta.tint }}>{pMeta.label}</span>
         </h1>
-        <p className="mt-3 text-stone-500 text-lg leading-relaxed max-w-2xl">
+        <p className="mt-3 text-stone-400 text-lg leading-relaxed max-w-2xl">
           {results.list.length} hand-picked phone{results.list.length === 1 ? '' : 's'} priced in
           the {bMeta.label.toLowerCase()} band ({bMeta.range}), ranked by how well they match your
           priority.
@@ -534,19 +579,19 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
             <i className={pMeta.icon} />
             {pMeta.label}
           </span>
-          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 bg-stone-100 px-3 py-1.5 rounded-full">
-            <i className="fa-solid fa-indian-rupee-sign text-[10px]" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-300 bg-white/[0.06] px-3 py-1.5 rounded-full">
+            <i className="fa-solid fa-indian-rupee-sign text-[10px] text-sage" />
             {bMeta.label} · {bMeta.range}
           </span>
           {osLabel && (
-            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 bg-stone-100 px-3 py-1.5 rounded-full">
-              <i className="fa-solid fa-laptop text-[10px]" />
+            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-300 bg-white/[0.06] px-3 py-1.5 rounded-full">
+              <i className="fa-solid fa-laptop text-[10px] text-plum" />
               {osLabel}
             </span>
           )}
           {sizeLabel && (
-            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-600 bg-stone-100 px-3 py-1.5 rounded-full">
-              <i className="fa-solid fa-expand text-[10px]" />
+            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-300 bg-white/[0.06] px-3 py-1.5 rounded-full">
+              <i className="fa-solid fa-expand text-[10px] text-terra" />
               {sizeLabel}
             </span>
           )}
@@ -562,8 +607,8 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
 
         {/* Relaxed filters note */}
         {results.relaxed.length > 0 && (
-          <p className="mt-4 text-xs text-stone-500 bg-amber-50 border border-amber-200/70 rounded-xl px-3.5 py-2.5 inline-block">
-            <i className="fa-solid fa-circle-info mr-1.5 text-amber-500" />
+          <p className="mt-4 text-xs text-amber-200/90 bg-amber-400/10 border border-amber-400/30 rounded-xl px-3.5 py-2.5 inline-block">
+            <i className="fa-solid fa-circle-info mr-1.5 text-amber-300" />
             We widened the search to show enough matches — your{' '}
             {results.relaxed.join(' and ')} preference{results.relaxed.length > 1 ? 's were' : ' was'}{' '}
             relaxed.
@@ -572,7 +617,7 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
 
         {/* Honest shortlist note (e.g. a single iPhone in a budget band) */}
         {results.list.length > 0 && results.list.length < 3 && prefs.os !== 'any' && results.relaxed.length === 0 && (
-          <p className="mt-4 text-xs text-stone-500 bg-stone-100 border border-stone-200 rounded-xl px-3.5 py-2.5 inline-block">
+          <p className="mt-4 text-xs text-stone-400 bg-white/[0.06] border border-stone-700 rounded-xl px-3.5 py-2.5 inline-block">
             <i className="fa-solid fa-circle-info mr-1.5 text-accent" />
             Only {results.list.length} {prefs.os} phone{results.list.length === 1 ? '' : 's'} fit
             {results.list.length === 1 ? 's' : ''} this budget — showing the honest shortlist rather
@@ -583,13 +628,15 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
 
       {/* Recommendation cards */}
       {results.list.length === 0 ? (
-        <section className="text-center py-20 bg-white rounded-3xl border border-stone-200 animate-fade-up">
-          <i className="fa-solid fa-magnifying-glass text-3xl text-stone-300" />
-          <h2 className="mt-4 text-lg font-semibold text-stone-800">No phones match those filters</h2>
-          <p className="mt-2 text-sm text-stone-500">Try loosening a preference or choosing another budget range.</p>
+        <section className="text-center py-20 bg-panel rounded-3xl border border-stone-700 animate-fade-up">
+          <div className="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center bg-plum/10">
+            <i className="fa-solid fa-magnifying-glass text-2xl text-plum" />
+          </div>
+          <h2 className="mt-4 text-lg font-display font-semibold text-ink">No phones match those filters</h2>
+          <p className="mt-2 text-sm text-stone-400">Try loosening a preference or choosing another budget range.</p>
           <button
             onClick={onRefine}
-            className="mt-6 px-6 py-3 rounded-full bg-accent text-white text-sm font-semibold hover:bg-accent-dark transition-colors"
+            className="mt-6 px-6 py-3 rounded-full text-sm font-semibold btn-primary"
           >
             Adjust preferences
           </button>
@@ -607,12 +654,12 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
 
       {/* Bottom actions */}
       <section className="mt-14 text-center animate-fade-up">
-        <p className="text-sm text-stone-400">Not quite right?</p>
+        <p className="text-sm text-stone-500">Not quite right?</p>
         <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
           <button
             id="restart-flow"
             onClick={onRestart}
-            className="px-6 py-3 rounded-full border border-stone-300 text-stone-700 text-sm font-semibold hover:border-stone-400 hover:bg-white transition-all"
+            className="px-6 py-3 rounded-full border border-stone-600 text-stone-300 text-sm font-semibold hover:border-stone-500 hover:bg-white/[0.06] transition-all"
           >
             <i className="fa-solid fa-rotate-left mr-2 text-xs" />
             Start over with a new purpose
@@ -620,7 +667,7 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
           <button
             id="refine-bottom"
             onClick={onRefine}
-            className="px-6 py-3 rounded-full bg-accent text-white text-sm font-semibold hover:bg-accent-dark shadow-sm hover:shadow-md transition-all"
+            className="px-6 py-3 rounded-full text-sm font-semibold btn-primary"
           >
             <i className="fa-solid fa-sliders mr-2 text-xs" />
             Adjust budget &amp; filters
@@ -694,7 +741,7 @@ const App = () => {
   const progressStep = modalOpen ? 1 : stage === 'results' ? 2 : 0;
 
   return (
-    <div className="min-h-screen bg-[#FAFAF9] text-stone-900 font-sans">
+    <div className="min-h-screen text-stone-100 font-sans">
       <TopBar
         step={progressStep}
         onHome={stage === 'results' ? handleRestart : handleHome}
@@ -725,8 +772,14 @@ const App = () => {
       )}
 
       {/* Footer */}
-      <footer className="border-t border-stone-200/80 py-8">
-        <p className="text-center text-xs text-stone-400">
+      <footer className="border-t border-stone-700/80 py-8">
+        <p className="text-center text-xs text-stone-500 flex items-center justify-center gap-2">
+          <span aria-hidden="true" className="flex gap-1.5">
+            <i className="fa-solid fa-circle text-[5px] text-plum" />
+            <i className="fa-solid fa-circle text-[5px] text-terra" />
+            <i className="fa-solid fa-circle text-[5px] text-sage" />
+            <i className="fa-solid fa-circle text-[5px] text-accent" />
+          </span>
           PhoneFit · Curated demo dataset of {phones.length} devices · Built with React + Tailwind
         </p>
       </footer>

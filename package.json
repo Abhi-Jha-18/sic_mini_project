@@ -2,6 +2,7 @@
   "name": "phonefit",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "PhoneFit — 3-stage tailored mobile phone recommendation experience",
   "dependencies": {
     "react": "^18.3.1",

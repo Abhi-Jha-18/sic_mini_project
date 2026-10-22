@@ -19,35 +19,35 @@ export const PURPOSES = [
     label: 'Gaming',
     description: 'High FPS, sustained performance and big batteries',
     icon: 'fa-solid fa-gamepad',
-    tint: '#6B5B8A',
+    tint: '#9C8BD8',
   },
   {
     key: 'camera',
     label: 'Photography/Videography',
     description: 'Great cameras, low light and stable video',
     icon: 'fa-solid fa-camera-retro',
-    tint: '#8B6655',
+    tint: '#D0967B',
   },
   {
     key: 'battery',
     label: 'Daily Work & Battery Life',
     description: 'All-day battery, calls and productivity',
     icon: 'fa-solid fa-battery-three-quarters',
-    tint: '#5D7A6B',
+    tint: '#8FC1A4',
   },
   {
     key: 'media',
     label: 'Media Consumption/Display',
     description: 'Binge-worthy screens, speakers and storage',
     icon: 'fa-solid fa-film',
-    tint: '#4A6785',
+    tint: '#7FA8D9',
   },
   {
     key: 'everyday',
     label: 'General Everyday Use',
     description: 'Balanced all-rounders that do everything well',
     icon: 'fa-solid fa-wand-magic-sparkles',
-    tint: '#7A6F5D',
+    tint: '#C9B98F',
   },
 ];
 
@@ -639,13 +639,13 @@ export function getRecommendations({ purpose, budget, os = 'any', size = 'any' }
 
 // ── Brand monogram tones (muted, used in the placeholder visuals) ──────────
 export const brandTones = {
-  Apple: '#5B6169',
-  Samsung: '#4A6285',
-  Google: '#5F7A64',
-  OnePlus: '#9A5D4E',
-  Nothing: '#6E6E76',
-  Motorola: '#6B5B7B',
-  Poco: '#8A6D3B',
-  Redmi: '#8A5545',
-  iQOO: '#4E6D8A',
+  Apple: '#B7BDC9',
+  Samsung: '#8FB4EC',
+  Google: '#93C4A6',
+  OnePlus: '#E58B7B',
+  Nothing: '#B9B9C4',
+  Motorola: '#B7A6E0',
+  Poco: '#E0B85A',
+  Redmi: '#E08E79',
+  iQOO: '#7FA4E0',
 };
