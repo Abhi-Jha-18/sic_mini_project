@@ -548,22 +548,11 @@ export const phones = [
   },
 ];
 
-<<<<<<< HEAD
-// ── Brand metadata for filter chips ──────────────────────────────────────────
-export const brandMeta = {
-  Apple:   { color: '#a78bfa', icon: 'fa-brands fa-apple' },
-  Samsung: { color: '#38bdf8', icon: 'fa-solid fa-mobile-screen-button' },
-  OnePlus: { color: '#fb7185', icon: 'fa-solid fa-bolt' },
-  Google:  { color: '#34d399', icon: 'fa-brands fa-google' },
-  Huawei:  { color: '#fbbf24', icon: 'fa-solid fa-signal' },
-};
-=======
 // ── Purpose scoring (pure functions, 0–100 composites) ─────────────────────
 const normRam = (gb) => Math.min(gb / 12, 1) * 100;
 const normBattery = (mah) => Math.min(mah / 6000, 1) * 100;
 const normStorage = (gb) => Math.min(gb / 512, 1) * 100;
 const normHz = (hz) => Math.min(hz / 144, 1) * 100;
->>>>>>> e8380c4d0ee9e602db09411fecf03f528f96ef8e
 
 export const scoringRules = {
   // Raw GPU/CPU headroom + RAM + high-refresh panels for smooth gameplay
@@ -587,17 +576,8 @@ export const scoringRules = {
     p.specs.processorScore * 0.25 + p.specs.cameraRating * 0.25 + normBattery(p.specs.batteryPower) * 0.25 + p.specs.displayScore * 0.25,
 };
 
-<<<<<<< HEAD
-export const PRIORITIES = [
-  { key: 'gaming',      label: 'Gaming & Performance', icon: 'fa-solid fa-gamepad',     color: '#a78bfa' },
-  { key: 'photography', label: 'Photography',           icon: 'fa-solid fa-camera',      color: '#f472b6' },
-  { key: 'battery',     label: 'Long Battery Life',     icon: 'fa-solid fa-battery-full', color: '#34d399' },
-  { key: 'budget',      label: 'Budget Friendly',       icon: 'fa-solid fa-tag',          color: '#fbbf24' },
-];
-=======
 export const scorePhone = (phone, purposeKey) =>
   Math.round((scoringRules[purposeKey] || scoringRules.everyday)(phone));
->>>>>>> e8380c4d0ee9e602db09411fecf03f528f96ef8e
 
 // ── Derived helpers ────────────────────────────────────────────────────────
 export const tierOf = (phone) => {
