@@ -28,6 +28,19 @@ const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
 /** Return the brand accent colour from brandMeta (fallback slate) */
 const brandColor = (brand) => (brandMeta[brand] ? brandMeta[brand].color : '#64748b');
 
+/** Decorative floating orb (purely visual) */
+const FloatingOrb = ({ color, size, top, left, delay }) => (
+  <div
+    className="absolute rounded-full pointer-events-none animate-float opacity-20 blur-2xl"
+    style={{
+      background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
+      width: size, height: size,
+      top, left,
+      animationDelay: delay || '0s',
+    }}
+  />
+);
+
 /** Star rating renderer */
 const Stars = ({ score }) => {
   const pct = clamp(Math.round(score), 0, 100);
@@ -49,13 +62,21 @@ const Stars = ({ score }) => {
 /** Small spec badge pill */
 const SpecPill = ({ icon, label, value, accent }) => (
   <div
-    className="flex items-center gap-2 rounded-xl px-3 py-2 glass"
-    style={{ borderColor: accent + '30' }}
+    className="flex items-center gap-2 rounded-xl px-3 py-2.5"
+    style={{
+      background: `linear-gradient(135deg, ${accent}12, ${accent}06)`,
+      border: `1px solid ${accent}20`,
+    }}
   >
-    <i className={`${icon} text-sm`} style={{ color: accent }} />
+    <div
+      className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+      style={{ background: accent + '20' }}
+    >
+      <i className={`${icon} text-xs`} style={{ color: accent }} />
+    </div>
     <div className="min-w-0">
-      <p className="text-slate-400 text-xs leading-none mb-0.5">{label}</p>
-      <p className="text-slate-100 text-sm font-semibold leading-none truncate">{value}</p>
+      <p className="text-slate-500 text-[10px] uppercase tracking-wider leading-none mb-0.5 font-medium">{label}</p>
+      <p className="text-slate-100 text-sm font-bold leading-none truncate">{value}</p>
     </div>
   </div>
 );
@@ -65,7 +86,12 @@ const SpecPill = ({ icon, label, value, accent }) => (
 // ─────────────────────────────────────────────────────────────────────────────
 
 const Navbar = ({ compareList, onGoCompare, onHome }) => (
-  <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5">
+  <nav className="fixed top-0 left-0 right-0 z-50" style={{
+    background: 'linear-gradient(180deg, rgba(5,10,24,0.95) 0%, rgba(5,10,24,0.8) 100%)',
+    backdropFilter: 'blur(20px) saturate(1.3)',
+    WebkitBackdropFilter: 'blur(20px) saturate(1.3)',
+    borderBottom: '1px solid rgba(124,58,237,0.1)',
+  }}>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
       {/* Logo */}
       <button
@@ -73,28 +99,35 @@ const Navbar = ({ compareList, onGoCompare, onHome }) => (
         className="flex items-center gap-2.5 group"
         id="nav-logo-home"
       >
-        <div className="w-8 h-8 rounded-lg bg-brand flex items-center justify-center shadow-lg shadow-brand/40 group-hover:scale-110 transition-transform">
+        <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform" style={{
+          background: 'linear-gradient(135deg, #7c3aed, #06b6d4)',
+          boxShadow: '0 4px 15px rgba(124,58,237,0.4)',
+        }}>
           <i className="fa-solid fa-layer-group text-white text-sm" />
         </div>
-        <span className="font-bold text-base tracking-tight gradient-text">PhoneMatrix</span>
+        <span className="font-display font-bold text-lg tracking-tight gradient-text">PhoneMatrix</span>
       </button>
 
       {/* Compare Tray CTA */}
       <button
         id="nav-compare-btn"
         onClick={compareList.length === 2 ? onGoCompare : undefined}
-        className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
+        className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${
           compareList.length === 2
-            ? 'bg-brand hover:bg-brand/80 text-white tray-glow cursor-pointer animate-pulse-soft'
-            : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+            ? 'text-white tray-glow cursor-pointer animate-pulse-soft'
+            : 'text-slate-500 cursor-not-allowed'
         }`}
+        style={compareList.length === 2
+          ? { background: 'linear-gradient(135deg, #7c3aed, #06b6d4)' }
+          : { background: 'rgba(15,23,42,0.8)', border: '1px solid rgba(148,163,184,0.1)' }
+        }
         title={compareList.length < 2 ? 'Select 2 phones to compare' : 'Compare now'}
       >
         <i className="fa-solid fa-code-compare" />
         Compare
         <span
           className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold ${
-            compareList.length === 2 ? 'bg-white text-brand' : 'bg-slate-700 text-slate-400'
+            compareList.length === 2 ? 'bg-white text-purple-700' : 'bg-slate-700/80 text-slate-400'
           }`}
         >
           {compareList.length}/2
@@ -116,42 +149,64 @@ const PhoneCard = ({ phone, inCompare, onToggleCompare, matchScore }) => {
   return (
     <div
       id={`card-${phone.id}`}
-      className={`relative rounded-2xl p-5 flex flex-col gap-4 card-hover glass transition-all duration-300 ${
+      className={`relative rounded-2xl p-5 flex flex-col gap-4 card-hover transition-all duration-300 overflow-hidden ${
         isMax ? 'ring-2' : 'ring-0'
       }`}
-      style={isMax ? { ringColor: accent, boxShadow: `0 0 0 2px ${accent}` } : {}}
+      style={{
+        background: `linear-gradient(160deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%)`,
+        backdropFilter: 'blur(20px)',
+        border: isMax ? `2px solid ${accent}` : '1px solid rgba(255,255,255,0.08)',
+        boxShadow: isMax
+          ? `0 0 30px ${accent}25, inset 0 1px 0 rgba(255,255,255,0.05)`
+          : '0 4px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)',
+      }}
     >
+      {/* Subtle gradient overlay at top of card */}
+      <div
+        className="absolute top-0 left-0 right-0 h-24 pointer-events-none opacity-30"
+        style={{ background: `linear-gradient(180deg, ${accent}15, transparent)` }}
+      />
+
       {/* Match score ribbon — only shown when recommendation engine is active */}
       {matchScore !== undefined && (
         <div
-          className="absolute -top-2 -right-2 text-xs font-bold px-2.5 py-1 rounded-full text-white shadow-lg"
-          style={{ background: accent }}
+          className="absolute -top-0.5 -right-0.5 text-xs font-bold px-3 py-1.5 rounded-bl-xl rounded-tr-xl text-white shadow-lg"
+          style={{
+            background: `linear-gradient(135deg, ${accent}, ${accent}cc)`,
+            boxShadow: `0 4px 12px ${accent}40`,
+          }}
         >
-          {Math.round(matchScore)}% match
+          <i className="fa-solid fa-bolt mr-1 text-[10px]" />
+          {Math.round(matchScore)}%
         </div>
       )}
 
       {/* Brand + Year */}
-      <div className="flex items-center justify-between">
+      <div className="relative flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <i className={`${icon} text-lg`} style={{ color: accent }} />
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
+          <div
+            className="w-7 h-7 rounded-lg flex items-center justify-center"
+            style={{ background: accent + '20', border: `1px solid ${accent}30` }}
+          >
+            <i className={`${icon} text-sm`} style={{ color: accent }} />
+          </div>
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
             {phone.brand}
           </span>
         </div>
-        <span className="text-xs text-slate-600 font-medium">{phone.year}</span>
+        <span className="text-xs text-slate-600 font-semibold px-2 py-0.5 rounded-full bg-slate-800/50">{phone.year}</span>
       </div>
 
       {/* Name + Price */}
-      <div>
-        <h3 className="text-slate-100 font-bold text-base leading-snug">{phone.name}</h3>
-        <p className="font-bold text-lg mt-0.5" style={{ color: accent }}>
+      <div className="relative">
+        <h3 className="text-slate-100 font-bold text-lg leading-snug font-display">{phone.name}</h3>
+        <p className="font-extrabold text-xl mt-1" style={{ color: accent }}>
           {inrFormat(phone.priceINR)}
         </p>
       </div>
 
       {/* Key Specs grid */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="relative grid grid-cols-2 gap-2">
         <SpecPill icon="fa-solid fa-microchip"   label="Chip Score"  value={`${phone.specs.processorScore}/100`} accent={accent} />
         <SpecPill icon="fa-solid fa-memory"      label="RAM"         value={`${phone.specs.ramGB} GB`}           accent={accent} />
         <SpecPill icon="fa-solid fa-battery-full" label="Battery"    value={`${phone.specs.batteryPower} mAh`}   accent={accent} />
@@ -159,21 +214,21 @@ const PhoneCard = ({ phone, inCompare, onToggleCompare, matchScore }) => {
       </div>
 
       {/* Display type tag & Rating */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5">
-          <i className="fa-solid fa-display text-slate-500 text-xs" />
-          <span className="text-slate-400 text-xs">{phone.specs.displayType}</span>
+      <div className="relative flex items-center justify-between">
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800/50">
+          <i className="fa-solid fa-display text-cyan-400 text-xs" />
+          <span className="text-slate-300 text-xs font-medium">{phone.specs.displayType}</span>
         </div>
         <Stars score={phone.specs.cameraRating} />
       </div>
 
       {/* Highlights */}
-      <div className="flex flex-wrap gap-1.5">
+      <div className="relative flex flex-wrap gap-1.5">
         {phone.highlights.slice(0, 3).map((h) => (
           <span
             key={h}
-            className="text-xs px-2 py-0.5 rounded-full"
-            style={{ background: accent + '18', color: accent }}
+            className="text-xs px-2.5 py-1 rounded-full font-medium"
+            style={{ background: accent + '15', color: accent, border: `1px solid ${accent}20` }}
           >
             {h}
           </span>
@@ -184,12 +239,15 @@ const PhoneCard = ({ phone, inCompare, onToggleCompare, matchScore }) => {
       <button
         id={`compare-toggle-${phone.id}`}
         onClick={() => onToggleCompare(phone)}
-        className={`mt-auto w-full py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
+        className={`relative mt-auto w-full py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
           isMax
             ? 'text-white'
-            : 'bg-slate-800 hover:bg-slate-700 text-slate-300'
+            : 'text-slate-300 hover:text-white'
         }`}
-        style={isMax ? { background: accent } : {}}
+        style={isMax
+          ? { background: `linear-gradient(135deg, ${accent}, ${accent}cc)`, boxShadow: `0 4px 15px ${accent}40` }
+          : { background: 'rgba(15,23,42,0.6)', border: '1px solid rgba(148,163,184,0.1)' }
+        }
       >
         {isMax ? (
           <>
@@ -354,23 +412,37 @@ const HomeView = ({ compareList, onToggleCompare }) => {
   return (
     <div className="min-h-screen">
       {/* ── HERO HEADER ──────────────────────────────────────────────────── */}
-      <div className="pt-28 pb-10 px-4 sm:px-6 max-w-7xl mx-auto">
-        <div className="text-center mb-10 animate-fade-up">
-          <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-brand px-3 py-1 rounded-full bg-brand/10 mb-4">
+      <div className="pt-28 pb-10 px-4 sm:px-6 max-w-7xl mx-auto relative">
+        {/* Decorative floating orbs */}
+        <FloatingOrb color="#7c3aed" size="300px" top="-50px" left="-100px" delay="0s" />
+        <FloatingOrb color="#06b6d4" size="200px" top="100px" left="80%" delay="1.5s" />
+        <FloatingOrb color="#f43f5e" size="150px" top="250px" left="10%" delay="3s" />
+
+        <div className="text-center mb-12 animate-fade-up relative">
+          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full mb-5" style={{
+            background: 'linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.1))',
+            color: '#a78bfa',
+            border: '1px solid rgba(124,58,237,0.2)',
+          }}>
+            <i className="fa-solid fa-sparkles text-cyan-400" />
             Multi-Brand Unified Engine
           </span>
-          <h1 className="text-4xl sm:text-5xl font-black text-slate-100 leading-tight">
+          <h1 className="text-4xl sm:text-6xl font-black text-slate-100 leading-tight font-display">
             Find Your{' '}
             <span className="gradient-text">Perfect Phone</span>
           </h1>
-          <p className="mt-3 text-slate-400 text-base max-w-xl mx-auto">
-            Compare {phones.length} smartphones across {allBrands.length} brands with
+          <p className="mt-4 text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+            Compare <span className="text-cyan-400 font-semibold">{phones.length}</span> smartphones across <span className="text-purple-400 font-semibold">{allBrands.length}</span> brands with
             our real-time smart scoring engine.
           </p>
         </div>
 
         {/* ── CONTROL BAR ────────────────────────────────────────────────── */}
-        <div className="glass rounded-2xl p-5 mb-8 animate-fade-up flex flex-col gap-5">
+        <div className="glass rounded-2xl p-6 mb-8 animate-fade-up flex flex-col gap-5 relative" style={{
+          borderImage: 'linear-gradient(135deg, rgba(124,58,237,0.2), rgba(6,182,212,0.1), rgba(244,63,94,0.05)) 1',
+          borderImageSlice: 1,
+          border: '1px solid',
+        }}>
           {/* Row 1: Search + Brand chips */}
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
             {/* Search */}
@@ -382,7 +454,7 @@ const HomeView = ({ compareList, onToggleCompare }) => {
                 placeholder="Search phones or brands…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-slate-800/80 border border-slate-700 rounded-xl pl-9 pr-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand/60 transition"
+                className="w-full bg-slate-900/80 border border-slate-700/50 rounded-xl pl-9 pr-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/60 focus:border-purple-500/30 transition"
               />
             </div>
 
@@ -414,8 +486,8 @@ const HomeView = ({ compareList, onToggleCompare }) => {
 
           {/* Row 2: Priority selector */}
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-2.5">
-              <i className="fa-solid fa-sliders mr-1.5" />
+            <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2.5">
+              <i className="fa-solid fa-sliders mr-1.5 text-purple-400" />
               Your Priority
             </p>
             <div className="flex flex-wrap gap-2">
@@ -441,11 +513,11 @@ const HomeView = ({ compareList, onToggleCompare }) => {
           {/* Row 3: Budget slider */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
-                <i className="fa-solid fa-indian-rupee-sign mr-1.5" />
+              <p className="text-xs font-bold uppercase tracking-widest text-slate-400">
+                <i className="fa-solid fa-indian-rupee-sign mr-1.5 text-cyan-400" />
                 Max Budget
               </p>
-              <span className="text-sm font-bold text-brand">{inrFormat(maxBudget)}</span>
+              <span className="text-sm font-extrabold gradient-text">{inrFormat(maxBudget)}</span>
             </div>
             <input
               id="budget-slider"
@@ -478,9 +550,9 @@ const HomeView = ({ compareList, onToggleCompare }) => {
         )}
 
         {/* ── UNIFIED PHONE GRID ─────────────────────────────────────────── */}
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-slate-300 font-bold text-base">
-            <i className="fa-solid fa-list-ul mr-2 text-brand" />
+        <div className="mb-6 flex items-center justify-between relative">
+          <h2 className="text-slate-200 font-bold text-lg font-display">
+            <i className="fa-solid fa-list-ul mr-2 text-purple-400" />
             All Phones
             <span className="ml-2 text-slate-500 font-normal text-sm">
               ({scoredPhones.length} result{scoredPhones.length !== 1 ? 's' : ''})
@@ -634,11 +706,11 @@ const ComparisonView = ({ compareList, onBack, onToggleCompare }) => {
         Back to Unified Engine Dashboard
       </button>
 
-      <h1 className="text-3xl font-black text-slate-100 mb-2">
+      <h1 className="text-4xl font-black text-slate-100 mb-2 font-display">
         <span className="gradient-text">Side-by-Side</span> Comparison
       </h1>
       <p className="text-slate-400 text-sm mb-8">
-        Green rows indicate the superior specification. Crown icon marks the outright winner.
+        <span className="text-emerald-400">Green rows</span> indicate the superior specification. <i className="fa-solid fa-crown text-yellow-400 text-xs" /> marks the outright winner.
       </p>
 
       {/* Phone header cards */}
@@ -763,7 +835,11 @@ const ComparisonView = ({ compareList, onBack, onToggleCompare }) => {
         <button
           id="back-to-dashboard-bottom"
           onClick={onBack}
-          className="px-8 py-3.5 rounded-2xl bg-brand text-white font-bold text-sm hover:bg-brand/80 transition-all duration-200 hover:shadow-lg hover:shadow-brand/30"
+          className="px-8 py-3.5 rounded-2xl text-white font-bold text-sm transition-all duration-300 hover:scale-105"
+          style={{
+            background: 'linear-gradient(135deg, #7c3aed, #06b6d4)',
+            boxShadow: '0 4px 20px rgba(124,58,237,0.3)',
+          }}
         >
           <i className="fa-solid fa-arrow-left mr-2" />
           Back to Unified Engine Dashboard
@@ -816,7 +892,7 @@ const App = () => {
   const handleHome = () => navigateTo('home');
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen" style={{ background: 'transparent' }}>
       <Navbar
         compareList={compareList}
         onGoCompare={handleGoCompare}

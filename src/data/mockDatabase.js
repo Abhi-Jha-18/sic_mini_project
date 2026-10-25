@@ -152,11 +152,11 @@ export const phones = [
 
 // ── Brand metadata for filter chips ──────────────────────────────────────────
 export const brandMeta = {
-  Apple:   { color: '#6366f1', icon: 'fa-brands fa-apple' },
-  Samsung: { color: '#3b82f6', icon: 'fa-solid fa-mobile-screen-button' },
-  OnePlus: { color: '#ef4444', icon: 'fa-solid fa-bolt' },
-  Google:  { color: '#10b981', icon: 'fa-brands fa-google' },
-  Huawei:  { color: '#f59e0b', icon: 'fa-solid fa-signal' },
+  Apple:   { color: '#a78bfa', icon: 'fa-brands fa-apple' },
+  Samsung: { color: '#38bdf8', icon: 'fa-solid fa-mobile-screen-button' },
+  OnePlus: { color: '#fb7185', icon: 'fa-solid fa-bolt' },
+  Google:  { color: '#34d399', icon: 'fa-brands fa-google' },
+  Huawei:  { color: '#fbbf24', icon: 'fa-solid fa-signal' },
 };
 
 // ── Priority scoring rules (pure functions) ───────────────────────────────────
@@ -201,10 +201,10 @@ export const scoringRules = {
 };
 
 export const PRIORITIES = [
-  { key: 'gaming',      label: 'Gaming & Performance', icon: 'fa-solid fa-gamepad',     color: '#6366f1' },
-  { key: 'photography', label: 'Photography',           icon: 'fa-solid fa-camera',      color: '#ec4899' },
-  { key: 'battery',     label: 'Long Battery Life',     icon: 'fa-solid fa-battery-full', color: '#10b981' },
-  { key: 'budget',      label: 'Budget Friendly',       icon: 'fa-solid fa-tag',          color: '#f59e0b' },
+  { key: 'gaming',      label: 'Gaming & Performance', icon: 'fa-solid fa-gamepad',     color: '#a78bfa' },
+  { key: 'photography', label: 'Photography',           icon: 'fa-solid fa-camera',      color: '#f472b6' },
+  { key: 'battery',     label: 'Long Battery Life',     icon: 'fa-solid fa-battery-full', color: '#34d399' },
+  { key: 'budget',      label: 'Budget Friendly',       icon: 'fa-solid fa-tag',          color: '#fbbf24' },
 ];
 
 // All unique brand names derived from the phones array
