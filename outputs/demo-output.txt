@@ -1,0 +1,84 @@
+
+============================================================================
+SCENARIO — Camera-first buyer · ₹20,000–₹50,000
+Purpose: Photography/Videography · Matches: 4
+
+#1 Celesto Plus33 SE (128 GB) — 97% match
+   Price: ₹26,636 · Rating: 4.3/5
+   Camera: 200 MP · Display: 6.6" AMOLED
+   Battery: 4,500 mAh · 6 GB RAM · 128 GB storage
+   Processor: not listed
+
+#2 NeoPhone X32 Neo (128 GB) — 95% match
+   Price: ₹28,539 · Rating: 4/5
+   Camera: 200 MP · Display: 6.8" AMOLED
+   Battery: 5,000 mAh · 3 GB RAM · 128 GB storage
+   Processor: Gen8
+
+#3 Zento Core27 (128 GB) — 88% match
+   Price: ₹27,588 · Rating: 4.1/5
+   Camera: 180 MP · Display: 6.7" AMOLED
+   Battery: 5,000 mAh · 8 GB RAM · 128 GB storage
+   Processor: Gen8
+
+#4 Voltix Core34 Neo (256 GB) — 62% match
+   Price: ₹31,393 · Rating: 4.2/5
+   Camera: 108 MP · Display: 6.8" AMOLED
+   Battery: 5,000 mAh · 12 GB RAM · 256 GB storage
+   Processor: not listed
+
+============================================================================
+SCENARIO — Battery-focused buyer · under ₹20,000
+Purpose: Daily Work & Battery Life · Matches: 4
+
+#1 NeoPhone Ultra76 (64 GB) — 90% match
+   Price: ₹13,318 · Rating: 4.3/5
+   Camera: 13 MP · Display: 6.4" Other / not specified
+   Battery: 6,000 mAh · 6 GB RAM · 64 GB storage
+   Processor: not listed
+
+#2 SkyMobile One14 SE (128 GB) — 90% match
+   Price: ₹18,075 · Rating: 4.3/5
+   Camera: 5 MP · Display: 6.5" Other / not specified
+   Battery: 6,000 mAh · 6 GB RAM · 128 GB storage
+   Processor: not listed
+
+#3 Voltix Ultra29 Pro (128 GB) — 89% match
+   Price: ₹16,172 · Rating: 4.1/5
+   Camera: 48 MP · Display: 6.4" Other / not specified
+   Battery: 6,000 mAh · 6 GB RAM · 128 GB storage
+   Processor: Heilo80P
+
+#4 Orion Edge68 Neo (128 GB) — 89% match
+   Price: ₹16,172 · Rating: 4.2/5
+   Camera: 13 MP · Display: 6.6" LCD
+   Battery: 6,000 mAh · 6 GB RAM · 128 GB storage
+   Processor: Heilo35P
+
+============================================================================
+SCENARIO — Large-screen media buyer · above ₹50,000
+Purpose: Media Consumption/Display · Matches: 4
+
+#1 Aurelia Ultra46 5G (512 GB) — 96% match
+   Price: ₹82,763 · Rating: 4.7/5
+   Camera: 108 MP · Display: 6.6" HD+ AMOLED
+   Battery: 4,700 mAh · 12 GB RAM · 512 GB storage
+   Processor: Snapdragon8PlusGen1Processor
+
+#2 Orion Edge12 5G (512 GB) — 96% match
+   Price: ₹1,14,156 · Rating: 4.6/5
+   Camera: 200 MP · Display: 6.8" HD+ AMOLED
+   Battery: 4,700 mAh · 12 GB RAM · 512 GB storage
+   Processor: Snapdragon8Gen2Processor
+
+#3 Orion Edge36 Neo (512 GB) — 94% match
+   Price: ₹67,542 · Rating: 4.3/5
+   Camera: 64 MP · Display: 6.7" HD+ AMOLED
+   Battery: 5,000 mAh · 8 GB RAM · 512 GB storage
+   Processor: not listed
+
+#4 Celesto Ultra61 5G (1TB) — 94% match
+   Price: ₹1,14,156 · Rating: 4.3/5
+   Camera: 200 MP · Display: 6.8" HD+ AMOLED
+   Battery: 5,000 mAh · 12 GB RAM · 1024 GB storage
+   Processor: Snapdragon8Gen2Processor

@@ -1,0 +1,414 @@
+name,rating,price,camera,display_type,display_size,battery,storage,ram,weight,processor
+Voltix Hyper67 5G (256 GB),4.9,$1000,200,HD+ AMOLED,6.7,4700,256GB,4,190,Dimensity9000Processor
+Orion Edge12 5G (512 GB),4.6,$1200,200,HD+ AMOLED,6.8,4700,512GB,12,205,Snapdragon8Gen2Processor
+Celesto Ultra61 5G (1TB),4.3,1200,200,HD+ AMOLED,6.8,5000,1TB,12,234,Snapdragon8Gen2Processor
+NeoPhone X32 Neo (128 GB),4,300,200,AMOLED,6.8,5000,128,3,198,Gen8
+Celesto Plus33 SE (128 GB),4.3,280,200,AMOLED,6.6,4500,128,6,185,not mentioned
+Zento Core27 (128 GB),4.1,290,180,AMOLED,6.7,5000,128,8,190,Gen8
+NovaTech Pro Max78 5G (256 GB),4.9,1000,108,HD+ AMOLED,6.6,4700,256,12,195,Snapdragon8Gen2Processor
+Aurelia Ultra46 5G (512 GB),4.7,870,108,HD+ AMOLED,6.6,4700,512,12,190,Snapdragon8PlusGen1Processor
+Celesto Xtreme76 5G (512 GB),4.7,620,108,other_types,6.6,5200,512,12,185,Snapdragon8PlusGen1Processor
+NovaTech Core66 5G (256 GB),4,720,108,HD+ AMOLED,6.7,4500,256,8,162,not mentioned
+Aurelia Max25 (256 GB),4.1,500,108,HD+ AMOLED,6.7,6000,256,8,174,not mentioned
+Zento Prime46 Pro (256 GB),4.2,480,108,other_types,6.7,5000,256,6,162,not mentioned
+Orion Note45 Neo (128 GB),4.1,340,108,other_types,6.7,5000,128,6,162,not mentioned
+Voltix Core34 Neo (256 GB),4.2,330,108,AMOLED,6.8,5000,256,12,162,not mentioned
+NeoPhone Lite33 SE (256 GB),4.4,290,24,other_types,6.8,5000,256,12,162,not mentioned
+Celesto Ultra51 SE (256 GB),4.3,300,12,other_types,6.8,5000,256,12,162,not mentioned
+NovaTech Edge63 (256 GB),4.3,260,24,AMOLED,6.8,5000,256,12,162,not mentioned
+NeoPhone Edge47 (512 GB),4.3,320,12,AMOLED,6.8,5000,512,12,162,not mentioned
+Zento X93 5G (256 GB),4.3,220,24,AMOLED,6.6,5000,256,12,162,not mentioned
+Hyperon Max85 SE (128 GB),4.3,400,64,HD+ AMOLED,6.5,4500,128,8,156,Snapdragon720GProcessor
+Aurelia Prime31 Neo (256 GB),4.2,870,108,HD+ AMOLED,6.5,4500,256,8,156,Snapdragon720GProcessor
+SkyMobile Core93 Pro (128 GB),4.3,400,64,other_types,6.7,4500,128,8,156,not mentioned
+Celesto Lite82 5G (256 GB),4.2,510,64,HD+ AMOLED,6.5,5000,256,4,162,not mentioned
+NeoPhone Ultra12 Neo (512 GB),4,480,64,HD+ AMOLED,6.5,5000,512,6,162,not mentioned
+Hyperon Prime67 (128 GB),4.1,400,64,HD+ AMOLED,6.5,5000,128,6,162,not mentioned
+Lumico Plus34 Pro (128 GB),4.3,400,64,HD+ AMOLED,6.7,3600,128,8,186,not mentioned
+Aurelia Note91 5G (128 GB),4,390,64,other_types,6.5,4500,128,6,156,not mentioned
+NeoPhone Core77 SE (256 GB),4.3,600,64,other_types,6.7,4500,256,6,180,not mentioned
+Orion Note36 Neo (256 GB),4.2,500,64,other_types,6.7,4500,256,6,156,Snapdragon(SDM450-F01)
+NovaTech Max23 SE (128 GB),4.3,380,64,other_types,6.7,4500,128,8,156,not mentioned
+Zento X28 5G (256 GB),4.4,400,48,HD+ AMOLED,6.1,4500,256,6,172,Snapdragon720GProcessor
+SkyMobile Ultra88 5G (512 GB),4.2,520,48,HD+ AMOLED,6.5,3500,512,6,171,Snapdragon720GProcessor
+Zento Edge92 (256 GB),4.4,360,12,HD+ AMOLED,6.7,3500,256,6,162,not mentioned
+Celesto Max27 (128 GB),4.3,320,24,other_types,5.7,3600,128,3,145.2,not mentioned
+Lumico Lite79 5G (128 GB),4.3,320,48,HD+ AMOLED,6.5,4500,128,6,156,not mentioned
+Voltix One19 Neo (128 GB),4.3,320,48,HD+ AMOLED,6.5,4500,128,6,155,Snapdragon720GProcessor
+NovaTech Ultra92 Neo (256 GB),4.2,760,108,HD+ AMOLED,6.7,5000,256,8,186,not mentioned
+NovaTech Ultra56 5G (128 GB),4.3,310,64,HD+ AMOLED,6.5,4500,128,8,156,Snapdragon720GProcessor
+NeoPhone X92 (256 GB),4.2,380,64,HD+ AMOLED,6.6,4500,256,6,160,Snapdragon720GProcessor
+Aurelia One67 Neo (512 GB),4.4,530,64,other_types,6.7,5000,512,6,162,not mentioned
+Aurelia Note67 Neo (128 GB),4.4,400,64,HD+ AMOLED,6.4,5000,128,6,161,Heilo80P
+Orion One64 Neo (128 GB),4.5,310,64,other_types,6.4,5000,128,6,162,not mentioned
+Voltix X74 SE (128 GB),4.1,310,64,AMOLED,6.5,4100,128,8,174,not mentioned
+NovaTech Edge43 Pro (128 GB),4.2,300,64,AMOLED,6.7,5000,128,6,162,not mentioned
+SkyMobile Core75 Neo (128 GB),4.1,280,12,TFT,6.2,3800,128,6,162,Dimensity700
+Voltix Core89 (128 GB),4.3,300,64,other_types,6.5,3700,128,8,174,not mentioned
+Orion Edge36 Neo (512 GB),4.3,710,64,HD+ AMOLED,6.7,5000,512,8,186,not mentioned
+Orion Plus15 SE (256 GB),4.1,300,12,HD+ AMOLED,6.5,4800,256,6,186,Heilo356765
+Lumico X48 SE 5G (512 GB),4.1,470,64,other_types,6.6,5000,512,8,162,Dimensity700
+SkyMobile One97 Pro (128 GB),4.3,290,64,AMOLED,6.4,5000,128,8,164,not mentioned
+Hyperon One45 Neo (256 GB),4.1,450,64,HD+ AMOLED,6.7,5000,256,6,162,not mentioned
+Celesto X87 Pro (256 GB),4.2,310,64,HD+ AMOLED,6.5,4500,256,6,174,not mentioned
+Voltix X61 5G (256 GB),4.2,380,64,HD+ AMOLED,6.7,4300,256,8,153.6,not mentioned
+NovaTech Lite87 SE (128 GB),4.2,260,64,AMOLED,6.4,5000,128,8,162,Heilo80P
+Orion One89 5G (128 GB),4.3,260,64,other_types,6.6,5000,128,6,162,Dimensity700
+Lumico Lite41 SE (128 GB),4.3,240,64,other_types,6.6,3800,128,8,162,not mentioned
+Zento Note99 Pro (64 GB),4.3,240,64,other_types,6.4,3200,64,6,174,not mentioned
+Voltix Ultra53 Pro (128 GB),4.2,240,64,other_types,6.5,3700,128,8,170,not mentioned
+Voltix Prime65 5G (128 GB),4.1,240,64,other_types,6.5,5000,128,6,180,not mentioned
+NeoPhone Max78 5G (128 GB),4.2,230,64,other_types,6.5,5000,128,8,162,Heilo80P
+Orion Core64 (128 GB),4.5,230,64,other_types,6.4,4000,128,8,174,not mentioned
+Celesto Core97 SE (128 GB),4.4,220,64,AMOLED,6.7,4500,128,8,156,not mentioned
+NeoPhone Note98 Pro (128 GB),4.2,220,64,other_types,6.7,5000,128,6,186,not mentioned
+NeoPhone Note18 5G (128 GB),4.4,200,64,TFT,6.6,5000,128,6,162,Dimensity700
+Zento Lite80 (64 GB),4,90,2,other_types,6.4,3000,64,2,174,not mentioned
+Voltix Edge32 Pro 5G (512 GB),4.3,380,12,other_types,6.7,4500,512,6,210,not mentioned
+Voltix One19 (64 GB),4.3,200,64,other_types,6.4,4000,64,6,174,not mentioned
+NovaTech Lite82 (128 GB),4.4,200,12,other_types,6.4,4000,128,6,174,not mentioned
+Voltix Note31 SE (64 GB),4.2,190,12,other_types,6.4,4500,64,4,150,not mentioned
+Celesto Ultra97 Neo (128 GB),4.2,190,24,other_types,6.4,3800,128,6,168,not mentioned
+SkyMobile X23 (128 GB),4.3,190,12,other_types,6.4,4000,128,6,161,not mentioned
+SkyMobile Edge32 Neo (128 GB),4.3,180,12,other_types,6.4,3200,128,6,174,not mentioned
+NovaTech X86 (128 GB),4.4,180,64,other_types,6.4,4000,128,6,179,not mentioned
+NeoPhone X24 5G (128 GB),4.4,180,64,other_types,6.4,4000,128,6,174,not mentioned
+Lumico Prime58 SE (64 GB),4.3,170,64,LCD,6.5,5000,64,4,162,not mentioned
+Zento Lite67 SE (128 GB),4,170,12,other_types,6.4,3000,128,6,174,not mentioned
+Zento X89 SE (128 GB),4.3,170,12,other_types,6.4,3000,128,6,180,not mentioned
+NovaTech Note89 (64 GB),4,160,64,other_types,6.5,3000,64,3,190,Snapdragon450P
+NovaTech Prime92 Pro (128 GB),4.2,150,64,LCD,6.4,3000,128,3,162,not mentioned
+NovaTech X12 (128 GB),4.3,200,64,LCD,6.5,3500,128,4,190,not mentioned
+NeoPhone Ultra58 SE (64 GB),4.2,150,12,other_types,6.4,3400,64,4,174,not mentioned
+Celesto Max62 SE (128 GB),4.2,160,12,other_types,6.4,3400,128,6,210,not mentioned
+NeoPhone Prime50 SE (128 GB),4.2,130,64,other_types,6.5,5000,128,6,162,Snapdragon450
+Voltix Lite80 Pro (128 GB),4.3,400,50,AMOLED,6.4,4500,128,8,156,not mentioned
+Celesto Note90 Pro (256 GB),4.5,370,30,HD+ AMOLED,6.6,4700,256,8,158.4,Snapdragon750GProcessor
+Hyperon Plus89 Neo (256 GB),4.3,370,30,HD+ AMOLED,6.6,4700,256,8,158.4,Gen8
+Celesto X63 (128 GB),4.2,340,30,other_types,6.5,4500,128,8,156,not mentioned
+Orion Edge30 Neo (128 GB),3.7,310,30,other_types,6.5,6000,128,8,174,not mentioned
+Voltix Ultra56 Neo (256 GB),4.2,300,30,HD+ AMOLED,7.6,4400,256,12,154.8,Snapdragon1P
+Hyperon Max22 5G (256 GB),3.9,300,30,HD+ AMOLED,7.6,4400,256,12,154.8,Snapdragon1P
+Orion Edge86 Neo (128 GB),3.8,300,48,LCD,6.6,5000,128,8,162,Snapdragon695
+NovaTech Core93 5G (128 GB),3.8,300,48,LCD,6.6,5000,128,8,162,Snapdragon695
+SkyMobile X16 Pro (128 GB),3.8,300,48,LCD,6.6,5000,128,8,162,Snapdragon695
+Celesto Ultra76 (256 GB),4.3,290,24,AMOLED,6.6,4500,256,8,156,Gen8
+Lumico Ultra57 Neo (128 GB),4.1,270,14,LCD,6.6,5000,128,6,162,Snapdragon695
+NovaTech X81 Neo (256 GB),4.1,270,14,LCD,6.6,5000,256,6,162,Snapdragon695
+Hyperon Max31 Neo (128 GB),4.3,270,20,other_types,6.5,6000,128,6,174,not mentioned
+Zento One57 (128 GB),3.7,270,14,other_types,6.5,6000,128,6,174,not mentioned
+Orion Note36 SE (128 GB),4.2,270,14,other_types,6.5,6000,128,6,174,not mentioned
+SkyMobile Core83 Neo (128 GB),4.2,260,12,other_types,6.1,3700,128,8,146.4,not mentioned
+Aurelia Plus31 5G (512 GB),4.1,370,13,LCD,6.6,5000,512,8,162,not mentioned
+Voltix Prime45 5G (512 GB),4.1,350,13,LCD,6.6,5000,512,8,162,not mentioned
+NeoPhone Lite84 SE (128 GB),4.1,250,13,LCD,6.6,5000,128,8,162,Snapdragon750GProcessor
+Aurelia Max21 5G (128 GB),4.3,250,13,other_types,6.6,5000,128,8,162,not mentioned
+Hyperon Core88 Pro (128 GB),4.3,250,12,other_types,6.6,5000,128,4,162,not mentioned
+Celesto Core68 5G (128 GB),3.9,250,12,other_types,6.6,6000,128,8,174,not mentioned
+SkyMobile Note90 Pro (128 GB),4,240,12,other_types,6.6,5000,128,8,162,not mentioned
+Orion Prime15 SE (64 GB),4.1,230,13,other_types,6.6,5000,64,4,162,not mentioned
+Lumico Ultra43 SE (128 GB),4.3,230,13,other_types,6.6,5000,128,8,162,not mentioned
+Voltix Edge59 5G (128 GB),4.2,220,13,other_types,6.6,5000,128,6,162,not mentioned
+Celesto One19 Neo (128 GB),4,220,13,LCD,6.6,5000,128,6,162,not mentioned
+Zento Core26 Neo (128 GB),4,220,13,LCD,6.6,5000,128,6,162,not mentioned
+Celesto Note93 (128 GB),4.2,220,13,other_types,6.6,5000,128,6,162,not mentioned
+Hyperon Edge23 (128 GB),4.2,220,13,other_types,6.6,6000,128,8,174,Heilo35P
+Zento One81 SE (128 GB),4.2,220,13,other_types,6.6,6000,128,6,174,not mentioned
+SkyMobile Ultra24 5G (128 GB),4.2,210,13,other_types,6.6,5000,128,6,162,not mentioned
+NovaTech One75 (128 GB),4.2,210,12,other_types,6.6,5000,128,6,162,not mentioned
+Zento Ultra47 (128 GB),4.2,210,50,other_types,6.6,5000,128,6,162,not mentioned
+SkyMobile Note97 (128 GB),4.3,210,50,other_types,6.6,5000,128,6,162,not mentioned
+Voltix Prime14 Pro (128 GB),4.2,210,50,other_types,6.6,4000,128,6,174,not mentioned
+Voltix Lite33 Pro (128 GB),4.2,210,50,other_types,6.6,4000,128,6,174,not mentioned
+Aurelia Plus60 Neo (128 GB),4.2,210,50,other_types,6.6,4000,128,6,174,not mentioned
+SkyMobile Core80 (128 GB),4.2,210,24,other_types,6.6,4000,128,6,174,not mentioned
+NovaTech Max72 (128 GB),4.2,210,24,other_types,6.6,4000,128,6,174,not mentioned
+Lumico Core71 Pro (64 GB),4.1,200,24,LCD,6.6,5000,64,4,162,not mentioned
+Voltix Prime98 Neo (64 GB),4.1,180,24,LCD,6.6,5000,64,4,162,not mentioned
+Celesto Max24 Neo (64 GB),4.1,160,24,LCD,6.6,5000,64,4,162,not mentioned
+NovaTech Plus13 Pro (64 GB),4.1,170,24,LCD,6.6,5000,64,4,162,not mentioned
+Celesto Core71 5G (64 GB),4.1,150,5,other_types,6.6,5000,64,4,162,not mentioned
+Celesto One31 (128 GB),4.2,200,5,other_types,6.6,5000,128,6,162,not mentioned
+SkyMobile X75 Neo (128 GB),4.2,200,4,LCD,6.6,5000,128,4,162,not mentioned
+Celesto Prime59 Neo (64 GB),4.2,200,4,HD+ AMOLED,6.5,5000,64,6,185,not mentioned
+Lumico Core31 SE (64 GB),4.1,190,4,other_types,6.6,3000,64,4,162,not mentioned
+NeoPhone X92 5G (128 GB),4.3,190,4,other_types,6.6,3000,128,6,162,Snapdragon750GProcessor
+Hyperon Max96 (128 GB),4.3,190,4,other_types,6.6,3200,128,6,162,Snapdragon750GProcessor
+SkyMobile Edge81 5G (128 GB),4.3,190,4,other_types,6.6,3000,128,6,162,Snapdragon750GProcessor
+Lumico Ultra87 Neo (128 GB),4.1,190,12,other_types,6.6,3000,128,4,162,not mentioned
+Lumico Edge54 SE (128 GB),3.9,190,12,LCD,6.6,5000,128,4,162,not mentioned
+NovaTech Max32 Pro (128 GB),3.9,190,50,LCD,6.6,5000,128,4,162,not mentioned
+Orion Edge36 5G (128 GB),4.1,190,50,other_types,6.6,5000,128,4,162,not mentioned
+Lumico Ultra16 5G (128 GB),4.2,190,12,other_types,6.5,5000,128,6,162,not mentioned
+Zento Edge73 SE (128 GB),4.2,190,12,other_types,6.6,3000,128,4,174,not mentioned
+NovaTech Note11 Neo (128 GB),4.2,190,13,other_types,6.6,3000,128,4,174,Snapdragon(SDM450-F01)
+Hyperon Core47 (128 GB),4.2,190,12,other_types,6.6,3000,128,6,174,not mentioned
+Orion Lite13 SE (256 GB),4.3,180,12,AMOLED,6.1,3700,256,8,146.4,not mentioned
+Lumico Edge69 SE (256 GB),4.5,200,24,HD+ AMOLED,6.1,3900,256,8,148.8,Gen8
+Celesto One66 Pro (256 GB),4.5,200,24,HD+ AMOLED,6.1,3900,256,8,148.8,Gen8
+Celesto Edge38 Pro (256 GB),4.5,180,24,HD+ AMOLED,6.1,3900,256,8,148.8,Gen8
+Zento Plus77 (256 GB),4.5,180,13,HD+ AMOLED,6.1,3900,256,8,148.8,Gen8
+Aurelia Core15 SE (128 GB),4.2,180,12,other_types,6.6,5000,128,4,162,not mentioned
+Lumico Edge77 Pro (128 GB),4.1,180,12,other_types,6.5,5000,128,6,162,not mentioned
+SkyMobile Plus78 SE (128 GB),4.1,180,12,other_types,6.5,5000,128,6,162,not mentioned
+Aurelia Max72 (128 GB),4.2,180,12,other_types,6.6,5000,128,4,162,not mentioned
+NovaTech Note73 Neo (128 GB),4.2,180,12,other_types,6.6,5000,128,4,162,not mentioned
+Zento Edge57 5G (128 GB),4.2,180,2,other_types,6.6,5000,128,4,162,Snapdragon750GProcessor
+Hyperon Max33 Neo (128 GB),4,180,2,other_types,6.5,5000,128,4,162,not mentioned
+Orion Note20 (128 GB),4.1,180,4,other_types,6.4,3000,128,6,174,not mentioned
+Voltix Plus33 Neo (64 GB),3.9,170,4,LCD,6.6,5000,64,4,162,not mentioned
+Aurelia Prime33 SE (64 GB),3.9,170,4,LCD,6.6,5000,64,4,162,not mentioned
+NeoPhone Max53 SE (64 GB),3.9,170,3,LCD,6.6,5000,64,4,162,not mentioned
+NeoPhone One58 (128 GB),4.2,170,3,LCD,6.6,3500,128,6,174,not mentioned
+Voltix Ultra93 (128 GB),4.2,170,2,LCD,6.6,3500,128,6,174,not mentioned
+Voltix Note72 (64 GB),4.1,160,2,other_types,6.5,3500,64,4,162,not mentioned
+NeoPhone Lite58 SE (64 GB),4.1,160,2,other_types,6.5,3500,64,4,162,not mentioned
+Hyperon Max17 Pro (64 GB),4.1,160,2,other_types,6.5,3500,64,4,162,not mentioned
+Aurelia Max95 SE (64 GB),4.1,160,2,other_types,6.5,3800,64,4,162,not mentioned
+Hyperon Edge48 Pro (128 GB),4,160,2,LCD,6.5,3800,128,4,162,Snapdragon888
+Aurelia Edge81 SE (128 GB),4,160,2,LCD,6.5,3500,128,4,162,not mentioned
+Aurelia X72 SE (64 GB),4.1,160,3,other_types,6.4,3200,64,4,174,not mentioned
+Celesto Core58 (128 GB),4.2,160,3,LCD,6.6,3200,128,4,174,not mentioned
+NeoPhone Lite53 SE (128 GB),4.2,160,3,LCD,6.6,3200,128,4,174,not mentioned
+Lumico Edge94 SE (128 GB),4.2,160,2,other_types,6.6,3500,128,6,174,not mentioned
+Orion One61 Pro (128 GB),4.2,160,2,other_types,6.6,3500,128,6,174,not mentioned
+Orion Core37 Pro (128 GB),4,150,2,LCD,6.5,4000,128,4,162,Gen8
+Hyperon Prime21 Neo (64 GB),4,140,2,LCD,6.5,4000,64,4,162,not mentioned
+Voltix Ultra14 Neo (64 GB),4.2,140,2,LCD,6.5,3500,64,4,162,not mentioned
+NeoPhone Max55 Pro (64 GB),4.4,140,2,LCD,6.5,5000,64,4,162,not mentioned
+Hyperon Note52 (64 GB),4.2,510,24,HD+ AMOLED,6.6,3000,64,4,174,not mentioned
+Orion Core37 Neo (256 GB),4.2,360,24,HD+ AMOLED,6.5,6000,256,4,174,not mentioned
+NeoPhone X87 5G (512 GB),4.3,450,24,HD+ AMOLED,6.4,6000,512,4,174,Heilo80P
+SkyMobile Max46 Neo (512 GB),4.1,480,24,HD+ AMOLED,6.4,5000,512,4,174,not mentioned
+NovaTech Prime88 5G (512 GB),4.2,510,48,HD+ AMOLED,6.6,6000,512,4,174,not mentioned
+Orion Lite23 Pro (256 GB),4.3,310,24,HD+ AMOLED,6.6,4000,256,4,174,not mentioned
+SkyMobile Edge48 SE (256 GB),4.3,380,12,HD+ AMOLED,6.6,4000,256,4,174,not mentioned
+Aurelia Core20 5G (256 GB),4.3,410,24,HD+ AMOLED,6.6,4000,256,4,174,not mentioned
+Hyperon Prime60 5G (256 GB),4.5,420,12,HD+ AMOLED,6.1,3900,256,8,148.8,Gen8
+Zento Plus53 SE (256 GB),4.5,420,12,HD+ AMOLED,6.1,3900,256,8,148.8,Gen8
+Celesto One22 SE (256 GB),4.5,320,12,HD+ AMOLED,6.1,3900,256,8,148.8,Gen8
+Celesto Plus37 Neo (256 GB),4.5,350,12,HD+ AMOLED,6.1,3900,256,8,148.8,Gen8
+Celesto One66 (128 GB),4.1,140,3,other_types,6.5,5000,128,4,162,not mentioned
+Lumico Max30 5G (64 GB),4.3,120,2,other_types,6.6,3000,64,4,174,not mentioned
+NovaTech Core20 (64 GB),4.3,120,2,other_types,6.6,3400,64,4,174,not mentioned
+Hyperon One70 Neo (64 GB),4.3,120,2,other_types,6.6,3500,64,4,174,not mentioned
+Celesto X75 (128 GB),4.4,90,5,AMOLED,6.1,3700,128,8,146.4,not mentioned
+NeoPhone Ultra48 Neo (256 GB),4.2,200,5,AMOLED,6.1,3700,256,8,146.4,not mentioned
+Voltix Lite91 Pro (256 GB),4.3,160,5,AMOLED,6.1,3700,256,8,146.4,not mentioned
+Aurelia Edge46 (512 GB),4,400,24,other_types,6.6,5000,512,8,162,"Dimensity1080,"
+NovaTech Note22 5G (256 GB),4.2,390,30,other_types,6.6,5000,256,8,162,"Dimensity1080,"
+SkyMobile One24 SE (256 GB),4.2,390,13,other_types,6.6,5000,256,8,162,"Dimensity1080,"
+Voltix Lite56 Neo (256 GB),4.2,390,24,other_types,6.6,5000,256,8,162,"Dimensity1080,"
+Celesto Plus55 Pro (128 GB),4.2,390,24,other_types,6.6,5000,128,8,162,"Dimensity1080,"
+SkyMobile Ultra76 5G (128 GB),4.2,370,48,AMOLED,6.5,4000,128,8,150,not mentioned
+NovaTech Note49 Pro (256 GB),4.3,370,12,AMOLED,6.7,4500,256,8,156,not mentioned
+Hyperon Prime93 Pro (256 GB),4.3,360,12,other_types,6.6,5000,256,6,162,"Dimensity1080,"
+Orion Prime79 SE (256 GB),4.3,360,10,other_types,6.6,5000,256,6,162,"Dimensity1080,"
+NovaTech Plus94 Neo (128 GB),4.3,360,10,other_types,6.6,5000,128,6,162,"Dimensity1080,"
+Orion Edge87 (128 GB),4.3,360,10,other_types,6.6,5000,128,6,162,"Dimensity1080,"
+NovaTech Core50 (128 GB),4.1,350,10,other_types,6.4,5000,128,8,162,not mentioned
+Lumico Prime65 SE (128 GB),4.1,350,10,other_types,6.4,5000,128,6,162,not mentioned
+Celesto Note47 Pro (128 GB),4.1,340,10,other_types,6.4,5000,128,8,162,not mentioned
+Celesto Lite18 Neo (128 GB),4.3,340,10,other_types,6.4,5000,128,8,162,not mentioned
+Lumico Lite51 Neo (256 GB),4.3,340,10,other_types,6.4,6000,256,4,174,Snapdragon(SDM450-F01)
+Hyperon Prime25 Neo (128 GB),4.1,320,10,other_types,6.4,5000,128,6,162,not mentioned
+Zento Max18 Neo (128 GB),4.3,320,10,other_types,6.4,5000,128,6,162,not mentioned
+Orion Edge51 SE (128 GB),4.3,320,14,other_types,6.4,5000,128,6,162,not mentioned
+Celesto Note25 Pro (128 GB),4.3,310,14,other_types,6.4,4000,128,4,150,not mentioned
+Zento Max34 Pro (128 GB),4.6,300,14,AMOLED,6.4,5000,128,6,162,MediaTek
+NovaTech Lite98 Pro (128 GB),4.3,270,14,AMOLED,6.6,5000,128,6,162,not mentioned
+NovaTech Ultra86 SE (64 GB),4.3,270,14,other_types,6.6,6000,64,4,174,not mentioned
+Zento X19 SE (128 GB),4.3,260,14,other_types,6.4,4000,128,4,150,not mentioned
+Lumico Core17 Neo (128 GB),2.9,260,14,other_types,6.4,4000,128,4,150,not mentioned
+Lumico Edge49 Neo (128 GB),4.3,260,14,AMOLED,6.5,4000,128,6,150,not mentioned
+NovaTech X52 SE (128 GB),4.3,260,14,AMOLED,6.5,4000,128,6,150,not mentioned
+Zento Edge60 Pro (128 GB),4.2,260,14,other_types,6.5,5000,128,8,162,Dimensity720
+Zento One52 Pro (128 GB),4.2,260,14,AMOLED,6.4,5000,128,6,162,Heilo806769
+Zento One66 (128 GB),4.3,260,14,other_types,6.6,5000,128,6,162,Dimensity700
+Aurelia Plus85 (128 GB),4.2,260,14,AMOLED,6.6,5000,128,6,162,Snapdragon750G
+Voltix Core45 Pro (128 GB),4.2,260,13,AMOLED,6.4,5000,128,6,162,Heilo806769
+Celesto One25 5G (128 GB),4.1,260,13,other_types,6.7,5000,128,6,186,not mentioned
+NeoPhone Plus71 (128 GB),4.1,250,13,other_types,6.6,3500,128,8,162,Dimensity700
+Celesto Edge90 Neo (128 GB),4.2,250,13,TFT,6.6,3500,128,6,162,Dimensity700
+NeoPhone Note27 Neo (128 GB),4.2,240,13,other_types,6.5,3500,128,8,162,not mentioned
+Lumico Lite69 (128 GB),4.2,240,13,other_types,6.5,3500,128,8,162,not mentioned
+Orion X40 Neo (128 GB),4.2,240,13,other_types,6.6,3500,128,8,162,Snapdragon750GProcessor
+Hyperon Lite90 Pro (128 GB),4.1,220,13,TFT,6.6,3500,128,8,162,Dimensity700
+Lumico Lite86 Pro (128 GB),4.1,220,12,LCD,6.5,5000,128,6,162,not mentioned
+Lumico Core23 SE (128 GB),4.2,220,12,other_types,6.5,5000,128,8,162,Dimensity720
+SkyMobile Note27 Neo (128 GB),4.2,220,12,LCD,6.5,5000,128,6,162,Snapdragon750G
+SkyMobile One90 Neo (128 GB),4.1,220,12,LCD,6.5,5000,128,6,162,Heilo356765
+SkyMobile Note93 (128 GB),4.3,220,12,other_types,6.5,4000,128,6,174,not mentioned
+Aurelia Note29 5G (128 GB),4.1,210,12,other_types,6.5,5000,128,6,162,Dimensity720
+Lumico Prime39 Neo (128 GB),4,210,12,other_types,6.4,5000,128,6,162,not mentioned
+Voltix Note93 Neo (128 GB),4.3,210,12,other_types,6.4,5000,128,6,162,not mentioned
+SkyMobile Core61 (128 GB),4.2,210,5,other_types,6.5,5000,128,6,162,Snapdragon(SDM450-F01)
+NovaTech Prime72 SE (128 GB),4,210,12,other_types,6.5,5000,128,6,162,not mentioned
+Aurelia Plus92 Neo (128 GB),4.4,210,10,AMOLED,6.4,5000,128,6,162,MediaTek
+Lumico Note74 SE (64 GB),4.2,210,12,other_types,6.4,4000,64,4,174,not mentioned
+Voltix Plus17 SE (128 GB),4.1,210,12,other_types,6.5,4000,128,6,174,not mentioned
+NovaTech Ultra10 SE (128 GB),4,210,12,other_types,6.5,5000,128,6,174,not mentioned
+Zento Lite98 SE (128 GB),4.3,210,10,other_types,6.4,3500,128,6,174,not mentioned
+Zento Note17 SE (128 GB),4.1,210,10,other_types,6.4,4000,128,6,174,not mentioned
+Celesto One22 Neo (128 GB),4.2,210,10,other_types,6.4,4000,128,6,174,not mentioned
+Lumico Ultra51 Neo (128 GB),4.3,200,10,TFT,6.6,5000,128,6,162,Dimensity700
+NovaTech Note79 (128 GB),4.2,200,10,other_types,6.5,5000,128,6,162,Dimensity720
+NovaTech Core24 SE (64 GB),4.2,190,12,LCD,6.5,5000,64,4,162,Heilo356765
+Lumico X60 (128 GB),4.2,190,5,other_types,6.6,5000,128,4,162,not mentioned
+SkyMobile One14 SE (128 GB),4.3,190,5,other_types,6.5,6000,128,6,174,not mentioned
+NovaTech Edge67 SE (128 GB),4.2,190,5,other_types,6.5,6000,128,6,174,not mentioned
+Lumico Edge83 5G (64 GB),4.2,180,5,LCD,6.5,5000,64,4,162,Heilo356765
+Voltix Edge95 5G (64 GB),4.1,180,48,other_types,5.5,4800,64,6,165,not mentioned
+Lumico X92 Pro (64 GB),4.2,180,48,other_types,6.4,3000,64,4,174,not mentioned
+NeoPhone Prime67 5G (64 GB),4.1,180,48,other_types,6.4,3000,64,4,174,not mentioned
+Voltix Core34 (64 GB),4.2,180,48,other_types,6.4,3000,64,4,174,not mentioned
+NovaTech Core17 5G (128 GB),4.3,180,48,other_types,6.4,3000,128,6,174,not mentioned
+Hyperon Core97 Neo (64 GB),4.2,180,48,other_types,6.5,5000,64,6,185,not mentioned
+Aurelia Max48 (64 GB),4.3,170,48,other_types,5.5,5000,64,6,160,not mentioned
+Celesto Lite58 (64 GB),4.5,170,48,LCD,6.5,5000,64,4,162,not mentioned
+Zento Core34 (128 GB),4.1,170,48,other_types,6.4,5000,128,8,162,not mentioned
+Aurelia Note58 Neo (64 GB),4.1,170,48,other_types,6.4,6000,64,4,174,not mentioned
+Voltix Ultra29 Pro (128 GB),4.1,170,48,other_types,6.4,6000,128,6,174,Heilo80P
+Celesto Note25 5G (64 GB),4.2,170,48,other_types,6.5,4500,64,4,180,not mentioned
+Celesto One44 SE (64 GB),4.1,160,48,other_types,6.5,5000,64,4,162,"Dimensity1080,"
+Voltix X61 SE (64 GB),4.2,160,48,LCD,6.4,5000,64,4,162,MediaTek
+Voltix Lite99 5G (64 GB),4.2,160,12,LCD,6.5,5000,64,4,162,not mentioned
+NovaTech Lite40 Neo (64 GB),4.3,160,12,LCD,6.5,5000,64,4,162,not mentioned
+Voltix Ultra13 5G (128 GB),4.5,160,12,LCD,6.5,5000,128,6,162,not mentioned
+Celesto Core87 SE (64 GB),4.2,160,12,other_types,6.5,6000,64,4,174,not mentioned
+NeoPhone Core66 5G (64 GB),4.2,160,12,other_types,6.5,6000,64,4,174,not mentioned
+Aurelia Lite74 (64 GB),4.2,160,12,other_types,6.4,6000,64,4,174,not mentioned
+Orion Plus72 SE (64 GB),4.2,160,12,other_types,6.4,3000,64,4,174,not mentioned
+Voltix Edge45 SE (128 GB),4.3,160,12,other_types,6.5,3000,128,4,174,not mentioned
+Orion Prime77 5G (64 GB),4.3,150,12,LCD,6.5,3000,64,4,162,not mentioned
+Voltix X37 5G (128 GB),4.3,150,12,other_types,6.5,6000,128,4,174,not mentioned
+Hyperon Edge40 Neo (64 GB),4.2,140,12,other_types,6.6,6000,64,4,174,"Dimensity1080,"
+Celesto Max83 5G (64 GB),4.2,140,12,other_types,6.5,6000,64,4,174,Snapdragon720GProcessor
+NeoPhone Lite11 5G (64 GB),4.3,140,12,other_types,6.5,6000,64,4,174,not mentioned
+Voltix One26 5G (64 GB),4.1,140,12,other_types,6.5,6000,64,4,174,not mentioned
+NovaTech Max64 5G (64 GB),4.2,140,12,other_types,6.5,4000,64,4,174,not mentioned
+Aurelia Edge76 Neo (64 GB),4.2,140,12,other_types,6.4,4000,64,4,174,not mentioned
+NovaTech Core32 Neo (64 GB),4.2,140,12,other_types,6.4,4000,64,4,174,not mentioned
+NeoPhone Max94 Pro (64 GB),4.2,140,12,other_types,6.4,4000,64,4,174,Heilo80P
+Aurelia Prime24 Pro (64 GB),4.3,130,12,other_types,6.5,4000,64,4,174,not mentioned
+Aurelia Max50 (64 GB),4.1,130,12,other_types,6.5,4000,64,4,174,not mentioned
+Orion Ultra65 Neo (32 GB),3.7,120,12,other_types,6.5,5000,32,3,162,not mentioned
+Celesto Max54 Pro (32 GB),4.2,120,12,other_types,6.5,5000,32,3,162,"Dimensity1080,"
+NeoPhone Core58 5G (256 GB),4.3,400,24,AMOLED,6.4,4500,256,8,156,not mentioned
+NeoPhone Note19 Neo (256 GB),4.3,400,24,AMOLED,6.4,4500,256,8,156,not mentioned
+Celesto Plus10 (256 GB),4.4,390,24,HD+ AMOLED,6.7,4500,256,6,156,not mentioned
+Orion Core14 Neo (256 GB),4.2,390,24,HD+ AMOLED,6.7,4500,256,6,156,not mentioned
+NeoPhone Edge38 (256 GB),4,350,24,HD+ AMOLED,6.5,4500,256,8,156,not mentioned
+NovaTech Lite25 (256 GB),4.5,270,12,other_types,6.3,3500,256,6,144,not mentioned
+Voltix Plus18 (64 GB),4.2,250,12,other_types,6.5,5000,64,6,162,not mentioned
+Aurelia Ultra67 Pro (128 GB),4.1,180,12,other_types,6.5,5000,128,6,162,not mentioned
+Aurelia Max85 Pro (64 GB),4.4,300,24,AMOLED,6.4,4000,64,6,150,not mentioned
+Lumico Edge84 (64 GB),4.3,300,24,AMOLED,6.4,4000,64,6,150,not mentioned
+Hyperon Core33 Pro (64 GB),4.3,260,12,AMOLED,6.4,4000,64,4,150,not mentioned
+SkyMobile Max85 SE (64 GB),4.2,260,12,AMOLED,6.4,4000,64,4,150,not mentioned
+Aurelia X29 Pro (64 GB),4.3,240,12,other_types,6.4,4000,64,4,150,not mentioned
+Voltix Lite62 Pro (64 GB),3.1,230,12,AMOLED,6.4,4000,64,6,150,not mentioned
+Orion Note71 (64 GB),4.3,200,12,other_types,6.4,4000,64,4,150,not mentioned
+Zento One96 Neo (64 GB),4.1,280,12,AMOLED,6,3300,64,4,141.6,not mentioned
+SkyMobile One67 Neo (64 GB),4.2,280,12,AMOLED,6,3300,64,4,141.6,not mentioned
+Voltix X19 Neo (64 GB),4.4,280,12,AMOLED,6,3300,64,4,141.6,not mentioned
+NeoPhone Edge38 SE (64 GB),4.4,210,16,other_types,6,3500,64,4,144,Snapdragon450P
+NovaTech One76 5G (64 GB),4.2,210,16,other_types,6,3500,64,4,144,Snapdragon450P
+Zento Plus24 Neo (32 GB),3.9,90,5,other_types,6.5,5000,32,2,162,MediaTek
+Orion One32 5G (128 GB),4.2,350,13,AMOLED,6.5,4000,128,8,150,Snapdragon450
+Hyperon One44 Pro (128 GB),4,320,13,HD+ AMOLED,6.7,7000,128,8,186,not mentioned
+NeoPhone Core75 Pro (32 GB),4.3,250,13,other_types,5.7,3300,32,4,141.6,MediaTek
+Voltix Note86 (32 GB),4.1,250,13,other_types,5.7,3300,32,4,141.6,MediaTek
+Voltix Max13 SE (128 GB),4.2,250,13,other_types,6.5,5000,128,8,162,Snapdragon410
+Celesto X26 Pro (64 GB),4.3,220,13,other_types,5.6,3000,64,4,138,not mentioned
+Zento Core75 SE (64 GB),4.3,220,13,other_types,5.5,3300,64,3,141.6,not mentioned
+Hyperon Lite13 SE (64 GB),4.3,220,13,other_types,5.5,3300,64,3,141.6,not mentioned
+Zento Edge91 (64 GB),4.4,220,13,AMOLED,5.6,4000,64,6,150,not mentioned
+Hyperon Ultra39 Neo (128 GB),4,200,13,other_types,6.3,3500,128,6,144,MediaTek
+Celesto Note53 Pro (32 GB),4.3,190,13,other_types,5.5,3300,32,3,141.6,not mentioned
+Celesto Plus40 SE (64 GB),4.3,180,13,LCD,6.5,5000,64,4,162,Heilo356765
+Orion Plus60 5G (64 GB),4,170,13,other_types,6.5,5000,64,4,162,not mentioned
+Orion Edge68 Neo (128 GB),4.2,170,13,LCD,6.6,6000,128,6,174,Heilo35P
+Zento X94 5G (128 GB),4.4,180,13,other_types,6.4,4000,128,2,150,not mentioned
+Aurelia Ultra95 Pro (128 GB),4.3,160,13,other_types,6.5,4000,128,3,150,not mentioned
+Aurelia Prime51 5G (128 GB),4.2,160,13,other_types,6.5,4000,128,3,150,not mentioned
+NovaTech X52 (128 GB),4.4,160,13,other_types,6.5,4000,128,3,150,not mentioned
+Celesto Max55 (128 GB),4.3,160,13,LCD,6.4,5000,128,3,162,Snapdragon(SDM450-F01)
+Aurelia Plus48 5G (64 GB),4.2,160,13,LCD,6.4,5000,64,4,162,Snapdragon(SDM450-F01)
+Celesto Core16 Neo (64 GB),4.4,160,13,LCD,6.4,5000,64,4,162,not mentioned
+Voltix Max83 (128 GB),4.3,140,13,other_types,5.6,3000,128,3,138,not mentioned
+Voltix One94 5G (128 GB),4.4,140,13,other_types,5.6,3000,128,3,138,not mentioned
+Celesto Ultra77 Neo (64 GB),4.4,140,13,other_types,6.2,3000,64,4,138,not mentioned
+Lumico Prime18 SE (32 GB),4.3,140,13,other_types,6.2,4000,32,3,150,MediaTek
+Orion Prime29 (32 GB),4,140,13,other_types,6.2,4000,32,3,150,MediaTek
+Orion Core90 (32 GB),4.2,140,13,other_types,6.2,4000,32,3,150,MediaTek
+SkyMobile X38 5G (32 GB),4.3,140,13,LCD,6.4,5000,32,3,162,not mentioned
+SkyMobile Core77 SE (64 GB),4.2,140,13,other_types,6.5,5000,64,4,162,Snapdragon450
+Zento Edge54 5G (64 GB),4.1,140,13,other_types,6.5,5000,64,4,162,not mentioned
+Hyperon Max32 Neo (64 GB),4.2,140,13,other_types,6.5,5000,64,4,162,Snapdragon450
+NeoPhone Note24 Pro (128 GB),4.1,140,13,LCD,6.5,5000,128,4,162,not mentioned
+Voltix Lite15 Pro (128 GB),4.1,140,13,other_types,6.5,5000,128,4,162,not mentioned
+NeoPhone Edge99 5G (128 GB),4.1,140,13,LCD,6.5,5000,128,4,162,not mentioned
+NeoPhone Ultra76 (64 GB),4.3,140,13,other_types,6.4,6000,64,6,174,not mentioned
+NovaTech Core41 (32 GB),4.1,140,13,LCD,6.5,5000,32,3,185,Helio356765
+Orion Prime26 Neo (64 GB),4.2,130,13,other_types,6.5,5000,64,4,162,Snapdragon450P
+Aurelia Ultra61 Pro (128 GB),4.1,130,13,other_types,6.5,5000,128,4,162,not mentioned
+NovaTech Note44 Pro (32 GB),4.2,130,13,LCD,6.5,5000,32,3,185,not mentioned
+Zento Ultra64 Pro (64 GB),4.5,120,13,other_types,5.6,3000,64,4,138,not mentioned
+NovaTech Max77 5G (64 GB),4.5,120,13,other_types,5.6,3000,64,4,138,not mentioned
+Zento Note94 Neo (64 GB),4.6,120,13,other_types,6.2,3300,64,6,141.6,Snapdragon(SDM439)
+Hyperon Core59 SE (32 GB),4.6,120,13,other_types,6.2,4000,32,2,150,Snapdragon(SDM439)
+Hyperon Edge53 SE (32 GB),4.3,120,13,other_types,6.2,4000,32,2,150,MediaTek
+Lumico Note98 (32 GB),4.3,120,13,other_types,6.5,5000,32,3,162,Snapdragon450P
+Celesto Ultra61 (64 GB),4.2,130,13,LCD,6.5,5000,64,3,162,not mentioned
+Hyperon Edge31 (64 GB),4.2,130,13,LCD,6.5,5000,64,3,162,not mentioned
+Lumico X64 5G (64 GB),4.1,130,13,other_types,6.5,5000,64,3,162,Heilo67653512
+Voltix Edge87 Pro (32 GB),4.4,110,13,other_types,6,3300,32,2,141.6,Snapdragon425P
+SkyMobile One38 Neo (64 GB),4.3,110,13,LCD,5.7,4000,64,3,150,not mentioned
+Orion Max76 Neo (64 GB),4.6,110,13,LCD,5.7,4000,64,3,150,Snapdragon(SDM439)
+Lumico Prime47 SE (32 GB),4.2,110,13,LCD,5.7,4000,32,3,150,Snapdragon(SDM439)
+NeoPhone Lite86 Neo (32 GB),4.3,110,13,other_types,6.5,5000,32,3,162,MediaTek
+Lumico X30 Pro (32 GB),4.3,110,13,other_types,6.5,5000,32,3,162,MediaTek
+Orion Lite97 Pro (64 GB),4.2,110,13,other_types,5.7,3000,64,4,174,Snapdragon(SDM450-F01)
+Hyperon X17 (32 GB),4,110,13,other_types,6.5,4500,32,3,175,not mentioned
+Aurelia Lite75 (64 GB),4.1,100,13,other_types,6.5,3500,64,4,162,Heilo35P
+SkyMobile Lite39 Neo (64 GB),4.1,100,13,other_types,6.5,3500,64,4,162,Heilo35P
+Celesto Core90 Pro (32 GB),4.1,90,13,other_types,6.5,3000,32,2,162,MediaTek
+Aurelia X24 Neo (32 GB),4,90,13,other_types,6.5,3000,32,2,162,MediaTek
+Voltix Note37 Neo (64 GB),4.2,90,13,LCD,6.5,3000,64,4,162,not mentioned
+NovaTech Core61 Neo (64 GB),4.2,90,13,LCD,6.5,3000,64,4,162,not mentioned
+Voltix Ultra64 Pro (256 GB),3.7,370,12,HD+ AMOLED,6.7,3700,256,8,146.4,Snapdragon1P
+NovaTech Prime70 (256 GB),3.7,370,12,HD+ AMOLED,6.7,3700,256,8,146.4,Snapdragon1P
+Celesto Note32 (256 GB),4.3,370,12,HD+ AMOLED,6.7,3700,256,8,146.4,Snapdragon1P
+NeoPhone Note38 (128 GB),4.2,350,12,other_types,6.5,4500,128,8,156,not mentioned
+Orion Note57 SE (512 GB),4.3,340,12,AMOLED,7.6,4400,512,12,154.8,Snapdragon888
+Celesto Prime42 Neo (128 GB),4.2,340,12,other_types,6.5,4500,128,8,156,not mentioned
+NovaTech Ultra92 Pro (128 GB),4,340,12,other_types,6.5,4500,128,8,156,not mentioned
+Lumico Note56 Neo (128 GB),3.7,310,12,HD+ AMOLED,6.7,3700,128,8,146.4,Snapdragon1P
+Voltix Max38 Neo (128 GB),3.7,310,12,HD+ AMOLED,6.7,3700,128,8,146.4,Snapdragon1P
+SkyMobile Plus17 Pro (128 GB),4.2,310,12,HD+ AMOLED,6.7,3700,128,8,146.4,Snapdragon1P
+Orion Ultra35 5G (256 GB),4.3,290,12,HD+ AMOLED,6.7,3300,256,8,141.6,Snapdragon888
+Orion Prime12 SE (256 GB),4.3,240,12,AMOLED,7.6,4400,256,12,154.8,Snapdragon888
+Aurelia X73 SE (64 GB),4.2,110,12,other_types,6.3,3300,64,6,141.6,not mentioned
+Lumico Lite86 Neo (64 GB),4.1,110,12,other_types,6.3,3300,64,6,141.6,not mentioned
+NeoPhone Edge31 (32 GB),4.2,110,12,LCD,6.3,4000,32,3,150,not mentioned
+SkyMobile Ultra13 SE (128 GB),4.8,190,8,LCD,6.5,5000,128,4,162,not mentioned
+SkyMobile Max50 Neo (32 GB),3.9,140,8,other_types,6.4,6000,32,4,180,Helio80P
+Zento Edge43 Pro (32 GB),4.5,130,8,other_types,5,3200,32,3,150,Snapdragon425P
+NovaTech One22 Neo (128 GB),4.1,150,8,other_types,6.5,5000,128,3,185,not mentioned
+NeoPhone Edge95 Neo (128 GB),4.4,160,8,LCD,5,3000,128,3,150,not mentioned
+Lumico Note45 SE (128 GB),4.2,150,8,other_types,5,3000,128,3,155,not mentioned
+SkyMobile Max21 SE (128 GB),4.2,200,8,other_types,5,3000,128,3,155,not mentioned
+NeoPhone Edge95 SE (128 GB),4.2,130,8,LCD,6.5,4500,128,3,180,not mentioned
+SkyMobile Prime12 Pro (128 GB),4.1,120,8,other_types,4.5,3000,128,3,150,not mentioned
+NeoPhone Core29 (128 GB),4.1,110,8,LCD,6.5,5000,128,3,185,not mentioned
+Zento Edge87 Neo (32 GB),4.1,110,8,LCD,6.5,4800,32,3,185,not mentioned
+SkyMobile Prime38 5G (32 GB),4.1,100,8,LCD,6.5,5000,32,2,162,not mentioned
+Voltix Max39 (32 GB),4.1,100,8,LCD,6.5,4500,32,3,175,not mentioned
+Zento Edge87 (32 GB),4,100,8,other_types,6.5,4500,32,3,178,not mentioned
+Aurelia X31 (32 GB),4.1,90,8,other_types,6.5,4500,32,3,170,not mentioned
+Voltix Lite83 Neo (32 GB),4.2,80,8,LCD,5.3,3000,32,2,138,MediaTek
+Zento Plus84 Pro (128 GB),4.3,180,5,other_types,6.6,5000,128,4,162,not mentioned
+Zento Edge49 SE (128 GB),3.6,140,5,other_types,6.5,6000,128,4,174,not mentioned
+Hyperon Core36 (128 GB),4,190,3,other_types,6.6,5000,128,4,162,not mentioned
+Celesto Note48 SE (128 GB),4.2,170,0,other_types,6.6,6000,128,6,174,not mentioned

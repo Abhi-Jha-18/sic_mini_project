@@ -1,100 +1,108 @@
-// Sanity tests for the PhoneFit recommendation engine (stage-3 data layer).
 import {
-  PURPOSES,
   BUDGET_TIERS,
+  DATASET_META,
+  PURPOSES,
   getRecommendations,
   phones,
+  purposeNotesFor,
   scorePhone,
+  tierOf,
 } from './mockDatabase';
 
-describe('recommendation engine', () => {
-  it('returns 3–4 matches for every purpose × budget combination', () => {
-    PURPOSES.forEach((p) => {
-      BUDGET_TIERS.forEach((t) => {
-        const { list } = getRecommendations({ purpose: p.key, budget: t.key });
+describe('client-provided phone dataset and recommendation engine', () => {
+  it('loads all 413 client records with source prices and localized INR prices', () => {
+    expect(DATASET_META).toEqual({
+      source: 'data/sic_mobile_spec_PJ1 - Sheet1.csv',
+      sourceCurrency: 'USD',
+      currency: 'INR',
+      usdToInrRate: 95.13,
+      conversionDate: '2026-10-28',
+      recordCount: 413,
+    });
+    expect(phones).toHaveLength(413);
+    expect(phones[0]).toMatchObject({
+      id: 'client-001',
+      name: 'Voltix Hyper67 5G (256 GB)',
+      priceUSD: 1000,
+      priceINR: 95130,
+      cameraMP: 200,
+      storageGB: 256,
+    });
+    expect(phones.at(-1)).toMatchObject({
+      id: 'client-413',
+      name: 'Celesto Note48 SE (128 GB)',
+      priceUSD: 170,
+      priceINR: 16172,
+      cameraMP: 0,
+    });
+    expect(phones.every((phone) => !('os' in phone))).toBe(true);
+  });
+
+  it('defines Indian-rupee budget tiers using converted prices', () => {
+    expect(BUDGET_TIERS.map((tier) => tier.range)).toEqual([
+      'Under ₹20,000', '₹20,000 – ₹50,000', 'Above ₹50,000',
+    ]);
+    phones.forEach((phone) => {
+      const tier = BUDGET_TIERS.find((candidate) => candidate.matches(phone));
+      expect(tier.key).toBe(tierOf(phone));
+    });
+    expect(phones.some((phone) => phone.priceUSD === 1000)).toBe(true);
+    phones.forEach((phone) => {
+      expect(phone.priceINR).toBe(Math.round(phone.priceUSD * DATASET_META.usdToInrRate));
+    });
+  });
+
+  it('returns a ranked shortlist for every purpose and budget tier', () => {
+    PURPOSES.forEach((purpose) => {
+      BUDGET_TIERS.forEach((tier) => {
+        const { list } = getRecommendations({ purpose: purpose.key, budget: tier.key });
         expect(list.length).toBeGreaterThanOrEqual(3);
         expect(list.length).toBeLessThanOrEqual(4);
+        for (let i = 1; i < list.length; i += 1) {
+          expect(list[i - 1].match).toBeGreaterThanOrEqual(list[i].match);
+        }
+        list.forEach(({ phone }) => expect(tier.matches(phone)).toBe(true));
       });
     });
   });
 
-  it('ranks matches by purpose score, descending', () => {
-    const { list } = getRecommendations({ purpose: 'camera', budget: 'flagship' });
-    for (let i = 1; i < list.length; i += 1) {
-      expect(list[i - 1].match).toBeGreaterThanOrEqual(list[i].match);
-    }
-    // The camera leader in the flagship tier should be a top-camera device
-    expect(['pixel-9-pro', 'galaxy-s24-ultra', 'iphone-16-pro']).toContain(list[0].phone.id);
+  it('supports top-pick limits and full-catalog browsing', () => {
+    const top = getRecommendations({ purpose: 'camera', budget: 'mid' });
+    const complete = getRecommendations({ purpose: 'camera', budget: 'mid', limit: Infinity });
+    expect(top.list).toHaveLength(4);
+    expect(complete.list.length).toBeGreaterThan(4);
+    expect(complete.list.length).toBe(phones.filter((phone) => BUDGET_TIERS[1].matches(phone)).length);
   });
 
-  it('keeps all matches inside the requested budget tier', () => {
-    const { list } = getRecommendations({ purpose: 'everyday', budget: 'entry' });
-    list.forEach((entry) => {
-      expect(entry.phone.priceINR).toBeLessThan(20000);
-    });
+  it('uses the selected need to surface corresponding client-supplied values', () => {
+    const phone = phones[0];
+    expect(purposeNotesFor(phone).camera).toContain('200 MP camera listing');
+    expect(purposeNotesFor(phone).gaming).toContain('4 GB RAM listed');
+    expect(purposeNotesFor(phone).battery).toContain('4,700 mAh battery listed');
   });
 
-  it('applies OS and size filters when enough matches exist', () => {
-    const { list, relaxed } = getRecommendations({
-      purpose: 'everyday',
-      budget: 'flagship',
-      os: 'iOS',
-    });
-    expect(relaxed).toEqual([]);
-    expect(list.length).toBe(3);
-    list.forEach((entry) => expect(entry.phone.os).toBe('iOS'));
-  });
-
-  it('keeps an honest short list rather than swapping OS for extra matches', () => {
-    // Only the iPhone 13 sits in the mid-range tier → 1 match, still all iOS.
-    const { list, relaxed } = getRecommendations({
-      purpose: 'everyday',
-      budget: 'mid',
-      os: 'iOS',
-    });
-    expect(list.length).toBe(1);
-    expect(relaxed).toEqual([]);
-    expect(list[0].phone.id).toBe('iphone-13');
-  });
-
-  it('relaxes OS only when it would otherwise return nothing', () => {
-    // No entry-level iOS phones exist in the catalog → OS must be relaxed.
-    const { list, relaxed } = getRecommendations({
-      purpose: 'gaming',
-      budget: 'entry',
-      os: 'iOS',
-    });
+  it('applies screen-size filtering and widens the filter when too few results remain', () => {
+    const { list } = getRecommendations({ purpose: 'camera', budget: 'mid', size: 'compact' });
     expect(list.length).toBeGreaterThanOrEqual(3);
-    expect(relaxed).toContain('OS');
+    expect(list.every(({ phone }) => phone.screenInches <= 6.3)).toBe(true);
+
+    const sparse = getRecommendations({ purpose: 'battery', budget: 'flagship', size: 'compact' });
+    expect(sparse.list.length).toBeGreaterThanOrEqual(3);
+    expect(sparse.relaxed).toContain('screen size');
   });
 
-  it('relaxes screen size (soft preference) before anything else', () => {
-    // Entry-level + large screen leaves few phones; size should widen first.
-    const { list, relaxed } = getRecommendations({
-      purpose: 'battery',
-      budget: 'entry',
-      size: 'large',
-    });
-    expect(list.length).toBeGreaterThanOrEqual(3);
-  });
-
-  it('scores are bounded 0–100 for every phone and purpose', () => {
+  it('keeps all heuristic scores within 0–100 for every record and need', () => {
     phones.forEach((phone) => {
-      PURPOSES.forEach((p) => {
-        const score = scorePhone(phone, p.key);
-        expect(score).toBeGreaterThanOrEqual(0);
-        expect(score).toBeLessThanOrEqual(100);
+      PURPOSES.forEach((purpose) => {
+        expect(scorePhone(phone, purpose.key)).toBeGreaterThanOrEqual(0);
+        expect(scorePhone(phone, purpose.key)).toBeLessThanOrEqual(100);
       });
     });
   });
 
-  it('every phone has tailored notes for all purposes plus pros & cons', () => {
-    phones.forEach((phone) => {
-      PURPOSES.forEach((p) => {
-        expect(phone.purposeNotes[p.key].length).toBeGreaterThan(0);
-      });
-      expect(phone.pros.length).toBe(3);
-      expect(phone.cons.length).toBe(2);
-    });
+  it('does not invent missing operating systems, processors, or camera details', () => {
+    expect(phones.every((phone) => !('os' in phone))).toBe(true);
+    expect(phones.some((phone) => phone.processor === null)).toBe(true);
+    expect(phones.some((phone) => phone.cameraMP === 0)).toBe(true);
   });
 });
