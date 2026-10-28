@@ -6,26 +6,23 @@
 //       phone?" → Gaming / Photography-Videography / Daily Work & Battery /
 //       Media / General Everyday Use
 //
-//  STAGE 2 · Inner modal     — budget & optional preferences
-//      Price range (Entry / Mid-range / Flagship) + quick toggles for
-//      OS (iOS vs Android) and screen size.
+//  STAGE 2 · Inner modal     — INR budget & optional screen-size preference
+//  STAGE 3 · Results section — 3–4 ranked cards backed by the client CSV
+//      Name, supplied price/specs, purpose-fit notes, and heuristic match score.
 //
-//  STAGE 3 · Results section — 3–4 minimalist recommendation cards
-//      Name + image placeholder, price, purpose-tailored highlights,
-//      and concise pros & cons.
-//
-//  React 16 · useState/useMemo/useEffect · no router · Tailwind CDN styling
-//  (light minimalist theme defined in public/index.html)
+//  OS/refresh-rate/benchmark filters are omitted because the client dataset does
+//  not provide those fields.
 // =============================================================================
 
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import {
   phones,
+  DATASET_META,
   PURPOSES,
   BUDGET_TIERS,
-  OS_OPTIONS,
   SIZE_OPTIONS,
   purposeMeta,
+  purposeNotesFor,
   budgetMeta,
   getRecommendations,
   brandTones,
@@ -35,7 +32,7 @@ import {
 //  UTILITIES
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** ₹79,900 — Indian digit grouping */
+/** Prices are localized to Indian rupees for display. */
 const inrFormat = (n) => '₹' + n.toLocaleString('en-IN');
 
 /** Tiny classnames helper */
@@ -366,6 +363,7 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
           <div className="space-y-2.5">
             {BUDGET_TIERS.map((tier) => {
               const active = prefs.budget === tier.key;
+              const modelCount = phones.filter((phone) => tier.matches(phone)).length;
               return (
                 <button
                   key={tier.key}
@@ -392,6 +390,7 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
                     <span className="flex items-baseline gap-2 flex-wrap">
                       <span className="font-display font-semibold text-ink text-[15px]">{tier.label}</span>
                       <span className="text-xs font-mono font-semibold text-accent">{tier.range}</span>
+                      <span className="text-[11px] text-stone-500">{modelCount} models</span>
                     </span>
                     <span className="block text-xs text-stone-400 mt-0.5">{tier.description}</span>
                   </span>
@@ -399,6 +398,9 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
               );
             })}
           </div>
+          <p className="-mt-4 text-[11px] leading-relaxed text-stone-500">
+            INR prices are estimates converted from the client USD prices at ₹{DATASET_META.usdToInrRate.toFixed(2)} per USD ({DATASET_META.conversionDate}).
+          </p>
 
           {/* Optional preferences */}
           <div className="pt-5 border-t border-stone-800 space-y-5">
@@ -409,12 +411,6 @@ const PreferencesModal = ({ purpose, prefs, onPrefsChange, onSubmit, onClose, is
               <div className="flex-1 h-px bg-white/[0.06]" />
             </div>
 
-            <Segmented
-              label="Operating system"
-              options={OS_OPTIONS}
-              value={prefs.os}
-              onChange={(v) => onPrefsChange({ ...prefs, os: v })}
-            />
             <Segmented
               label="Screen size"
               options={SIZE_OPTIONS}
@@ -466,24 +462,23 @@ const TIER_CHIP = {
 const ResultCard = ({ entry, purpose }) => {
   const phone = entry.phone;
   const pMeta = purposeMeta(purpose);
-  const notes = phone.purposeNotes[purpose] || [];
+  const notes = purposeNotesFor(phone)[purpose] || [];
   const tierKey = phone.priceINR < 20000 ? 'entry' : phone.priceINR <= 50000 ? 'mid' : 'flagship';
   const tierLabel = budgetMeta(tierKey).label;
+  const storageLabel = phone.storageGB >= 1024
+    ? `${phone.storageGB / 1024} TB`
+    : `${phone.storageGB} GB`;
+  const cameraLabel = phone.cameraMP > 0 ? `${phone.cameraMP} MP` : 'Not listed';
 
   return (
     <article className="bg-panel rounded-3xl border border-stone-700 shadow-sm hover:shadow-lift transition-all duration-200 p-5 flex flex-col gap-5">
       <PhoneVisual phone={phone} match={entry.match} tint={pMeta.tint} />
 
-      {/* Name + price */}
+      {/* Name + client-supplied price */}
       <div>
-        <div className="flex items-start justify-between gap-3">
-          <h3 className="font-display font-semibold text-ink text-lg leading-snug">{phone.name}</h3>
-          <span className="text-[11px] font-mono font-medium text-stone-400 bg-white/[0.06] rounded-full px-2.5 py-1 whitespace-nowrap">
-            {phone.os}
-          </span>
-        </div>
+        <h3 className="font-display font-semibold text-ink text-lg leading-snug">{phone.name}</h3>
         <p className="text-xs font-mono text-stone-500 mt-1">
-          {phone.brand} · {phone.year} · {phone.chipset}
+          {phone.brand} · {phone.processor || 'Processor not listed'}
         </p>
         <div className="flex items-baseline gap-2 mt-2.5">
           <span className="text-xl font-mono font-bold tracking-tight text-ink">
@@ -495,49 +490,32 @@ const ResultCard = ({ entry, purpose }) => {
         </div>
       </div>
 
-      {/* Purpose-tailored highlights */}
+      {/* Purpose-fit notes are generated from fields present in the CSV */}
       <div>
         <p className="text-xs font-semibold tracking-[0.14em] uppercase mb-2.5" style={{ color: pMeta.tint }}>
           Why it fits {pMeta.label.split('/')[0]}
         </p>
         <ul className="space-y-1.5">
-          {notes.map((n) => (
-            <li key={n} className="flex items-start gap-2 text-[13px] text-stone-300 leading-relaxed">
+          {notes.map((note) => (
+            <li key={note} className="flex items-start gap-2 text-[13px] text-stone-300 leading-relaxed">
               <i className="fa-solid fa-circle text-[5px] mt-1.5" style={{ color: pMeta.tint }} />
-              {n}
+              {note}
             </li>
           ))}
         </ul>
         <p className="mt-2.5 text-[11px] font-mono text-stone-500">
-          {phone.specs.batteryPower} mAh · {phone.specs.ramGB} GB RAM · {phone.screenInches}"{' '}
-          {phone.displayType}
+          {phone.batteryMah.toLocaleString()} mAh · {phone.ramGB} GB RAM · {phone.screenInches}" {phone.displayType}
         </p>
       </div>
 
-      {/* Pros & cons */}
-      <div className="grid grid-cols-1 gap-4 pt-4 border-t border-stone-800 mt-auto">
-        <div>
-          <p className="text-xs font-semibold tracking-[0.14em] uppercase text-sage mb-2">Pros</p>
-          <ul className="space-y-1.5">
-            {phone.pros.map((pro) => (
-              <li key={pro} className="flex items-start gap-2 text-[13px] text-stone-300 leading-relaxed">
-                <i className="fa-solid fa-circle-check text-emerald-500 text-xs mt-0.5" />
-                {pro}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p className="text-xs font-semibold tracking-[0.14em] uppercase text-rose-500 mb-2">Cons</p>
-          <ul className="space-y-1.5">
-            {phone.cons.map((con) => (
-              <li key={con} className="flex items-start gap-2 text-[13px] text-stone-400 leading-relaxed">
-                <i className="fa-solid fa-circle-minus text-rose-400 text-xs mt-0.5" />
-                {con}
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* Display source fields as facts; the client data has no editorial pros/cons. */}
+      <div className="pt-4 border-t border-stone-800 mt-auto">
+        <p className="text-xs font-semibold tracking-[0.14em] uppercase text-stone-400 mb-2">Client-listed specs</p>
+        <ul className="space-y-1.5 text-[13px] text-stone-300 leading-relaxed">
+          <li>Customer rating: {phone.rating}/5</li>
+          <li>Camera resolution: {cameraLabel}</li>
+          <li>Storage: {storageLabel} · Weight: {phone.weightGrams} g</li>
+        </ul>
       </div>
     </article>
   );
@@ -550,12 +528,34 @@ const ResultCard = ({ entry, purpose }) => {
 const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
   const pMeta = purposeMeta(purpose);
   const bMeta = budgetMeta(prefs.budget);
-  const osLabel = prefs.os === 'any' ? null : prefs.os;
   const sizeLabel = prefs.size === 'any'
     ? null
     : prefs.size === 'compact'
       ? 'Compact screen'
       : 'Large screen';
+  const [browseAll, setBrowseAll] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [brandFilter, setBrandFilter] = useState('any');
+  const [sortBy, setSortBy] = useState('match');
+  const [visibleCount, setVisibleCount] = useState(12);
+  const brandOptions = useMemo(
+    () => [...new Set(results.list.map(({ phone }) => phone.brand))].sort((a, b) => a.localeCompare(b)),
+    [results.list]
+  );
+  const exploredResults = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    const matches = results.list.filter(({ phone }) => {
+      const matchesText = !query || phone.name.toLowerCase().includes(query) || phone.brand.toLowerCase().includes(query);
+      return matchesText && (brandFilter === 'any' || phone.brand === brandFilter);
+    });
+    if (sortBy === 'price') matches.sort((a, b) => a.phone.priceINR - b.phone.priceINR || b.match - a.match);
+    if (sortBy === 'rating') matches.sort((a, b) => b.phone.rating - a.phone.rating || b.match - a.match);
+    if (sortBy === 'battery') matches.sort((a, b) => b.phone.batteryMah - a.phone.batteryMah || b.match - a.match);
+    return matches;
+  }, [results.list, searchQuery, brandFilter, sortBy]);
+  const visibleResults = browseAll
+    ? exploredResults.slice(0, visibleCount)
+    : results.list.slice(0, 4);
 
   return (
     <main className="max-w-6xl mx-auto px-5 sm:px-8 pb-24">
@@ -568,9 +568,12 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
           Tailored for <span style={{ color: pMeta.tint }}>{pMeta.label}</span>
         </h1>
         <p className="mt-3 text-stone-400 text-lg leading-relaxed max-w-2xl">
-          {results.list.length} hand-picked phone{results.list.length === 1 ? '' : 's'} priced in
-          the {bMeta.label.toLowerCase()} band ({bMeta.range}), ranked by how well they match your
-          priority.
+          {results.list.length} client-catalog phone{results.list.length === 1 ? '' : 's'} in the
+          {` ${bMeta.label.toLowerCase()} band (${bMeta.range})`}. Your top matches are ranked by
+          the selected priority.
+        </p>
+        <p className="mt-2 text-xs text-stone-500">
+          INR prices use client USD values converted at ₹{DATASET_META.usdToInrRate.toFixed(2)} per USD ({DATASET_META.conversionDate}).
         </p>
 
         {/* Choice chips */}
@@ -583,12 +586,6 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
             <i className="fa-solid fa-indian-rupee-sign text-[10px] text-sage" />
             {bMeta.label} · {bMeta.range}
           </span>
-          {osLabel && (
-            <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-300 bg-white/[0.06] px-3 py-1.5 rounded-full">
-              <i className="fa-solid fa-laptop text-[10px] text-plum" />
-              {osLabel}
-            </span>
-          )}
           {sizeLabel && (
             <span className="inline-flex items-center gap-1.5 text-xs font-medium text-stone-300 bg-white/[0.06] px-3 py-1.5 rounded-full">
               <i className="fa-solid fa-expand text-[10px] text-terra" />
@@ -615,18 +612,9 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
           </p>
         )}
 
-        {/* Honest shortlist note (e.g. a single iPhone in a budget band) */}
-        {results.list.length > 0 && results.list.length < 3 && prefs.os !== 'any' && results.relaxed.length === 0 && (
-          <p className="mt-4 text-xs text-stone-400 bg-white/[0.06] border border-stone-700 rounded-xl px-3.5 py-2.5 inline-block">
-            <i className="fa-solid fa-circle-info mr-1.5 text-accent" />
-            Only {results.list.length} {prefs.os} phone{results.list.length === 1 ? '' : 's'} fit
-            {results.list.length === 1 ? 's' : ''} this budget — showing the honest shortlist rather
-            than swapping your OS preference.
-          </p>
-        )}
       </section>
 
-      {/* Recommendation cards */}
+      {/* Top picks plus a searchable explorer for the full matching client catalog */}
       {results.list.length === 0 ? (
         <section className="text-center py-20 bg-panel rounded-3xl border border-stone-700 animate-fade-up">
           <div className="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center bg-plum/10">
@@ -634,22 +622,96 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
           </div>
           <h2 className="mt-4 text-lg font-display font-semibold text-ink">No phones match those filters</h2>
           <p className="mt-2 text-sm text-stone-400">Try loosening a preference or choosing another budget range.</p>
-          <button
-            onClick={onRefine}
-            className="mt-6 px-6 py-3 rounded-full text-sm font-semibold btn-primary"
-          >
+          <button onClick={onRefine} className="mt-6 px-6 py-3 rounded-full text-sm font-semibold btn-primary">
             Adjust preferences
           </button>
         </section>
       ) : (
-        <section
-          key={purpose + prefs.budget + prefs.os + prefs.size}
-          className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 animate-fade-up"
-        >
-          {results.list.map((entry) => (
-            <ResultCard key={entry.phone.id} entry={entry} purpose={purpose} />
-          ))}
-        </section>
+        <>
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+            <p className="text-sm text-stone-400">
+              {browseAll
+                ? `${exploredResults.length} matching model${exploredResults.length === 1 ? '' : 's'}`
+                : `Top ${Math.min(4, results.list.length)} recommendations`}
+            </p>
+            <button
+              id="toggle-catalog-browser"
+              onClick={() => {
+                setBrowseAll((open) => !open);
+                setVisibleCount(12);
+              }}
+              className="px-4 py-2 rounded-full border border-accent/30 text-accent text-sm font-semibold hover:bg-accent/10 transition-colors"
+            >
+              {browseAll ? 'Show top picks' : `Browse all ${results.list.length} matches`}
+            </button>
+          </div>
+
+          {browseAll && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 p-4 rounded-2xl border border-stone-700 bg-panel">
+              <label className="sm:col-span-1">
+                <span className="block text-[11px] uppercase tracking-wider text-stone-400 mb-1.5">Search model or brand</span>
+                <input
+                  id="catalog-search"
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="e.g. Voltix"
+                  className="w-full rounded-xl border border-stone-700 bg-black/30 px-3 py-2.5 text-sm text-stone-100 placeholder:text-stone-500 focus:border-accent focus:outline-none"
+                />
+              </label>
+              <label>
+                <span className="block text-[11px] uppercase tracking-wider text-stone-400 mb-1.5">Brand</span>
+                <select
+                  id="catalog-brand"
+                  value={brandFilter}
+                  onChange={(event) => setBrandFilter(event.target.value)}
+                  className="w-full rounded-xl border border-stone-700 bg-black/30 px-3 py-2.5 text-sm text-stone-100 focus:border-accent focus:outline-none"
+                >
+                  <option value="any">All brands</option>
+                  {brandOptions.map((brand) => <option key={brand} value={brand}>{brand}</option>)}
+                </select>
+              </label>
+              <label>
+                <span className="block text-[11px] uppercase tracking-wider text-stone-400 mb-1.5">Sort by</span>
+                <select
+                  id="catalog-sort"
+                  value={sortBy}
+                  onChange={(event) => setSortBy(event.target.value)}
+                  className="w-full rounded-xl border border-stone-700 bg-black/30 px-3 py-2.5 text-sm text-stone-100 focus:border-accent focus:outline-none"
+                >
+                  <option value="match">Best match</option>
+                  <option value="price">Lowest price</option>
+                  <option value="rating">Highest customer rating</option>
+                  <option value="battery">Largest battery</option>
+                </select>
+              </label>
+            </div>
+          )}
+
+          {visibleResults.length === 0 ? (
+            <p className="rounded-2xl border border-stone-700 bg-panel p-8 text-center text-stone-400">
+              No models match that search. Clear the search or choose another brand.
+            </p>
+          ) : (
+            <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 animate-fade-up">
+              {visibleResults.map((entry) => (
+                <ResultCard key={entry.phone.id} entry={entry} purpose={purpose} />
+              ))}
+            </section>
+          )}
+
+          {browseAll && visibleResults.length < exploredResults.length && (
+            <div className="mt-7 text-center">
+              <button
+                id="load-more-models"
+                onClick={() => setVisibleCount((count) => count + 12)}
+                className="px-5 py-2.5 rounded-full border border-stone-600 text-stone-200 text-sm font-semibold hover:border-accent hover:text-accent transition-colors"
+              >
+                Load 12 more · {exploredResults.length - visibleResults.length} remaining
+              </button>
+            </div>
+          )}
+        </>
       )}
 
       {/* Bottom actions */}
@@ -687,7 +749,7 @@ const App = () => {
   const [stage, setStage] = useState('landing');
   const [modalOpen, setModalOpen] = useState(false);
   const [purpose, setPurpose] = useState(null);
-  const [prefs, setPrefs] = useState({ budget: null, os: 'any', size: 'any' });
+  const [prefs, setPrefs] = useState({ budget: null, size: 'any' });
 
   // Scroll to top whenever the visible stage changes
   useEffect(() => {
@@ -709,7 +771,7 @@ const App = () => {
 
   const handleRestart = useCallback(() => {
     setPurpose(null);
-    setPrefs({ budget: null, os: 'any', size: 'any' });
+    setPrefs({ budget: null, size: 'any' });
     setModalOpen(false);
     setStage('landing');
   }, []);
@@ -733,8 +795,8 @@ const App = () => {
     return getRecommendations({
       purpose,
       budget: prefs.budget,
-      os: prefs.os,
       size: prefs.size,
+      limit: Infinity,
     });
   }, [stage, purpose, prefs]);
 
@@ -780,7 +842,7 @@ const App = () => {
             <i className="fa-solid fa-circle text-[5px] text-sage" />
             <i className="fa-solid fa-circle text-[5px] text-accent" />
           </span>
-          PhoneFit · Curated demo dataset of {phones.length} devices · Built with React + Tailwind
+          PhoneFit · {phones.length} client-provided devices · Built with React + Tailwind
         </p>
       </footer>
     </div>
