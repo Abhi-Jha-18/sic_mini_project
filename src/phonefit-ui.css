@@ -1,0 +1,141 @@
+/* PhoneFit interactive UI layer.
+   Colours are inherited from your existing palette (purpose tints, logo gradient);
+   this file only adds motion, depth and interaction. */
+
+/* ---------- Ambient background ---------- */
+.pf-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.32;
+  pointer-events: none;
+  animation: pf-drift 18s ease-in-out infinite alternate;
+}
+@keyframes pf-drift {
+  to { transform: translate3d(50px, -34px, 0) scale(1.18); }
+}
+
+/* ---------- Entrance + float ---------- */
+.pf-rise {
+  opacity: 0;
+  animation: pf-rise 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+@keyframes pf-rise {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.pf-float { animation: pf-float 5.5s ease-in-out infinite; animation-delay: var(--d, 0s); }
+@keyframes pf-float {
+  0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  50% { transform: translateY(-14px) rotate(calc(var(--r, 0deg) * -0.5)); }
+}
+
+/* ---------- Interactive card: tilt + cursor spotlight ---------- */
+.pf-card {
+  position: relative;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+.pf-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    280px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--tint, #7fa8d9) 24%, transparent),
+    transparent 62%
+  );
+}
+.pf-card:hover::before { opacity: 1; }
+.pf-card:hover {
+  border-color: color-mix(in srgb, var(--tint, #7fa8d9) 55%, transparent);
+  box-shadow: 0 18px 50px -18px color-mix(in srgb, var(--tint, #7fa8d9) 55%, transparent);
+}
+.pf-card .pf-phone-svg { transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.pf-card:hover .pf-phone-svg { transform: translateY(-8px) scale(1.06) rotate(-3deg); }
+.pf-card .pf-icon { transition: transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.pf-card:hover .pf-icon { transform: scale(1.15) rotate(-8deg); }
+.pf-card .pf-arrow { transition: transform 0.25s ease; }
+.pf-card:hover .pf-arrow { transform: translateX(6px); }
+
+/* ---------- Spec meters ---------- */
+.pf-meter {
+  height: 5px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+.pf-meter > span {
+  display: block;
+  height: 100%;
+  width: var(--w, 0%);
+  border-radius: inherit;
+  transform-origin: left;
+  animation: pf-grow 0.95s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes pf-grow { from { transform: scaleX(0); } }
+
+/* ---------- Match ring ---------- */
+.pf-ring-fg {
+  stroke-dasharray: var(--c);
+  stroke-dashoffset: var(--c);
+  animation: pf-ring 1.2s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes pf-ring { to { stroke-dashoffset: var(--o); } }
+
+/* ---------- Loading stage ---------- */
+.pf-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid var(--tint, #7fa8d9);
+  opacity: 0;
+  animation: pf-pulse 1.8s ease-out infinite;
+  animation-delay: var(--d, 0s);
+}
+@keyframes pf-pulse {
+  0% { transform: scale(0.7); opacity: 0.7; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+.pf-progress {
+  height: 100%;
+  width: 100%;
+  transform-origin: left;
+  animation: pf-grow var(--dur, 1.2s) linear both;
+}
+.pf-swap { animation: pf-swap 0.35s ease both; }
+@keyframes pf-swap { from { opacity: 0; transform: translateY(8px); } }
+
+/* ---------- Compare tray ---------- */
+.pf-tray { animation: pf-tray 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+@keyframes pf-tray { from { opacity: 0; transform: translate(-50%, 30px); } }
+
+/* ---------- Shine on primary hero button ---------- */
+.pf-shine { position: relative; overflow: hidden; }
+.pf-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-20deg);
+  animation: pf-shine 3.2s ease-in-out infinite;
+}
+@keyframes pf-shine { 0%, 60% { left: -60%; } 100% { left: 140%; } }
+
+/* ---------- Accessibility: respect reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .pf-orb, .pf-float, .pf-pulse, .pf-shine::after { animation: none !important; }
+  .pf-rise, .pf-swap, .pf-tray { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .pf-meter > span, .pf-progress { animation: none !important; }
+  .pf-ring-fg { animation: none !important; stroke-dashoffset: var(--o) !important; }
+  .pf-card, .pf-card .pf-phone-svg, .pf-card .pf-icon, .pf-card .pf-arrow { transition: none !important; }
+}

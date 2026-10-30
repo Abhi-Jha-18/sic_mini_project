@@ -1,58 +1,97 @@
 # PhoneFit — Smart Mobile Recommendation Tool
 
-PhoneFit is a React + Vite app that recommends phones from the **client-provided phone dataset**. A visitor selects a use case, an INR budget band, and optionally a screen-size preference; the app ranks matching dataset records using transparent local heuristics.
+> Samsung Innovation Campus (SIC) mini project  
+> **Author:** <Abhi Jha> · **Batch/Track:** < 3rd Batch / AI/ML > ·
 
-## Run locally
+PhoneFit is a React + Vite web app that recommends phones from a **client-provided dataset of 413 phone records**. A visitor picks a use case, an INR budget band, and (optionally) a screen-size preference. The app then ranks matching phones with transparent, rule-based scoring.
+
+**Live demo:** <add link if deployed>
+
+<!-- Add 2–3 screenshots here, e.g. ![Results page](docs/results.png) -->
+
+## Features
+
+- Three-step guided flow: use case → budget → screen size
+- Indian-rupee budget bands with a live count of matching models
+- Top 4 matches up front, expandable into a full catalog browser
+- Search by model/brand, brand filter, and sorting by match, price, rating, or battery
+- Incremental loading for the full catalog
+- Animated landing page with 3D-tilt, cursor-spotlight priority cards
+- Animated "finding your matches" transition and count-up statistics
+- Result cards with an animated fit-score ring and spec meters (battery, RAM, camera, storage)
+- Side-by-side comparison of up to 3 phones, with the best value in each row highlighted
+- Respects the system "reduce motion" setting
+- Deterministic, explainable scoring (no black-box AI)
+
+## Tech stack
+
+React · Vite · Tailwind CSS · Font Awesome icons · JavaScript (ES modules) · Node.js scripts for data preparation · unit/UI tests (`npm test`)
+
+## Getting started
+
+**Requirements:** Node.js 18+ and npm.
 
 ```bash
-npm ci
-npm run dev       # Vite development server
-npm test          # unit and UI tests
-npm run build      # production output in dist/
+npm ci               # install dependencies
+npm run dev          # start the Vite dev server
+npm test             # run unit and UI tests
+npm run build        # production build in dist/
+npm run data:prepare # regenerate normalized dataset from the CSV
 ```
 
-## Client dataset
+## Dataset
 
-The original client file is preserved at:
+The original client file is kept unchanged at `data/sic_mobile_spec_PJ1 - Sheet1.csv`.
 
-```text
-data/sic_mobile_spec_PJ1 - Sheet1.csv
-```
+| Item | Detail |
+|---|---|
+| Records | 413 |
+| Source columns | `name`, `rating`, `price`, `camera`, `display_type`, `display_size`, `battery`, `storage`, `ram`, `weight`, `processor` |
+| App-ready copy | `src/data/clientPhones.json` |
 
-It has 413 phone records and these source columns: `name`, `rating`, `price`, `camera`, `display_type`, `display_size`, `battery`, `storage`, `ram`, `weight`, and `processor`.
+`npm run data:prepare` converts the CSV into the app-ready JSON:
 
-The live app imports the normalized copy at `src/data/clientPhones.json`. To regenerate it after the source CSV changes, run:
+- Keeps every record, with a stable ID based on CSV row order
+- Keeps the original `priceUSD` and adds a rounded `priceINR` at an indicative rate of **$1 = ₹95.13** (dated 2026-10-28; change it in `src/data/currency.js` and rerun)
+- Converts `1TB` storage to 1,024 GB
+- Maps `other_types` to "Other / not specified"
+- Treats `not mentioned` processors as missing
 
-```bash
-npm run data:prepare
-```
+The CSV remains the source of truth. INR prices and budget tiers are **estimates**.
 
-The conversion retains every record, keeps each original `priceUSD`, and adds a rounded `priceINR` using a fixed indicative rate of **$1 = ₹95.13** (dated 2026-10-28). It also converts `1TB` storage to 1,024 GB for sorting/display, maps `other_types` to “Other / not specified”, and treats `not mentioned` processors as missing. Each row receives a stable ID based on its CSV row order. The original CSV remains the source of truth. The displayed INR prices and Indian budget tiers are estimates; the rate can be updated in `src/data/currency.js` before rerunning the conversion.
+## How recommendations work
 
-## Recommendation behavior and data limitations
+**Budget bands:** under ₹20,000 · ₹20,000–₹50,000 · above ₹50,000
 
-The app uses Indian-rupee budget bands: **under ₹20,000**, **₹20,000–₹50,000**, and **above ₹50,000**. The results page leads with four top matches and can expand into a searchable browser for every matching record. The expanded catalog supports model/brand search, brand filtering, sorting by match, price, rating, or battery capacity, and incremental loading. Budget options show the live number of matching models.
+Scoring uses only fields present in the dataset: customer rating, RAM, battery capacity, camera megapixels, display type/size, and storage. Scores are rule-based matching indicators, not lab benchmarks or AI-generated assessments.
 
-The ranking is deterministic and scores only fields supplied by the client: customer rating, RAM, battery capacity, camera megapixels, display type/size, and storage. Scores are rule-based matching indicators, not laboratory benchmarks or AI-generated assessments.
+### Limitations
 
-The source does not include operating system, refresh rate, processor benchmarks, camera sensor/quality details, or charging speed. The app therefore does not infer those properties or offer an OS filter. It displays the supplied processor label as-is and labels missing values as unavailable. The result cards show client-listed facts rather than invented editorial pros and cons.
+The dataset has no operating system, refresh rate, processor benchmarks, camera sensor quality, or charging speed. PhoneFit does not guess these, offers no OS filter, shows the processor label as supplied, and marks missing values as unavailable. Result cards show client-listed facts only, not invented pros and cons.
 
 ## Project structure
 
 ```text
-data/                                  # Original client spreadsheet
-outputs/                               # Generated recommendation demo output
-scripts/prepare-client-dataset.mjs     # CSV → normalized JSON conversion
-scripts/demo.mjs                       # Example recommendation scenarios
-src/App.jsx                             # React UI and user journey
-src/data/mockDatabase.js               # Active client-backed catalog and ranking
-src/data/clientPhones.json              # Normalized app-ready client records
-src/data/mockDatabase.test.js           # Dataset and engine tests
-src/wizard/                             # Separate framework-agnostic wizard modules
+data/                                # Original client spreadsheet
+outputs/                             # Generated recommendation demo output
+scripts/prepare-client-dataset.mjs   # CSV → normalized JSON
+scripts/demo.mjs                     # Example recommendation scenarios
+src/App.jsx                          # React UI and user journey
+src/phonefit-ui.css                  # Animations and interaction styles
+src/data/mockDatabase.js             # Active client-backed catalog and ranking engine (consider renaming to phoneCatalog.js)
+src/data/clientPhones.json           # Normalized app-ready records
+src/data/mockDatabase.test.js        # Dataset and engine tests
+src/wizard/                          # Standalone wizard modules (not used by the current UI)
 ```
 
-The app uses the client-backed catalog in `src/data/mockDatabase.js`. The separate `src/wizard/` modules are not the active data source for the current React UI.
+## Submission archive
 
-## Security and submission archive
+`PhoneFit_Codebase_Archive.zip` contains the code, original and normalized datasets, README, scripts, tests, and demo output. It excludes `.git`, `node_modules`, build output, and local environment files. The app needs no API keys.
 
-No API credentials are needed by this app. `PhoneFit_Codebase_Archive.zip` contains the code, original and normalized client datasets, README, scripts, tests, and generated demo output; it excludes `.git`, installed dependencies, build outputs, and local environment files.
+## Acknowledgements
+
+Built as part of the Samsung Innovation Campus program. Dataset provided by the client.
+
+## License
+
+<IET KHANDARI, or "For academic submission only">
