@@ -6,6 +6,7 @@ import {
   phones,
   purposeNotesFor,
   scorePhone,
+  sizeOf,
   tierOf,
 } from './mockDatabase';
 
@@ -89,6 +90,20 @@ describe('client-provided phone dataset and recommendation engine', () => {
     const sparse = getRecommendations({ purpose: 'battery', budget: 'flagship', size: 'compact' });
     expect(sparse.list.length).toBeGreaterThanOrEqual(3);
     expect(sparse.relaxed).toContain('screen size');
+  });
+
+  it.each(['compact', 'standard', 'large'])('returns only %s phones for that size unless the filter was relaxed', (size) => {
+    const { list, relaxed } = getRecommendations({ purpose: 'media', budget: 'mid', size, limit: Infinity });
+    expect(list.length).toBeGreaterThan(0);
+    if (relaxed.length === 0) {
+      list.forEach(({ phone }) => expect(sizeOf(phone)).toBe(size));
+    }
+  });
+
+  it('falls back to everyday scoring and never returns NaN for incomplete records', () => {
+    const incomplete = { ...phones[0], rating: undefined, cameraMP: null };
+    expect(scorePhone(incomplete, 'camera')).toBe(0);
+    expect(Number.isNaN(scorePhone(incomplete, 'unknown-purpose'))).toBe(false);
   });
 
   it('keeps all heuristic scores within 0–100 for every record and need', () => {

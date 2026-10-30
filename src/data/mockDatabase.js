@@ -4,6 +4,10 @@
 import clientPhoneRows from './clientPhones.json' with { type: 'json' };
 import { USD_TO_INR_RATE, USD_TO_INR_RATE_DATE } from './currency.js';
 
+// Budget band boundaries in INR (single source of truth for tiers and tierOf).
+const ENTRY_MAX_INR = 20000;
+const MID_MAX_INR = 50000;
+
 export const DATASET_META = {
   source: 'data/sic_mobile_spec_PJ1 - Sheet1.csv',
   sourceCurrency: 'USD',
@@ -61,21 +65,21 @@ export const BUDGET_TIERS = [
     label: 'Entry-level',
     range: 'Under ₹20,000',
     description: 'Lower-priced devices in the client catalog',
-    matches: (phone) => phone.priceINR < 20000,
+    matches: (phone) => phone.priceINR < ENTRY_MAX_INR,
   },
   {
     key: 'mid',
     label: 'Mid-range',
     range: '₹20,000 – ₹50,000',
     description: 'Mid-priced devices in the client catalog',
-    matches: (phone) => phone.priceINR >= 20000 && phone.priceINR <= 50000,
+    matches: (phone) => phone.priceINR >= ENTRY_MAX_INR && phone.priceINR <= MID_MAX_INR,
   },
   {
     key: 'flagship',
     label: 'Premium',
     range: 'Above ₹50,000',
     description: 'Higher-priced devices in the client catalog',
-    matches: (phone) => phone.priceINR > 50000,
+    matches: (phone) => phone.priceINR > MID_MAX_INR,
   },
 ];
 
@@ -84,6 +88,7 @@ export const budgetMeta = (key) => BUDGET_TIERS.find((tier) => tier.key === key)
 export const SIZE_OPTIONS = [
   { key: 'any', label: 'Any' },
   { key: 'compact', label: 'Compact · ≤ 6.3"' },
+  { key: 'standard', label: 'Standard · 6.4" – 6.5"' },
   { key: 'large', label: 'Large · 6.6" +' },
 ];
 
@@ -92,7 +97,11 @@ export const SIZE_OPTIONS = [
 // invented; the `processor` field is only what the source CSV lists.
 export const phones = clientPhoneRows;
 
-const clampScore = (value, max) => Math.max(0, Math.min((Number(value) / max) * 100, 100));
+// Missing or non-numeric values score 0 instead of producing NaN.
+const clampScore = (value, max) => {
+  const ratio = (Number(value) / max) * 100;
+  return Number.isFinite(ratio) ? Math.max(0, Math.min(ratio, 100)) : 0;
+};
 const ratingScore = (phone) => clampScore(phone.rating, 5);
 const ramScore = (phone) => clampScore(phone.ramGB, 12);
 const batteryScore = (phone) => clampScore(phone.batteryMah, 6000);
@@ -102,7 +111,7 @@ const screenSizeScore = (phone) => clampScore(phone.screenInches, 7.6);
 
 const displayTypeScore = (phone) => {
   const type = phone.displayType.toLowerCase();
-  if (type.includes('amoled') || type.includes('oled')) return 100;
+  if (type.includes('oled')) return 100; // also matches AMOLED / P-OLED
   if (type.includes('lcd')) return 60;
   if (type.includes('tft')) return 40;
   return 50;
@@ -125,8 +134,8 @@ export const scorePhone = (phone, purposeKey) =>
   Math.round((scoringRules[purposeKey] || scoringRules.everyday)(phone));
 
 export const tierOf = (phone) => {
-  if (phone.priceINR < 20000) return 'entry';
-  if (phone.priceINR <= 50000) return 'mid';
+  if (phone.priceINR < ENTRY_MAX_INR) return 'entry';
+  if (phone.priceINR <= MID_MAX_INR) return 'mid';
   return 'flagship';
 };
 
@@ -156,7 +165,7 @@ export function getRecommendations({ purpose, budget, size = 'any', limit = 4 })
   const sizeMatches = (phone) => {
     if (size === 'any') return true;
     const phoneSize = sizeOf(phone);
-    return phoneSize === size || (size === 'large' && phoneSize === 'standard');
+    return phoneSize === size;
   };
 
   let list = scoreList((phone) => inTier(phone) && sizeMatches(phone));
