@@ -391,7 +391,7 @@ const LandingStage = ({ onSelectPurpose }) => {
       <div className="pf-orb w-[300px] h-[300px] top-[520px] left-1/3" style={{ background: '#4A6785', animationDelay: '-11s' }} aria-hidden="true" />
 
       {/* Hero */}
-      <section className="relative grid lg:grid-cols-2 gap-10 items-center pt-14 sm:pt-20 pb-16">
+      <section className="relative grid lg:grid-cols-2 gap-10 items-center pt-6 sm:pt-10 pb-8">
         <div className="pf-rise text-center lg:text-left">
           <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.18em] uppercase text-accent bg-accent/10 px-3.5 py-1.5 rounded-full">
             <i className="fa-solid fa-compass text-[10px]" />
@@ -440,8 +440,8 @@ const LandingStage = ({ onSelectPurpose }) => {
       </section>
 
       {/* Purpose picker */}
-      <section id="purposes" className="relative pb-24 pt-6 scroll-mt-24">
-        <div className="max-w-2xl mx-auto text-center mb-10">
+      <section id="purposes" className="relative pb-12 pt-4 scroll-mt-20">
+        <div className="max-w-2xl mx-auto text-center mb-6">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-accent">Step 1 · Your priority</p>
           <h2 className="mt-3 text-2xl sm:text-[32px] font-display font-semibold text-ink leading-snug">
             What matters most in your next phone?
@@ -1279,9 +1279,36 @@ const App = () => {
     return () => clearTimeout(timer);
   }, [stage]);
 
+  // ── History API: push a state entry whenever the user navigates forward so
+  //    the mobile browser back-gesture navigates within the app instead of
+  //    closing the browser tab/app.
+  useEffect(() => {
+    window.history.replaceState({ pfStage: 'landing' }, '');
+  }, []);
+
+  useEffect(() => {
+    const onPop = (e) => {
+      const s = (e.state || {}).pfStage;
+      if (s === 'landing') {
+        setPurpose(null);
+        setPrefs({ budget: null, size: 'any' });
+        setModalOpen(false);
+        setStage('landing');
+      } else if (s === 'modal') {
+        setModalOpen(true);
+      } else if (s === 'results') {
+        setModalOpen(false);
+        setStage('results');
+      }
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
   const handleSelectPurpose = useCallback((key) => {
     setPurpose(key);
     setModalOpen(true);
+    window.history.pushState({ pfStage: 'modal' }, '');
   }, []);
 
   const handleSubmitPrefs = useCallback((draft) => {
@@ -1289,6 +1316,7 @@ const App = () => {
     setPrefs(draft);
     setModalOpen(false);
     setStage('loading');
+    window.history.pushState({ pfStage: 'results' }, '');
   }, []);
 
   const handleRestart = useCallback(() => {
@@ -1296,9 +1324,13 @@ const App = () => {
     setPrefs({ budget: null, size: 'any' });
     setModalOpen(false);
     setStage('landing');
+    window.history.pushState({ pfStage: 'landing' }, '');
   }, []);
 
-  const handleRefine = useCallback(() => setModalOpen(true), []);
+  const handleRefine = useCallback(() => {
+    setModalOpen(true);
+    window.history.pushState({ pfStage: 'modal' }, '');
+  }, []);
   const handleCloseModal = useCallback(() => setModalOpen(false), []);
 
   const results = useMemo(() => {
