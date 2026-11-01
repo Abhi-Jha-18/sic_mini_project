@@ -41,6 +41,30 @@ const pct = (value, max) => Math.max(0, Math.min((Number(value) / max) * 100, 10
 
 const cx = (...parts) => parts.filter(Boolean).join(' ');
 
+// ─────────────────────────────────────────────────────────────────────────────
+//  FULL-WIDTH (FLUID) LAYOUT
+//
+//  The page shell is deliberately *not* a centred, capped column: there is
+//  no `max-w-*`, no `mx-auto` and no Tailwind `.container` anywhere in the
+//  page layout. The app root is `w-full min-h-screen` and every stage is
+//  rendered inside <FluidContainer>, which stretches to the full viewport
+//  width and keeps only a small responsive edge padding as a gutter, so
+//  inner grids/cards grow to fill whatever width the screen offers.
+//
+//  The few remaining `max-w-*` classes in this file belong to centred
+//  overlays (budget modal, compare modal/tray, truncated chips) — not to
+//  page layout — and are kept on purpose: a dialog stretched edge-to-edge
+//  on an ultra-wide monitor would be unusable.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const FLUID_GUTTER = 'w-full px-4 sm:px-8 lg:px-12 2xl:px-16';
+
+const FluidContainer = ({ as: Tag = 'div', className = '', children, ...props }) => (
+  <Tag className={cx(FLUID_GUTTER, className)} {...props}>
+    {children}
+  </Tag>
+);
+
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   typeof window.matchMedia === 'function' &&
@@ -133,8 +157,8 @@ const ProgressSteps = ({ current }) => (
 );
 
 const TopBar = ({ step, onHome, showHome }) => (
-  <header className="sticky top-0 z-40 bg-[#0B0C10]/80 backdrop-blur-xl border-b border-stone-700/80">
-    <div className="max-w-6xl mx-auto px-4 sm:px-8 h-14 flex items-center justify-between gap-4">
+  <header className="sticky top-0 z-40 w-full bg-[#0B0C10]/80 backdrop-blur-xl border-b border-stone-700/80">
+    <FluidContainer className="h-14 flex items-center justify-between gap-4">
       <button onClick={onHome} className="flex items-center gap-2.5 group" id="logo-home">
         <div
           className="w-8 h-8 rounded-xl text-white flex items-center justify-center shadow-tile group-hover:scale-110 group-hover:rotate-6 transition-transform"
@@ -159,7 +183,7 @@ const TopBar = ({ step, onHome, showHome }) => (
       ) : (
         <div className="w-[72px]" />
       )}
-    </div>
+    </FluidContainer>
   </header>
 );
 
@@ -347,7 +371,7 @@ const PurposeCard = ({ purpose, index, onSelect }) => (
     onClick={() => onSelect(purpose.key)}
     style={{ '--tint': purpose.tint, '--i': index }}
     {...spotlightProps(7)}
-    className="pf-card pf-rise overflow-hidden group text-left bg-panel rounded-2xl border border-stone-700 p-3 sm:p-6 shadow-sm flex flex-col gap-3 sm:gap-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+    className="pf-card pf-rise w-full h-full overflow-hidden group text-left bg-panel rounded-2xl border border-stone-700 p-3 sm:p-6 shadow-sm flex flex-col gap-3 sm:gap-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
   >
     <span
       className="absolute -top-2 right-3 text-7xl font-display font-black select-none"
@@ -384,14 +408,14 @@ const LandingStage = ({ onSelectPurpose }) => {
   };
 
   return (
-    <main className="relative max-w-6xl mx-auto px-4 sm:px-8 overflow-x-clip">
+    <FluidContainer as="main" className="relative flex-1 overflow-x-clip">
       {/* ambient glow */}
       <div className="pf-orb w-[420px] h-[420px] -top-24 -left-24" style={{ background: '#54649F' }} aria-hidden="true" />
       <div className="pf-orb w-[360px] h-[360px] top-40 right-0" style={{ background: '#6B5B8A', animationDelay: '-6s' }} aria-hidden="true" />
       <div className="pf-orb w-[300px] h-[300px] top-[520px] left-1/3" style={{ background: '#4A6785', animationDelay: '-11s' }} aria-hidden="true" />
 
       {/* Hero */}
-      <section className="relative grid lg:grid-cols-2 gap-4 items-center pt-3 sm:pt-8 pb-4 sm:pb-6">
+      <section className="relative w-full grid lg:grid-cols-2 gap-4 xl:gap-16 items-center pt-3 sm:pt-8 pb-4 sm:pb-6">
         <div className="pf-rise text-center lg:text-left">
           <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.18em] uppercase text-accent bg-accent/10 px-3.5 py-1.5 rounded-full">
             <i className="fa-solid fa-compass text-[10px]" />
@@ -402,7 +426,7 @@ const LandingStage = ({ onSelectPurpose }) => {
             <br />
             that <span className="text-gradient">fits your life.</span>
           </h1>
-          <p className="mt-3 text-base text-stone-400 leading-relaxed max-w-md mx-auto lg:mx-0">
+          <p className="mt-3 text-base text-stone-400 leading-relaxed">
             Pick a priority and a budget. Get a ranked shortlist in seconds.
           </p>
 
@@ -440,21 +464,22 @@ const LandingStage = ({ onSelectPurpose }) => {
       </section>
 
       {/* Purpose picker */}
-      <section id="purposes" className="relative pb-6 pt-0 scroll-mt-16">
-        <div className="max-w-2xl mx-auto text-center mb-4">
+      <section id="purposes" className="relative w-full pb-6 pt-0 scroll-mt-16">
+        <div className="w-full text-center mb-4">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-accent">Step 1 · Your priority</p>
           <h2 className="mt-2 text-xl sm:text-[28px] font-display font-semibold text-ink leading-snug">
             What matters most in your next phone?
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        {/* 5 purposes: 2 cols → 3 cols → one full-width row on ultra-wide */}
+        <div className="grid w-full grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-3 sm:gap-4">
           {PURPOSES.map((p, i) => (
             <PurposeCard key={p.key} purpose={p} index={i} onSelect={onSelectPurpose} />
           ))}
         </div>
       </section>
-    </main>
+    </FluidContainer>
   );
 };
 
@@ -666,7 +691,7 @@ const LoadingStage = ({ purpose }) => {
   }, []);
 
   return (
-    <main className="max-w-6xl mx-auto px-4 sm:px-8 min-h-[60vh] flex flex-col items-center justify-center text-center" role="status" aria-live="polite">
+    <FluidContainer as="main" className="flex-1 min-h-[60vh] flex flex-col items-center justify-center text-center" role="status" aria-live="polite">
       <div className="relative w-24 h-24 flex items-center justify-center" style={{ '--tint': pMeta.tint }}>
         <span className="pf-pulse" style={{ '--d': '0s' }} />
         <span className="pf-pulse" style={{ '--d': '0.6s' }} />
@@ -684,7 +709,7 @@ const LoadingStage = ({ purpose }) => {
       <div className="mt-5 w-56 pf-meter">
         <span className="pf-progress" style={{ background: pMeta.tint, '--dur': RESULTS_DELAY_MS + 'ms' }} />
       </div>
-    </main>
+    </FluidContainer>
   );
 };
 
@@ -725,7 +750,7 @@ const ResultCard = ({ entry, purpose, rank, badge, selected, canSelectMore, onTo
 
   return (
     <article
-      className="pf-card pf-rise bg-panel rounded-3xl border border-stone-700 shadow-sm p-5 flex flex-col gap-4"
+      className="pf-card pf-rise w-full h-full bg-panel rounded-3xl border border-stone-700 shadow-sm p-5 flex flex-col gap-4"
       style={{
         '--tint': pMeta.tint,
         '--i': Math.min(rank, 11),
@@ -1048,7 +1073,7 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
   const topBadge = (i) => (i === 0 ? '★ Best match' : '#' + (i + 1));
 
   return (
-    <main className="relative max-w-6xl mx-auto px-4 sm:px-8 pb-20 overflow-x-clip">
+    <FluidContainer as="main" className="relative flex-1 pb-20 overflow-x-clip">
       <div className="pf-orb w-[380px] h-[380px] -top-24 right-0" style={{ background: pMeta.tint, opacity: 0.18 }} aria-hidden="true" />
 
       <section className="relative pt-8 sm:pt-12 pb-6">
@@ -1083,7 +1108,7 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
         </div>
 
         {stats && (
-          <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3 max-w-3xl">
+          <div className="mt-5 grid w-full grid-cols-3 gap-2 sm:gap-3">
             <StatTile index={3} icon="fa-solid fa-mobile-screen" label="Models in range" value={stats.count} tint={pMeta.tint} />
             <StatTile index={4} icon="fa-solid fa-tag" label="Average price" value={stats.avgPrice} format={inrFormat} tint={pMeta.tint} />
             <StatTile index={5} icon="fa-solid fa-star" label="Top rating" value={Math.round(stats.topRating * 10)} format={(v) => (v / 10).toFixed(1)} tint={pMeta.tint} />
@@ -1135,7 +1160,7 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
           </div>
 
           {browseAll && (
-            <div className="pf-rise mb-6 p-4 rounded-2xl border border-stone-700 bg-panel space-y-4">
+            <div className="pf-rise w-full mb-6 p-4 rounded-2xl border border-stone-700 bg-panel space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <label>
                   <span className="block text-[11px] uppercase tracking-wider text-stone-400 mb-1.5">Search model or brand</span>
@@ -1188,12 +1213,20 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
             </div>
           )}
 
+          {/* Results grid: top picks (≤4) stretch across 4 columns; the full
+              catalog gains extra columns on ultra-wide screens instead of
+              leaving the new width empty. */}
           {visibleResults.length === 0 ? (
             <p className="rounded-2xl border border-stone-700 bg-panel p-8 text-center text-stone-400">
               No models match that search. Clear the search or choose another brand.
             </p>
           ) : (
-            <section className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5">
+            <section
+              className={cx(
+                'grid w-full grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5',
+                browseAll && '2xl:grid-cols-6'
+              )}
+            >
               {visibleResults.map((entry, i) => (
                 <ResultCard
                   key={entry.phone.id}
@@ -1253,7 +1286,7 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
       {compareOpen && compareEntries.length >= 2 && (
         <CompareModal entries={compareEntries} tint={pMeta.tint} onClose={closeCompare} />
       )}
-    </main>
+    </FluidContainer>
   );
 };
 
@@ -1341,7 +1374,7 @@ const App = () => {
   const progressStep = modalOpen ? 1 : stage === 'landing' ? 0 : 2;
 
   return (
-    <div className="min-h-screen text-stone-100 font-sans">
+    <div className="w-full min-h-screen flex flex-col text-stone-100 font-sans">
       <TopBar step={progressStep} onHome={handleRestart} showHome={stage !== 'landing'} />
 
       {stage === 'landing' && <LandingStage onSelectPurpose={handleSelectPurpose} />}
@@ -1369,8 +1402,8 @@ const App = () => {
         />
       )}
 
-      <footer className="border-t border-stone-700/80 py-8">
-        <p className="text-center text-xs text-stone-500 flex items-center justify-center gap-2">
+      <footer className="w-full border-t border-stone-700/80 py-8">
+        <p className="w-full text-center text-xs text-stone-500 flex items-center justify-center gap-2 px-4">
           <span aria-hidden="true" className="flex gap-1.5">
             <i className="fa-solid fa-circle text-[5px] text-plum" />
             <i className="fa-solid fa-circle text-[5px] text-terra" />
