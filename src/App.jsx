@@ -134,7 +134,7 @@ const ProgressSteps = ({ current }) => (
 
 const TopBar = ({ step, onHome, showHome }) => (
   <header className="sticky top-0 z-40 bg-[#0B0C10]/80 backdrop-blur-xl border-b border-stone-700/80">
-    <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-4">
+    <div className="max-w-6xl mx-auto px-4 sm:px-8 h-14 flex items-center justify-between gap-4">
       <button onClick={onHome} className="flex items-center gap-2.5 group" id="logo-home">
         <div
           className="w-8 h-8 rounded-xl text-white flex items-center justify-center shadow-tile group-hover:scale-110 group-hover:rotate-6 transition-transform"
@@ -384,29 +384,29 @@ const LandingStage = ({ onSelectPurpose }) => {
   };
 
   return (
-    <main className="relative max-w-6xl mx-auto px-5 sm:px-8 overflow-x-clip">
+    <main className="relative max-w-6xl mx-auto px-4 sm:px-8 overflow-x-clip">
       {/* ambient glow */}
       <div className="pf-orb w-[420px] h-[420px] -top-24 -left-24" style={{ background: '#54649F' }} aria-hidden="true" />
       <div className="pf-orb w-[360px] h-[360px] top-40 right-0" style={{ background: '#6B5B8A', animationDelay: '-6s' }} aria-hidden="true" />
       <div className="pf-orb w-[300px] h-[300px] top-[520px] left-1/3" style={{ background: '#4A6785', animationDelay: '-11s' }} aria-hidden="true" />
 
       {/* Hero */}
-      <section className="relative grid lg:grid-cols-2 gap-10 items-center pt-6 sm:pt-10 pb-8">
+      <section className="relative grid lg:grid-cols-2 gap-6 items-center pt-4 sm:pt-8 pb-6">
         <div className="pf-rise text-center lg:text-left">
           <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.18em] uppercase text-accent bg-accent/10 px-3.5 py-1.5 rounded-full">
             <i className="fa-solid fa-compass text-[10px]" />
             Smart phone finder
           </span>
-          <h1 className="mt-6 text-5xl sm:text-[64px] leading-[1.03] font-display font-black text-ink">
+          <h1 className="mt-4 text-4xl sm:text-[56px] leading-[1.05] font-display font-black text-ink">
             Find the phone
             <br />
             that <span className="text-gradient">fits your life.</span>
           </h1>
-          <p className="mt-5 text-lg text-stone-400 leading-relaxed max-w-md mx-auto lg:mx-0">
+          <p className="mt-3 text-base text-stone-400 leading-relaxed max-w-md mx-auto lg:mx-0">
             Pick a priority and a budget. Get a ranked shortlist in seconds.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+          <div className="mt-5 flex flex-wrap items-center justify-center lg:justify-start gap-4">
             <button
               id="hero-start"
               onClick={scrollToPurposes}
@@ -418,7 +418,7 @@ const LandingStage = ({ onSelectPurpose }) => {
             <span className="text-xs text-stone-500">No sign-up · takes about 20 seconds</span>
           </div>
 
-          <div className="mt-10 flex items-center justify-center lg:justify-start gap-9">
+          <div className="mt-6 flex items-center justify-center lg:justify-start gap-9">
             <HeroStat value={phones.length} label="Phones" />
             <div className="w-px h-9 bg-stone-700" />
             <HeroStat value={PURPOSES.length} label="Priorities" />
@@ -440,10 +440,10 @@ const LandingStage = ({ onSelectPurpose }) => {
       </section>
 
       {/* Purpose picker */}
-      <section id="purposes" className="relative pb-12 pt-4 scroll-mt-20">
-        <div className="max-w-2xl mx-auto text-center mb-6">
+      <section id="purposes" className="relative pb-8 pt-2 scroll-mt-20">
+        <div className="max-w-2xl mx-auto text-center mb-4">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-accent">Step 1 · Your priority</p>
-          <h2 className="mt-3 text-2xl sm:text-[32px] font-display font-semibold text-ink leading-snug">
+          <h2 className="mt-2 text-xl sm:text-[28px] font-display font-semibold text-ink leading-snug">
             What matters most in your next phone?
           </h2>
         </div>
@@ -666,7 +666,7 @@ const LoadingStage = ({ purpose }) => {
   }, []);
 
   return (
-    <main className="max-w-6xl mx-auto px-5 sm:px-8 min-h-[70vh] flex flex-col items-center justify-center text-center" role="status" aria-live="polite">
+    <main className="max-w-6xl mx-auto px-4 sm:px-8 min-h-[60vh] flex flex-col items-center justify-center text-center" role="status" aria-live="polite">
       <div className="relative w-24 h-24 flex items-center justify-center" style={{ '--tint': pMeta.tint }}>
         <span className="pf-pulse" style={{ '--d': '0s' }} />
         <span className="pf-pulse" style={{ '--d': '0.6s' }} />
@@ -1048,12 +1048,12 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
   const topBadge = (i) => (i === 0 ? '★ Best match' : '#' + (i + 1));
 
   return (
-    <main className="relative max-w-6xl mx-auto px-5 sm:px-8 pb-32 overflow-x-clip">
+    <main className="relative max-w-6xl mx-auto px-4 sm:px-8 pb-20 overflow-x-clip">
       <div className="pf-orb w-[380px] h-[380px] -top-24 right-0" style={{ background: pMeta.tint, opacity: 0.18 }} aria-hidden="true" />
 
-      <section className="relative pt-12 sm:pt-16 pb-8">
+      <section className="relative pt-8 sm:pt-12 pb-6">
         <p className="pf-rise text-xs font-semibold tracking-[0.2em] uppercase text-accent">Step 3 of 3 · Your matches</p>
-        <h1 className="pf-rise mt-3 text-3xl sm:text-[44px] leading-tight font-display font-extrabold text-ink" style={{ '--i': 1 }}>
+        <h1 className="pf-rise mt-2 text-2xl sm:text-[36px] leading-tight font-display font-extrabold text-ink" style={{ '--i': 1 }}>
           Tailored for <span style={{ color: pMeta.tint }}>{pMeta.label}</span>
         </h1>
 
