@@ -30,6 +30,11 @@
           padding: 0,
           screens: { sm: '100%', md: '100%', lg: '100%', xl: '100%', '2xl': '100%' },
         },
+        /* Extra-wide breakpoint so full-bleed layouts on 2K/4K displays can
+           add columns instead of stretching a handful of cards. */
+        screens: {
+          '3xl': '1800px',
+        },
         extend: {
           fontFamily: {
             sans:    ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],

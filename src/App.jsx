@@ -42,14 +42,15 @@ const pct = (value, max) => Math.max(0, Math.min((Number(value) / max) * 100, 10
 const cx = (...parts) => parts.filter(Boolean).join(' ');
 
 // ─────────────────────────────────────────────────────────────────────────────
-//  FULL-WIDTH (FLUID) LAYOUT
+//  FULL-BLEED (FLUID) LAYOUT
 //
 //  The page shell is deliberately *not* a centred, capped column: there is
 //  no `max-w-*`, no `mx-auto` and no Tailwind `.container` anywhere in the
 //  page layout. The app root is `w-full min-h-screen` and every stage is
 //  rendered inside <FluidContainer>, which stretches to the full viewport
-//  width and keeps only a small responsive edge padding as a gutter, so
-//  inner grids/cards grow to fill whatever width the screen offers.
+//  width and height. Type, spacing, cards and the hero visual all scale with
+//  `clamp()` (see src/phonefit-ui.css), so the composition fills a 1280px
+//  laptop just as fully as a 2560px display — no narrow strip in the middle.
 //
 //  The few remaining `max-w-*` classes in this file belong to centred
 //  overlays (budget modal, compare modal/tray, truncated chips) — not to
@@ -57,7 +58,9 @@ const cx = (...parts) => parts.filter(Boolean).join(' ');
 //  on an ultra-wide monitor would be unusable.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const FLUID_GUTTER = 'w-full px-4 sm:px-8 lg:px-12 2xl:px-16';
+// Full-bleed gutter: `pf-gutter` keeps the layout edge-to-edge and grows the
+// side padding fluidly with the viewport (see src/phonefit-ui.css).
+const FLUID_GUTTER = 'pf-gutter w-full';
 
 const FluidContainer = ({ as: Tag = 'div', className = '', children, ...props }) => (
   <Tag className={cx(FLUID_GUTTER, className)} {...props}>
@@ -143,7 +146,7 @@ const ProgressSteps = ({ current }) => (
             </span>
             <span
               className={cx(
-                'text-xs font-medium tracking-wide hidden sm:block',
+                'pf-step-label font-medium tracking-wide hidden sm:block',
                 state === 'todo' ? 'text-stone-500' : 'text-stone-300'
               )}
             >
@@ -158,7 +161,7 @@ const ProgressSteps = ({ current }) => (
 
 const TopBar = ({ step, onHome, showHome }) => (
   <header className="sticky top-0 z-40 w-full bg-[#0B0C10]/80 backdrop-blur-xl border-b border-stone-700/80">
-    <FluidContainer className="h-14 flex items-center justify-between gap-4">
+    <FluidContainer className="h-14 xl:h-16 flex items-center justify-between gap-4">
       <button onClick={onHome} className="flex items-center gap-2.5 group" id="logo-home">
         <div
           className="w-8 h-8 rounded-xl text-white flex items-center justify-center shadow-tile group-hover:scale-110 group-hover:rotate-6 transition-transform"
@@ -166,7 +169,7 @@ const TopBar = ({ step, onHome, showHome }) => (
         >
           <i className="fa-solid fa-mobile-screen-button text-sm" />
         </div>
-        <span className="font-display font-bold text-[17px] tracking-tight text-ink">
+        <span className="pf-brand font-display font-bold tracking-tight text-ink">
           Phone<span className="text-gradient">Fit</span>
         </span>
       </button>
@@ -319,34 +322,27 @@ const PhoneVisual = ({ phone, match, tint, badge }) => {
 //  STAGE 1 · LANDING
 // ─────────────────────────────────────────────────────────────────────────────
 
-const HeroPhone = ({ tint, className = '', style }) => (
+const HeroPhone = ({ tint, variant = 'center', style }) => (
   <div
-    className={cx('absolute rounded-[26px] border-2 bg-[#121218] shadow-2xl pf-float', className)}
+    className={cx('pf-hero-phone pf-float', 'pf-hero-phone--' + variant)}
     style={{ borderColor: tint, boxShadow: `0 25px 60px -20px ${tint}88`, ...style }}
     aria-hidden="true"
   >
-    <div className="absolute inset-2 rounded-[18px] overflow-hidden" style={{ background: tint + '1F' }}>
-      <div className="mx-auto mt-2 h-1.5 w-8 rounded-full" style={{ background: tint + '88' }} />
-      <div className="m-3 h-16 rounded-xl" style={{ background: tint + '33' }} />
-      <div className="mx-3 h-2 rounded-full" style={{ background: tint + '55' }} />
-      <div className="mx-3 mt-2 h-2 w-2/3 rounded-full" style={{ background: tint + '33' }} />
-      <div className="mx-3 mt-4 grid grid-cols-2 gap-2">
-        <div className="h-10 rounded-lg" style={{ background: tint + '26' }} />
-        <div className="h-10 rounded-lg" style={{ background: tint + '26' }} />
+    <div className="pf-hero-phone__screen" style={{ background: tint + '1F' }}>
+      <div className="pf-hp-notch" style={{ background: tint + '88' }} />
+      <div className="pf-hp-hero" style={{ background: tint + '33' }} />
+      <div className="pf-hp-line pf-hp-line--1" style={{ background: tint + '55' }} />
+      <div className="pf-hp-line pf-hp-line--2" style={{ background: tint + '33' }} />
+      <div className="pf-hp-grid">
+        <span style={{ background: tint + '26' }} />
+        <span style={{ background: tint + '26' }} />
       </div>
     </div>
   </div>
 );
 
 const FloatChip = ({ icon, text, tint, className, delay }) => (
-  <span
-    className={cx(
-      'absolute pf-float inline-flex items-center gap-2 text-xs font-semibold text-stone-100 rounded-full px-3.5 py-2 bg-black/60 backdrop-blur-md border border-white/10 shadow-xl',
-      className
-    )}
-    style={{ '--d': delay }}
-    aria-hidden="true"
-  >
+  <span className={cx('pf-float-chip', className)} style={{ '--d': delay }} aria-hidden="true">
     <i className={icon} style={{ color: tint }} />
     {text}
   </span>
@@ -356,11 +352,11 @@ const HeroStat = ({ value, label, suffix = '' }) => {
   const n = useCountUp(value);
   return (
     <div>
-      <div className="text-3xl font-display font-extrabold text-ink tabular-nums">
+      <div className="pf-metric-value font-display font-extrabold text-ink tabular-nums leading-none">
         {n}
         {suffix}
       </div>
-      <div className="text-xs uppercase tracking-[0.16em] text-stone-500 mt-0.5">{label}</div>
+      <div className="pf-metric-label uppercase tracking-[0.16em] text-stone-500 mt-1">{label}</div>
     </div>
   );
 };
@@ -371,17 +367,17 @@ const PurposeCard = ({ purpose, index, onSelect }) => (
     onClick={() => onSelect(purpose.key)}
     style={{ '--tint': purpose.tint, '--i': index }}
     {...spotlightProps(7)}
-    className="pf-card pf-rise w-full h-full overflow-hidden group text-left bg-panel rounded-2xl border border-stone-700 p-3 sm:p-6 shadow-sm flex flex-col gap-3 sm:gap-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+    className="pf-card pf-rise pf-purpose-card w-full h-full overflow-hidden group text-left bg-panel border border-stone-700 shadow-sm flex flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
   >
     <span
-      className="absolute -top-2 right-3 text-7xl font-display font-black select-none"
+      className="pf-purpose-number absolute -top-2 right-3 font-display font-black select-none leading-none"
       style={{ color: purpose.tint + '14' }}
       aria-hidden="true"
     >
       {String(index + 1).padStart(2, '0')}
     </span>
     <div
-      className="pf-icon w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center text-base sm:text-xl relative"
+      className="pf-icon pf-purpose-icon flex items-center justify-center relative"
       style={{
         background: purpose.tint + '1C',
         color: purpose.tint,
@@ -391,12 +387,12 @@ const PurposeCard = ({ purpose, index, onSelect }) => (
       <i className={purpose.icon} />
     </div>
     <div className="relative">
-      <h3 className="font-display font-semibold text-ink text-[13px] sm:text-[17px] leading-snug">{purpose.label}</h3>
-      <p className="text-stone-400 text-[11px] sm:text-[13px] mt-1 sm:mt-1.5 leading-relaxed hidden sm:block">{purpose.description}</p>
+      <h3 className="pf-card-title font-display font-semibold text-ink leading-snug">{purpose.label}</h3>
+      <p className="pf-card-body text-stone-400 mt-1.5 sm:mt-2.5 leading-relaxed hidden sm:block">{purpose.description}</p>
     </div>
-    <div className="relative mt-auto flex items-center gap-1 text-[10px] sm:text-xs font-semibold" style={{ color: purpose.tint }}>
+    <div className="pf-card-cta relative mt-auto flex items-center gap-1 font-semibold" style={{ color: purpose.tint }}>
       Choose this
-      <i className="pf-arrow fa-solid fa-arrow-right text-[10px]" />
+      <i className="pf-arrow fa-solid fa-arrow-right text-[0.8em]" />
     </div>
   </button>
 );
@@ -415,22 +411,30 @@ const LandingStage = ({ onSelectPurpose }) => {
       <div className="pf-orb w-[300px] h-[300px] top-[520px] left-1/3" style={{ background: '#4A6785', animationDelay: '-11s' }} aria-hidden="true" />
 
       {/* Hero */}
-      <section className="relative w-full grid lg:grid-cols-2 gap-4 xl:gap-16 items-center pt-3 sm:pt-8 pb-4 sm:pb-6">
+      <section className="relative w-full grid lg:grid-cols-[1.12fr_1fr] gap-6 lg:gap-10 2xl:gap-16 items-center pt-6 sm:pt-10 lg:pt-14 2xl:pt-20 pb-8 sm:pb-12">
         <div className="pf-rise text-center lg:text-left">
-          <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.18em] uppercase text-accent bg-accent/10 px-3.5 py-1.5 rounded-full">
-            <i className="fa-solid fa-compass text-[10px]" />
+          <span className="pf-eyebrow inline-flex items-center gap-2 font-medium tracking-[0.18em] uppercase text-accent bg-accent/10 px-3.5 py-1.5 rounded-full">
+            <i className="fa-solid fa-compass text-[0.8em]" />
             Smart phone finder
           </span>
-          <h1 className="mt-4 text-4xl sm:text-[56px] leading-[1.05] font-display font-black text-ink">
+          <h1 className="pf-hero-title mt-5 sm:mt-6 font-display font-black text-ink text-balance">
             Find the phone
             <br />
             that <span className="text-gradient">fits your life.</span>
           </h1>
-          <p className="mt-3 text-base text-stone-400 leading-relaxed">
-            Pick a priority and a budget. Get a ranked shortlist in seconds.
+          <p className="pf-lead mt-4 sm:mt-6 text-stone-400 leading-relaxed mx-auto lg:mx-0 max-w-[46ch]">
+            Skip the endless spec sheets. Answer two quick questions and get a shortlist of 3–4
+            phones tailored to what you actually care about.
           </p>
 
-          <div className="mt-5 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+          {/* Palette hint — one dot per purpose, matching the card accents */}
+          <div className="mt-6 flex items-center justify-center lg:justify-start gap-2.5" aria-hidden="true">
+            {PURPOSES.map((p) => (
+              <span key={p.key} className="w-2 h-2 rounded-full" style={{ background: p.tint }} />
+            ))}
+          </div>
+
+          <div className="mt-7 sm:mt-9 flex flex-wrap items-center justify-center lg:justify-start gap-4">
             <button
               id="hero-start"
               onClick={scrollToPurposes}
@@ -439,41 +443,41 @@ const LandingStage = ({ onSelectPurpose }) => {
               Find my phone
               <i className="fa-solid fa-arrow-down ml-2 text-xs" />
             </button>
-            <span className="text-xs text-stone-500">No sign-up · takes about 20 seconds</span>
+            <span className="text-xs sm:text-sm text-stone-500">No sign-up · takes about 20 seconds</span>
           </div>
 
-          <div className="mt-6 flex items-center justify-center lg:justify-start gap-9">
+          <div className="mt-8 sm:mt-10 flex items-center justify-center lg:justify-start gap-8 sm:gap-12">
             <HeroStat value={phones.length} label="Phones" />
-            <div className="w-px h-9 bg-stone-700" />
+            <div className="w-px h-10 bg-stone-700" />
             <HeroStat value={PURPOSES.length} label="Priorities" />
-            <div className="w-px h-9 bg-stone-700" />
+            <div className="w-px h-10 bg-stone-700" />
             <HeroStat value={BUDGET_TIERS.length} label="Budgets" />
           </div>
         </div>
 
-        {/* Floating phone cluster */}
-        <div className="relative h-[380px] sm:h-[440px] hidden sm:block" aria-hidden="true">
-          <HeroPhone tint="#9C8BD8" className="w-[150px] h-[290px] left-[8%] top-[60px]" style={{ '--r': '-8deg', '--d': '0s' }} />
-          <HeroPhone tint="#7FA8D9" className="w-[170px] h-[330px] left-[34%] top-[16px] z-10" style={{ '--r': '3deg', '--d': '-1.5s' }} />
-          <HeroPhone tint="#D0967B" className="w-[150px] h-[290px] right-[4%] top-[80px]" style={{ '--r': '9deg', '--d': '-3s' }} />
-          <FloatChip icon="fa-solid fa-battery-three-quarters" text="5,000 mAh" tint="#8FC1A4" className="left-0 top-4" delay="-2s" />
-          <FloatChip icon="fa-solid fa-camera-retro" text="200 MP" tint="#D0967B" className="right-0 top-[60px]" delay="-0.8s" />
-          <FloatChip icon="fa-solid fa-film" text="AMOLED" tint="#7FA8D9" className="left-[6%] bottom-10" delay="-3.4s" />
-          <FloatChip icon="fa-solid fa-gamepad" text="12 GB RAM" tint="#9C8BD8" className="right-[6%] bottom-4" delay="-1.6s" />
+        {/* Floating phone cluster — scales with the viewport */}
+        <div className="pf-hero-cluster hidden sm:block" aria-hidden="true">
+          <HeroPhone tint="#9C8BD8" variant="left" style={{ '--r': '-8deg', '--d': '0s' }} />
+          <HeroPhone tint="#7FA8D9" variant="center" style={{ '--r': '3deg', '--d': '-1.5s' }} />
+          <HeroPhone tint="#D0967B" variant="right" style={{ '--r': '9deg', '--d': '-3s' }} />
+          <FloatChip icon="fa-solid fa-battery-three-quarters" text="5,000 mAh" tint="#8FC1A4" className="left-0 top-[4%]" delay="-2s" />
+          <FloatChip icon="fa-solid fa-camera-retro" text="200 MP" tint="#D0967B" className="right-0 top-[16%]" delay="-0.8s" />
+          <FloatChip icon="fa-solid fa-film" text="AMOLED" tint="#7FA8D9" className="left-[4%] bottom-[12%]" delay="-3.4s" />
+          <FloatChip icon="fa-solid fa-gamepad" text="12 GB RAM" tint="#9C8BD8" className="right-[3%] bottom-[5%]" delay="-1.6s" />
         </div>
       </section>
 
       {/* Purpose picker */}
-      <section id="purposes" className="relative w-full pb-6 pt-0 scroll-mt-16">
-        <div className="w-full text-center mb-4">
-          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-accent">Step 1 · Your priority</p>
-          <h2 className="mt-2 text-xl sm:text-[28px] font-display font-semibold text-ink leading-snug">
-            What matters most in your next phone?
+      <section id="purposes" className="relative w-full pb-10 sm:pb-14 pt-2 scroll-mt-16">
+        <div className="w-full text-center mb-6 sm:mb-9">
+          <p className="pf-eyebrow font-semibold tracking-[0.2em] uppercase text-accent">Step 1 · Your priority</p>
+          <h2 className="pf-section-title mt-3 font-display font-semibold text-ink text-balance max-w-[52ch] mx-auto">
+            What is the primary purpose or main feature you need in your mobile phone?
           </h2>
         </div>
 
-        {/* 5 purposes: 2 cols → 3 cols → one full-width row on ultra-wide */}
-        <div className="grid w-full grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-3 sm:gap-4">
+        {/* 5 purposes: 2 → 3 → 5 columns, always filling the full width */}
+        <div className="pf-purpose-grid">
           {PURPOSES.map((p, i) => (
             <PurposeCard key={p.key} purpose={p} index={i} onSelect={onSelectPurpose} />
           ))}
@@ -998,8 +1002,8 @@ const StatTile = ({ icon, label, value, format = (v) => v, tint, index }) => {
         <i className={icon} />
       </span>
       <div>
-        <div className="text-base sm:text-xl font-mono font-bold text-ink tabular-nums leading-tight">{format(n)}</div>
-        <div className="text-[11px] uppercase tracking-wider text-stone-500">{label}</div>
+        <div className="pf-metric-value font-mono font-bold text-ink tabular-nums leading-tight">{format(n)}</div>
+        <div className="pf-metric-label uppercase tracking-wider text-stone-500">{label}</div>
       </div>
     </div>
   );
@@ -1223,8 +1227,8 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
           ) : (
             <section
               className={cx(
-                'grid w-full grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5',
-                browseAll && '2xl:grid-cols-6'
+                'grid w-full grid-cols-2 xl:grid-cols-4 3xl:grid-cols-5 gap-3 sm:gap-5',
+                browseAll && '2xl:grid-cols-6 3xl:grid-cols-8'
               )}
             >
               {visibleResults.map((entry, i) => (

@@ -58,7 +58,7 @@ describe('PhoneFit App', () => {
 
   it('renders the landing page', () => {
     expect(container.textContent).toContain(
-      'What matters most in your next phone?'
+      'What is the primary purpose or main feature you need in your mobile phone?'
     );
 
     expect(container.querySelector('#purposes')).not.toBeNull();
@@ -73,7 +73,14 @@ describe('PhoneFit App', () => {
     expect(root.className).toContain('min-h-screen');
     expect(main).not.toBeNull();
     expect(main.className).toContain('w-full');
+    expect(main.className).toContain('pf-gutter');
     expect(main.className).not.toMatch(/max-w-|mx-auto|\bcontainer\b/);
+
+    // The full-bleed gutter and the fluid purpose grid must be present so the
+    // composition keeps filling the viewport at any width.
+    const grid = container.querySelector('#purposes .pf-purpose-grid');
+    expect(grid).not.toBeNull();
+    expect(grid.querySelectorAll(':scope > button').length).toBe(5);
   });
 
   it('opens the budget modal after selecting a purpose', async () => {

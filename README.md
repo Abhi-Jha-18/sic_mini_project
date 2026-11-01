@@ -24,6 +24,7 @@ The goal is to simplify smartphone selection by providing relevant recommendatio
 - Search by phone model or brand.
 - Brand filtering and sorting by match score, price, rating, and battery.
 - Incremental catalog loading.
+- Full-bleed fluid layout: type, spacing, cards and the hero visual scale with the viewport (clamp-based) so the page fills any screen from phone to ultrawide.
 - Animated landing page with interactive visual effects.
 - Animated recommendation-loading transition and statistics.
 - Smartphone result cards with fit-score rings and specification meters.
