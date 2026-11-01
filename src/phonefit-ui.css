@@ -2,6 +2,176 @@
    Colours are inherited from your existing palette (purpose tints, logo gradient);
    this file only adds motion, depth and interaction. */
 
+/* ---------- Fluid full-screen layout ----------
+   The page is meant to fill the entire viewport, not sit as a narrow strip
+   in the middle of a wide screen. Everything below scales with viewport
+   width via clamp(), so 1280px, 1920px and 2560px all read as one
+   full-bleed composition instead of a small centred column. */
+
+:root {
+  --pf-gutter: clamp(1rem, 2.6vw, 4.5rem);
+  --pf-header-h: 3.5rem;
+}
+
+/* Full-bleed page gutter (replaces fixed px padding). */
+.pf-gutter {
+  width: 100%;
+  padding-left: var(--pf-gutter);
+  padding-right: var(--pf-gutter);
+}
+
+/* Fluid type scale */
+.pf-brand { font-size: clamp(1.05rem, 0.95rem + 0.3vw, 1.4rem); }
+.pf-step-label { font-size: clamp(0.75rem, 0.7rem + 0.16vw, 0.9rem); }
+.pf-hero-title {
+  font-size: clamp(2.1rem, 0.55rem + 5.1vw, 7rem);
+  line-height: 1.02;
+}
+.pf-section-title {
+  font-size: clamp(1.3rem, 0.95rem + 1.15vw, 2.75rem);
+  line-height: 1.25;
+}
+.pf-eyebrow {
+  font-size: clamp(0.63rem, 0.57rem + 0.18vw, 0.85rem);
+}
+.pf-lead {
+  font-size: clamp(0.95rem, 0.82rem + 0.42vw, 1.4rem);
+}
+.pf-metric-value {
+  font-size: clamp(1.35rem, 1rem + 1.05vw, 2.6rem);
+}
+.pf-metric-label {
+  font-size: clamp(0.58rem, 0.54rem + 0.16vw, 0.8rem);
+}
+.pf-card-title {
+  font-size: clamp(0.95rem, 0.78rem + 0.55vw, 1.6rem);
+}
+.pf-card-body {
+  font-size: clamp(0.73rem, 0.63rem + 0.32vw, 1rem);
+}
+.pf-card-cta {
+  font-size: clamp(0.68rem, 0.6rem + 0.24vw, 0.95rem);
+}
+
+/* Purpose grid: 2 → 3 → 5 columns, always filling the available width. */
+.pf-purpose-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.05vw, 1.75rem);
+}
+@media (min-width: 768px) {
+  .pf-purpose-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1280px) {
+  .pf-purpose-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+/* Purpose cards stretch with the grid so wide screens get taller, roomier
+   cards rather than lots of dead space. */
+.pf-purpose-card {
+  padding: clamp(0.9rem, 1.05vw, 2.1rem);
+  border-radius: clamp(0.9rem, 0.95vw, 1.6rem);
+  gap: clamp(0.7rem, 1vw, 1.6rem);
+  min-height: clamp(10.5rem, 16vw, 22rem);
+}
+.pf-purpose-icon {
+  width: clamp(2.25rem, 2.5vw, 4rem);
+  height: clamp(2.25rem, 2.5vw, 4rem);
+  border-radius: clamp(0.65rem, 0.8vw, 1.25rem);
+  font-size: clamp(0.9rem, 1.05vw, 1.75rem);
+}
+.pf-purpose-number {
+  font-size: clamp(2.5rem, 4vw, 6rem);
+}
+
+/* ---------- Hero phone cluster (scales with the viewport) ---------- */
+.pf-hero-cluster {
+  position: relative;
+  width: 100%;
+  height: clamp(20rem, 30vw, 44rem);
+}
+.pf-hero-phone {
+  position: absolute;
+  border-style: solid;
+  border-width: clamp(1.5px, 0.12vw, 3px);
+  border-radius: clamp(14px, 1.2vw, 30px);
+  background: #121218;
+  aspect-ratio: 9 / 19;
+  box-shadow: 0 25px 60px -20px rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+}
+.pf-hero-phone--left   { height: 68%; left: 2%;  top: 18%; }
+.pf-hero-phone--center { height: 78%; left: 33%; top: 4%; z-index: 10; }
+.pf-hero-phone--right  { height: 68%; right: 1%; top: 22%; }
+.pf-hero-phone__screen {
+  position: absolute;
+  inset: clamp(5px, 0.42vw, 12px);
+  border-radius: clamp(9px, 0.85vw, 22px);
+  overflow: hidden;
+}
+.pf-hp-notch {
+  position: absolute;
+  top: 3.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26%;
+  height: 1.7%;
+  border-radius: 9999px;
+}
+.pf-hp-hero {
+  position: absolute;
+  top: 9%;
+  left: 7%;
+  right: 7%;
+  height: 26%;
+  border-radius: clamp(6px, 0.55vw, 14px);
+}
+.pf-hp-line {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  height: 2.4%;
+  border-radius: 9999px;
+}
+.pf-hp-line--1 { top: 39%; }
+.pf-hp-line--2 { top: 45%; right: 36%; }
+.pf-hp-grid {
+  position: absolute;
+  top: 54%;
+  left: 7%;
+  right: 7%;
+  height: 22%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7%;
+}
+.pf-hp-grid > span {
+  border-radius: clamp(4px, 0.4vw, 10px);
+  display: block;
+}
+
+/* Floating spec chips */
+.pf-float-chip {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.55em 0.95em;
+  border-radius: 9999px;
+  font-size: clamp(0.6rem, 0.5rem + 0.28vw, 0.95rem);
+  font-weight: 600;
+  color: #f4f2ee;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 14px 34px -14px rgba(0, 0, 0, 0.95);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  animation: pf-float 5.5s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+
 /* ---------- Ambient background ---------- */
 .pf-orb {
   position: absolute;
@@ -133,7 +303,7 @@
 
 /* ---------- Accessibility: respect reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .pf-orb, .pf-float, .pf-pulse, .pf-shine::after { animation: none !important; }
+  .pf-orb, .pf-float, .pf-float-chip, .pf-pulse, .pf-shine::after { animation: none !important; }
   .pf-rise, .pf-swap, .pf-tray { animation: none !important; opacity: 1 !important; transform: none !important; }
   .pf-meter > span, .pf-progress { animation: none !important; }
   .pf-ring-fg { animation: none !important; stroke-dashoffset: var(--o) !important; }
