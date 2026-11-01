@@ -347,7 +347,7 @@ const PurposeCard = ({ purpose, index, onSelect }) => (
     onClick={() => onSelect(purpose.key)}
     style={{ '--tint': purpose.tint, '--i': index }}
     {...spotlightProps(7)}
-    className="pf-card pf-rise overflow-hidden group text-left bg-panel rounded-2xl border border-stone-700 p-6 shadow-sm flex flex-col gap-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+    className="pf-card pf-rise overflow-hidden group text-left bg-panel rounded-2xl border border-stone-700 p-3 sm:p-6 shadow-sm flex flex-col gap-3 sm:gap-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
   >
     <span
       className="absolute -top-2 right-3 text-7xl font-display font-black select-none"
@@ -357,7 +357,7 @@ const PurposeCard = ({ purpose, index, onSelect }) => (
       {String(index + 1).padStart(2, '0')}
     </span>
     <div
-      className="pf-icon w-12 h-12 rounded-2xl flex items-center justify-center text-xl relative"
+      className="pf-icon w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center text-base sm:text-xl relative"
       style={{
         background: purpose.tint + '1C',
         color: purpose.tint,
@@ -367,10 +367,10 @@ const PurposeCard = ({ purpose, index, onSelect }) => (
       <i className={purpose.icon} />
     </div>
     <div className="relative">
-      <h3 className="font-display font-semibold text-ink text-[17px] leading-snug">{purpose.label}</h3>
-      <p className="text-stone-400 text-[13px] mt-1.5 leading-relaxed">{purpose.description}</p>
+      <h3 className="font-display font-semibold text-ink text-[13px] sm:text-[17px] leading-snug">{purpose.label}</h3>
+      <p className="text-stone-400 text-[11px] sm:text-[13px] mt-1 sm:mt-1.5 leading-relaxed hidden sm:block">{purpose.description}</p>
     </div>
-    <div className="relative mt-auto flex items-center gap-2 text-xs font-semibold" style={{ color: purpose.tint }}>
+    <div className="relative mt-auto flex items-center gap-1 text-[10px] sm:text-xs font-semibold" style={{ color: purpose.tint }}>
       Choose this
       <i className="pf-arrow fa-solid fa-arrow-right text-[10px]" />
     </div>
@@ -391,7 +391,7 @@ const LandingStage = ({ onSelectPurpose }) => {
       <div className="pf-orb w-[300px] h-[300px] top-[520px] left-1/3" style={{ background: '#4A6785', animationDelay: '-11s' }} aria-hidden="true" />
 
       {/* Hero */}
-      <section className="relative grid lg:grid-cols-2 gap-6 items-center pt-4 sm:pt-8 pb-6">
+      <section className="relative grid lg:grid-cols-2 gap-4 items-center pt-3 sm:pt-8 pb-4 sm:pb-6">
         <div className="pf-rise text-center lg:text-left">
           <span className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.18em] uppercase text-accent bg-accent/10 px-3.5 py-1.5 rounded-full">
             <i className="fa-solid fa-compass text-[10px]" />
@@ -440,7 +440,7 @@ const LandingStage = ({ onSelectPurpose }) => {
       </section>
 
       {/* Purpose picker */}
-      <section id="purposes" className="relative pb-8 pt-2 scroll-mt-20">
+      <section id="purposes" className="relative pb-6 pt-0 scroll-mt-16">
         <div className="max-w-2xl mx-auto text-center mb-4">
           <p className="text-xs font-semibold tracking-[0.2em] uppercase text-accent">Step 1 · Your priority</p>
           <h2 className="mt-2 text-xl sm:text-[28px] font-display font-semibold text-ink leading-snug">
@@ -448,7 +448,7 @@ const LandingStage = ({ onSelectPurpose }) => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {PURPOSES.map((p, i) => (
             <PurposeCard key={p.key} purpose={p} index={i} onSelect={onSelectPurpose} />
           ))}
@@ -966,14 +966,14 @@ const StatTile = ({ icon, label, value, format = (v) => v, tint, index }) => {
   const n = useCountUp(value);
   return (
     <div
-      className="pf-rise rounded-2xl border border-stone-700 bg-panel px-4 py-3.5 flex items-center gap-3"
+      className="pf-rise rounded-2xl border border-stone-700 bg-panel px-2 py-2.5 sm:px-4 sm:py-3.5 flex items-center gap-2 sm:gap-3"
       style={{ '--i': index }}
     >
-      <span className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: tint + '1F', color: tint }}>
+      <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center" style={{ background: tint + '1F', color: tint }}>
         <i className={icon} />
       </span>
       <div>
-        <div className="text-xl font-mono font-bold text-ink tabular-nums leading-tight">{format(n)}</div>
+        <div className="text-base sm:text-xl font-mono font-bold text-ink tabular-nums leading-tight">{format(n)}</div>
         <div className="text-[11px] uppercase tracking-wider text-stone-500">{label}</div>
       </div>
     </div>
@@ -1083,7 +1083,7 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
         </div>
 
         {stats && (
-          <div className="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-3xl">
+          <div className="mt-5 grid grid-cols-3 gap-2 sm:gap-3 max-w-3xl">
             <StatTile index={3} icon="fa-solid fa-mobile-screen" label="Models in range" value={stats.count} tint={pMeta.tint} />
             <StatTile index={4} icon="fa-solid fa-tag" label="Average price" value={stats.avgPrice} format={inrFormat} tint={pMeta.tint} />
             <StatTile index={5} icon="fa-solid fa-star" label="Top rating" value={Math.round(stats.topRating * 10)} format={(v) => (v / 10).toFixed(1)} tint={pMeta.tint} />
@@ -1193,7 +1193,7 @@ const ResultsStage = ({ purpose, prefs, results, onRefine, onRestart }) => {
               No models match that search. Clear the search or choose another brand.
             </p>
           ) : (
-            <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+            <section className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5">
               {visibleResults.map((entry, i) => (
                 <ResultCard
                   key={entry.phone.id}
