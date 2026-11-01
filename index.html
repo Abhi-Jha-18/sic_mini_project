@@ -21,6 +21,15 @@
   <script>
     tailwind.config = {
       theme: {
+        /* Fluid layout: even if a `.container` class is ever used, it must
+           span the full viewport width instead of Tailwind's default
+           per-breakpoint max-width caps. (No `.container` is used today —
+           page shells use `w-full` via FluidContainer in src/App.jsx.) */
+        container: {
+          center: false,
+          padding: 0,
+          screens: { sm: '100%', md: '100%', lg: '100%', xl: '100%', '2xl': '100%' },
+        },
         extend: {
           fontFamily: {
             sans:    ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
@@ -86,6 +95,15 @@
       margin: 0;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+    }
+
+    /* Full-bleed page: the document and React root always span the entire
+       viewport width/height — no centred max-width column. */
+    html, body, #root {
+      width: 100%;
+      max-width: none;
+      min-height: 100vh;
+      min-height: 100dvh;
     }
 
     /* Display type: geometric, tightly tracked */

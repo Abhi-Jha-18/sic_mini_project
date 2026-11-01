@@ -1,4 +1,19 @@
-/* index.css — intentionally minimal; all visual styling is handled by Tailwind
-   utility classes loaded via CDN in public/index.html and by the <style> block
-   embedded in that file (light minimalist theme). This file exists only to
-   satisfy the CRA import chain. */
+/* index.css — full-width base for the fluid layout.
+ *
+ * All component styling is handled by Tailwind utility classes (CDN config
+ * in index.html) and src/phonefit-ui.css. This file only guarantees the
+ * document itself can never re-introduce a centred, width-capped column:
+ * html / body / #root always span the entire viewport. The matching rule
+ * in index.html applies before first paint; this one keeps the guarantee
+ * in the bundled CSS as well. */
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+}

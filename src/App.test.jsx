@@ -65,6 +65,17 @@ describe('PhoneFit App', () => {
     expect(container.querySelector('#hero-start')).not.toBeNull();
   });
 
+  it('uses a fluid full-width layout (no max-w cap on the page shell)', () => {
+    const root = container.firstElementChild;
+    const main = container.querySelector('main');
+
+    expect(root.className).toContain('w-full');
+    expect(root.className).toContain('min-h-screen');
+    expect(main).not.toBeNull();
+    expect(main.className).toContain('w-full');
+    expect(main.className).not.toMatch(/max-w-|mx-auto|\bcontainer\b/);
+  });
+
   it('opens the budget modal after selecting a purpose', async () => {
     const purposeButton = container.querySelector('[id^="purpose-"]');
 
